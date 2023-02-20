@@ -9,7 +9,7 @@ const moveKeys = ["w", "a", "s", "d"];
 const getAnimationStates = await fetch("resources/knights-animation-states.json");
 const animationStates = await getAnimationStates.json();
 
-const currentAnimationStates = animationStates["golden-knight"];
+const currentAnimationStates = animationStates["green-knight"];
 
 const charSpriteWidth = currentAnimationStates["width"];
 const charSpriteHeight = currentAnimationStates["height"];
