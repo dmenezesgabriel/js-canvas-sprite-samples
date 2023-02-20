@@ -4,7 +4,7 @@ const CANVAS_WIDTH = (canvas.width = 600);
 const CANVAS_HEIGHT = (canvas.height = 500);
 
 const keys = [];
-const moveKeys = ["w", "a", "s", "d"];
+const moveKeys = ["w", "a", "s", "d", "ArrowUp", "ArrowDown", "ArrowLeft", "ArrowRight"];
 
 const getAnimationStates = await fetch("resources/knights-animation-states.json");
 const animationStates = await getAnimationStates.json();
@@ -57,22 +57,22 @@ window.addEventListener("keyup", function (e) {
 
 function movePLayer() {
   // move up without crossing screen limits
-  if (keys["w"] && player.y > 100) {
+  if ((keys["w"] || keys["ArrowUp"]) && player.y > 100) {
     player.y -= player.speed;
     player.frameY = currentAnimationStates["upFramesY"];
     player.moving = true;
   }
-  if (keys["a"] && player.x > 0) {
+  if ((keys["a"] || keys["ArrowLeft"]) && player.x > 0) {
     player.x -= player.speed;
     player.frameY = currentAnimationStates["leftFramesY"];
     player.moving = true;
   }
-  if (keys["s"] && player.y < canvas.height - player.height) {
+  if ((keys["s"] || keys["ArrowDown"]) && player.y < canvas.height - player.height) {
     player.y += player.speed;
     player.frameY = currentAnimationStates["downFramesY"];
     player.moving = true;
   }
-  if (keys["d"] && player.x < canvas.width - player.width) {
+  if ((keys["d"] || keys["ArrowRight"]) && player.x < canvas.width - player.width) {
     player.x += player.speed;
     player.frameY = currentAnimationStates["rightFramesY"];
     player.moving = true;
