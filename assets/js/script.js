@@ -5,27 +5,37 @@ const CANVAS_HEIGHT = (canvas.height = 500);
 
 const keys = [];
 const moveKeys = ["w", "a", "s", "d"];
-const maxCharFrames = 2; // 0, 1, 2
-const charSpriteWidth = 52;
-const charSpriteHeight = 72;
-const currentSpawnPositionX = 250;
-const currentSpawnPositionY = 250;
+
+const getAnimationStates = await fetch("resources/knights-animation-states.json");
+const animationStates = await getAnimationStates.json();
+
+const currentAnimationStates = animationStates["golden-knight"];
+
+const charSpriteWidth = currentAnimationStates["width"];
+const charSpriteHeight = currentAnimationStates["height"];
+const initialXFrame = currentAnimationStates["initialXFrame"];
+const initialYFrame = currentAnimationStates["initialYFrame"];
+
+const currentCanvasSpawnPositionX = 250;
+const currentCanvasSpawnPositionY = 250;
 
 const player = {
-  x: currentSpawnPositionX,
-  y: currentSpawnPositionY,
+  x: currentCanvasSpawnPositionX,
+  y: currentCanvasSpawnPositionY,
   width: charSpriteWidth,
   height: charSpriteHeight,
-  frameX: 0,
-  frameY: 0,
+  frameX: initialXFrame,
+  frameY: initialYFrame,
   speed: 10,
   moving: false,
 };
 
 const playerSprite = new Image();
-playerSprite.src = "assets/img/knights_2x.png";
+playerSprite.src = currentAnimationStates["img"];
 const background = new Image();
 background.src = "assets/img/tileset.png";
+
+let fps, fpsInterval, startTime, now, then, elapsed;
 
 function drawSprite(img, sX, sY, sW, sH, dX, dY, dW, dH) {
   ctx.drawImage(img, sX, sY, sW, sH, dX, dY, dW, dH);
@@ -49,38 +59,29 @@ function movePLayer() {
   // move up without crossing screen limits
   if (keys["w"] && player.y > 100) {
     player.y -= player.speed;
-    player.frameY = 3;
+    player.frameY = currentAnimationStates["upFramesY"];
     player.moving = true;
   }
   if (keys["a"] && player.x > 0) {
     player.x -= player.speed;
-    player.frameY = 1;
+    player.frameY = currentAnimationStates["leftFramesY"];
     player.moving = true;
   }
   if (keys["s"] && player.y < canvas.height - player.height) {
     player.y += player.speed;
-    player.frameY = 0;
+    player.frameY = currentAnimationStates["downFramesY"];
     player.moving = true;
   }
   if (keys["d"] && player.x < canvas.width - player.width) {
     player.x += player.speed;
-    player.frameY = 2;
+    player.frameY = currentAnimationStates["rightFramesY"];
     player.moving = true;
   }
 }
 
 function HandlePlayerFrame() {
-  if (player.frameX < maxCharFrames && player.moving) player.frameX++;
-  else player.frameX = 1;
-}
-
-let fps, fpsInterval, starTime, now, then, elapsed;
-
-function startAnimating(fps) {
-  fpsInterval = 1000 / fps; // calculate milliseconds
-  then = Date.now();
-  startTime = then;
-  animate();
+  if (player.frameX < currentAnimationStates["endXFrames"] && player.moving) player.frameX++;
+  else player.frameX = currentAnimationStates["initialXFrame"];
 }
 
 function animate() {
@@ -107,4 +108,12 @@ function animate() {
     HandlePlayerFrame();
   }
 }
+
+function startAnimating(fps) {
+  fpsInterval = 1000 / fps; // calculate milliseconds
+  then = Date.now();
+  startTime = then;
+  animate();
+}
+
 startAnimating(10);
