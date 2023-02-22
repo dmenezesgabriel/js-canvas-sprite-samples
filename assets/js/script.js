@@ -2,11 +2,24 @@ const canvas = document.getElementById("canvas1");
 const ctx = canvas.getContext("2d");
 const CANVAS_WIDTH = (canvas.width = 600);
 const CANVAS_HEIGHT = (canvas.height = 500);
+const BACKGROUND_WIDTH = 600;
+const BACKGROUND_HEIGHT = 500;
 
 const keys = [];
-const moveKeys = ["w", "a", "s", "d", "ArrowUp", "ArrowDown", "ArrowLeft", "ArrowRight"];
+const moveKeys = [
+  "w",
+  "a",
+  "s",
+  "d",
+  "ArrowUp",
+  "ArrowDown",
+  "ArrowLeft",
+  "ArrowRight",
+];
 
-const getAnimationStates = await fetch("resources/knights-animation-states.json");
+const getAnimationStates = await fetch(
+  "resources/knights-animation-states.json"
+);
 const animationStates = await getAnimationStates.json();
 
 const currentAnimationStates = animationStates["golden-knight"];
@@ -67,12 +80,18 @@ function movePLayer() {
     player.frameY = currentAnimationStates["leftFramesY"];
     player.moving = true;
   }
-  if ((keys["s"] || keys["ArrowDown"]) && player.y < canvas.height - player.height) {
+  if (
+    (keys["s"] || keys["ArrowDown"]) &&
+    player.y < canvas.height - player.height
+  ) {
     player.y += player.speed;
     player.frameY = currentAnimationStates["downFramesY"];
     player.moving = true;
   }
-  if ((keys["d"] || keys["ArrowRight"]) && player.x < canvas.width - player.width) {
+  if (
+    (keys["d"] || keys["ArrowRight"]) &&
+    player.x < canvas.width - player.width
+  ) {
     player.x += player.speed;
     player.frameY = currentAnimationStates["rightFramesY"];
     player.moving = true;
@@ -80,7 +99,8 @@ function movePLayer() {
 }
 
 function HandlePlayerFrame() {
-  if (player.frameX < currentAnimationStates["endXFrames"] && player.moving) player.frameX++;
+  if (player.frameX < currentAnimationStates["endXFrames"] && player.moving)
+    player.frameX++;
   else player.frameX = currentAnimationStates["initialXFrame"];
 }
 
@@ -92,7 +112,17 @@ function gameLoop() {
     then = now - (elapsed % fpsInterval);
 
     ctx.clearRect(0, 0, canvas.width, canvas.height);
-    ctx.drawImage(background, 0, 0, canvas.width, canvas.height);
+    ctx.drawImage(
+      background,
+      0,
+      0,
+      BACKGROUND_WIDTH,
+      BACKGROUND_HEIGHT,
+      0,
+      0,
+      canvas.width,
+      canvas.height
+    );
     drawSprite(
       playerSprite,
       player.width * player.frameX,
