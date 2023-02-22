@@ -2,8 +2,6 @@ const canvas = document.getElementById("canvas1");
 const ctx = canvas.getContext("2d");
 const CANVAS_WIDTH = (canvas.width = 800);
 const CANVAS_HEIGHT = (canvas.height = 700);
-const BACKGROUND_WIDTH = 400;
-const BACKGROUND_HEIGHT = 300;
 
 const keys = [];
 const moveKeys = [
@@ -32,7 +30,41 @@ const initialYFrame = currentAnimationStates["initialYFrame"];
 const currentCanvasSpawnPositionX = 250;
 const currentCanvasSpawnPositionY = 250;
 
+const playerSpriteImg = new Image();
+playerSpriteImg.src = currentAnimationStates["img"];
+const backgroundImg = new Image();
+backgroundImg.src = "assets/img/tileset.png";
+
+let fps, fpsInterval, startTime, now, then, elapsed;
+const background = {
+  img: backgroundImg,
+  x: 0,
+  y: 0,
+  width: 400,
+  height: 300,
+};
+
+const camera = {
+  x: 0,
+  y: 0,
+  width: canvas.width,
+  height: canvas.height,
+  leftEdge: () => {
+    return this.x + this.width * 0.25;
+  },
+  topEdge: () => {
+    return this.y + this.height * 0.25;
+  },
+  rightEdge: () => {
+    return this.x + this.width * 0.75;
+  },
+  bottomEdge: () => {
+    return this.y + this.height * 0.75;
+  },
+};
+
 const player = {
+  img: playerSpriteImg,
   x: currentCanvasSpawnPositionX,
   y: currentCanvasSpawnPositionY,
   width: charSpriteWidth,
@@ -42,13 +74,6 @@ const player = {
   speed: 10,
   moving: false,
 };
-
-const playerSprite = new Image();
-playerSprite.src = currentAnimationStates["img"];
-const background = new Image();
-background.src = "assets/img/tileset.png";
-
-let fps, fpsInterval, startTime, now, then, elapsed;
 
 function drawSprite(img, sX, sY, sW, sH, dX, dY, dW, dH) {
   ctx.drawImage(img, sX, sY, sW, sH, dX, dY, dW, dH);
@@ -107,18 +132,18 @@ function HandlePlayerFrame() {
 function render() {
   ctx.clearRect(0, 0, canvas.width, canvas.height);
   ctx.drawImage(
-    background,
-    0,
-    0,
-    BACKGROUND_WIDTH,
-    BACKGROUND_HEIGHT,
+    background.img,
+    background.x,
+    background.y,
+    background.width,
+    background.height,
     0,
     0,
     canvas.width,
     canvas.height
   );
   drawSprite(
-    playerSprite,
+    player.img,
     player.width * player.frameX,
     player.height * player.frameY,
     player.width,
