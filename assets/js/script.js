@@ -9,7 +9,7 @@ const moveKeys = ["w", "a", "s", "d", "ArrowUp", "ArrowDown", "ArrowLeft", "Arro
 const getAnimationStates = await fetch("resources/knights-animation-states.json");
 const animationStates = await getAnimationStates.json();
 
-const currentAnimationStates = animationStates["green-knight"];
+const currentAnimationStates = animationStates["golden-knight"];
 
 const charSpriteWidth = currentAnimationStates["width"];
 const charSpriteHeight = currentAnimationStates["height"];
@@ -84,8 +84,8 @@ function HandlePlayerFrame() {
   else player.frameX = currentAnimationStates["initialXFrame"];
 }
 
-function animate() {
-  requestAnimationFrame(animate);
+function gameLoop() {
+  window.requestAnimationFrame(gameLoop);
   now = Date.now();
   elapsed = now - then;
   if (elapsed > fpsInterval) {
@@ -113,7 +113,7 @@ function startAnimating(fps) {
   fpsInterval = 1000 / fps; // calculate milliseconds
   then = Date.now();
   startTime = then;
-  animate();
+  gameLoop();
 }
 
 startAnimating(10);
