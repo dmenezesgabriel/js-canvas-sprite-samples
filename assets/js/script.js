@@ -104,38 +104,45 @@ function HandlePlayerFrame() {
   else player.frameX = currentAnimationStates["initialXFrame"];
 }
 
+function render() {
+  ctx.clearRect(0, 0, canvas.width, canvas.height);
+  ctx.drawImage(
+    background,
+    0,
+    0,
+    BACKGROUND_WIDTH,
+    BACKGROUND_HEIGHT,
+    0,
+    0,
+    canvas.width,
+    canvas.height
+  );
+  drawSprite(
+    playerSprite,
+    player.width * player.frameX,
+    player.height * player.frameY,
+    player.width,
+    player.height,
+    player.x,
+    player.y,
+    player.width,
+    player.height
+  );
+}
+
+function update() {
+  movePLayer();
+  HandlePlayerFrame();
+}
+
 function gameLoop() {
   window.requestAnimationFrame(gameLoop);
   now = Date.now();
   elapsed = now - then;
   if (elapsed > fpsInterval) {
     then = now - (elapsed % fpsInterval);
-
-    ctx.clearRect(0, 0, canvas.width, canvas.height);
-    ctx.drawImage(
-      background,
-      0,
-      0,
-      BACKGROUND_WIDTH,
-      BACKGROUND_HEIGHT,
-      0,
-      0,
-      canvas.width,
-      canvas.height
-    );
-    drawSprite(
-      playerSprite,
-      player.width * player.frameX,
-      player.height * player.frameY,
-      player.width,
-      player.height,
-      player.x,
-      player.y,
-      player.width,
-      player.height
-    );
-    movePLayer();
-    HandlePlayerFrame();
+    render();
+    update();
   }
 }
 
