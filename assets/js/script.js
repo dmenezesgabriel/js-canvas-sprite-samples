@@ -1,9 +1,9 @@
 const canvas = document.getElementById("canvas1");
 const ctx = canvas.getContext("2d");
-const CANVAS_WIDTH = (canvas.width = 600);
-const CANVAS_HEIGHT = (canvas.height = 500);
-const BACKGROUND_WIDTH = 600;
-const BACKGROUND_HEIGHT = 500;
+const CANVAS_WIDTH = (canvas.width = 800);
+const CANVAS_HEIGHT = (canvas.height = 700);
+const BACKGROUND_WIDTH = 400;
+const BACKGROUND_HEIGHT = 300;
 
 const keys = [];
 const moveKeys = [
@@ -70,7 +70,7 @@ window.addEventListener("keyup", function (e) {
 
 function movePLayer() {
   // move up without crossing screen limits
-  if ((keys["w"] || keys["ArrowUp"]) && player.y > 100) {
+  if ((keys["w"] || keys["ArrowUp"]) && player.y > 0) {
     player.y -= player.speed;
     player.frameY = currentAnimationStates["upFramesY"];
     player.moving = true;
