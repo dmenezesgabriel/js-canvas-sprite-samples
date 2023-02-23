@@ -22,6 +22,11 @@ const animationStates = await getAnimationStates.json();
 
 const currentAnimationStates = animationStates["golden-knight"];
 
+const playerSpriteImg = new Image();
+playerSpriteImg.src = currentAnimationStates["img"];
+const backgroundImg = new Image();
+backgroundImg.src = "assets/img/background.jpg";
+
 const charSpriteWidth = currentAnimationStates["width"];
 const charSpriteHeight = currentAnimationStates["height"];
 const initialXFrame = currentAnimationStates["initialXFrame"];
@@ -29,11 +34,6 @@ const initialYFrame = currentAnimationStates["initialYFrame"];
 
 const currentCanvasSpawnPositionX = canvas.width / 2 - charSpriteWidth / 2;
 const currentCanvasSpawnPositionY = canvas.height / 2 - charSpriteHeight / 2;
-
-const playerSpriteImg = new Image();
-playerSpriteImg.src = currentAnimationStates["img"];
-const backgroundImg = new Image();
-backgroundImg.src = "assets/img/background.jpg";
 
 const sprites = [];
 
@@ -52,16 +52,16 @@ const camera = {
   y: 0,
   width: canvas.width,
   height: canvas.height,
-  leftEdge: () => {
+  leftEdge: function () {
     return this.x + this.width * 0.25;
   },
-  topEdge: () => {
+  topEdge: function () {
     return this.y + this.height * 0.25;
   },
-  rightEdge: () => {
+  rightEdge: function () {
     return this.x + this.width * 0.75;
   },
-  bottomEdge: () => {
+  bottomEdge: function () {
     return this.y + this.height * 0.75;
   },
 };
@@ -98,31 +98,67 @@ window.addEventListener("keyup", function (e) {
 
 function movePLayer() {
   // move up without crossing screen limits
-  if ((keys["w"] || keys["ArrowUp"]) && player.y > 0) {
+  if (keys["w"] || keys["ArrowUp"]) {
     player.y -= player.speed;
     player.frameY = currentAnimationStates["upFramesY"];
     player.moving = true;
   }
-  if ((keys["a"] || keys["ArrowLeft"]) && player.x > 0) {
+  if (keys["a"] || keys["ArrowLeft"]) {
     player.x -= player.speed;
     player.frameY = currentAnimationStates["leftFramesY"];
     player.moving = true;
   }
-  if (
-    (keys["s"] || keys["ArrowDown"]) &&
-    player.y < canvas.height - player.height
-  ) {
+  if (keys["s"] || keys["ArrowDown"]) {
     player.y += player.speed;
     player.frameY = currentAnimationStates["downFramesY"];
     player.moving = true;
   }
-  if (
-    (keys["d"] || keys["ArrowRight"]) &&
-    player.x < canvas.width - player.width
-  ) {
+  if (keys["d"] || keys["ArrowRight"]) {
     player.x += player.speed;
     player.frameY = currentAnimationStates["rightFramesY"];
     player.moving = true;
+  }
+
+  // Player limits
+  if (player.x < 0) {
+    player.x = 0;
+  }
+  if (player.x + player.width > background.width) {
+    player.x = background.width - player.width;
+  }
+  if (player.y < 0) {
+    player.y = 0;
+  }
+  if (player.y + player.height > background.height) {
+    player.y = background.height - player.height;
+  }
+
+  // camera
+  if (player.x < camera.leftEdge()) {
+    camera.x = player.x - camera.width * 0.25;
+  }
+  if (player.x + player.width > camera.rightEdge()) {
+    camera.x = player.x + player.width - camera.width * 0.75;
+  }
+  if (player.y < camera.topEdge()) {
+    camera.y = player.y - camera.height * 0.25;
+  }
+  if (player.y + player.height > camera.bottomEdge()) {
+    camera.y = player.y + player.height - camera.height * 0.75;
+  }
+
+  // Camera limits
+  if (camera.x < 0) {
+    camera.x = 0;
+  }
+  if (camera.x + camera.width > background.width) {
+    camera.x = background.width - camera.width;
+  }
+  if (player.y < 0) {
+    player.y = 0;
+  }
+  if (camera.y + camera.height > background.height) {
+    camera.y = background.height - camera.height;
   }
 }
 
@@ -133,7 +169,9 @@ function HandlePlayerFrame() {
 }
 
 function render() {
+  ctx.save();
   ctx.clearRect(0, 0, canvas.width, canvas.height);
+  ctx.translate(-camera.x, -camera.y);
   ctx.drawImage(
     background.img,
     0,
@@ -156,6 +194,7 @@ function render() {
     player.width,
     player.height
   );
+  ctx.restore();
 }
 
 function update() {
@@ -178,6 +217,8 @@ function startAnimating(fps) {
   // center camera
   camera.x = (background.width - camera.width) / 2;
   camera.y = (background.height - camera.height) / 2;
+  player.x = (background.width - camera.width) / 2;
+  player.y = (background.height - camera.height) / 2;
 
   fpsInterval = 1000 / fps; // calculate milliseconds
   then = Date.now();
