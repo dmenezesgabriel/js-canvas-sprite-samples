@@ -154,8 +154,8 @@ function movePLayer() {
   if (camera.x + camera.width > background.width) {
     camera.x = background.width - camera.width;
   }
-  if (player.y < 0) {
-    player.y = 0;
+  if (camera.y < 0) {
+    camera.y = 0;
   }
   if (camera.y + camera.height > background.height) {
     camera.y = background.height - camera.height;
