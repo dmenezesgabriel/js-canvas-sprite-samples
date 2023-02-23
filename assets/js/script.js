@@ -1,7 +1,7 @@
 const canvas = document.getElementById("canvas1");
 const ctx = canvas.getContext("2d");
-const CANVAS_WIDTH = (canvas.width = 300);
-const CANVAS_HEIGHT = (canvas.height = 300);
+const CANVAS_WIDTH = (canvas.width = 500);
+const CANVAS_HEIGHT = (canvas.height = 500);
 
 const keys = [];
 const moveKeys = [
@@ -165,7 +165,11 @@ function movePLayer() {
 function HandlePlayerFrame() {
   if (player.frameX < currentAnimationStates["endXFrames"] && player.moving)
     player.frameX++;
-  else player.frameX = currentAnimationStates["initialXFrame"];
+  else if (!player.moving) {
+    player.frameX = currentAnimationStates["stationaryXFrame"];
+  } else {
+    player.frameX = currentAnimationStates["initialXFrame"];
+  }
 }
 
 function render() {
