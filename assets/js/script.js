@@ -1,8 +1,8 @@
 import Player from "./player.js";
 import Camera from "./Camera.js";
+import Display from "./display.js";
 
 const canvas = document.getElementById("canvas1");
-const ctx = canvas.getContext("2d");
 const CANVAS_WIDTH = (canvas.width = 500);
 const CANVAS_HEIGHT = (canvas.height = 500);
 
@@ -30,15 +30,9 @@ playerSpriteImg.src = currentAnimationStates["img"];
 const backgroundImg = new Image();
 backgroundImg.src = "assets/img/background.jpg";
 
-const charSpriteWidth = currentAnimationStates["width"];
-const charSpriteHeight = currentAnimationStates["height"];
-const initialXFrame = currentAnimationStates["initialXFrame"];
-const initialYFrame = currentAnimationStates["initialYFrame"];
-
-const currentCanvasSpawnPositionX = canvas.width / 2 - charSpriteWidth / 2;
-const currentCanvasSpawnPositionY = canvas.height / 2 - charSpriteHeight / 2;
-
 let fps, fpsInterval, startTime, now, then, elapsed;
+
+const display = new Display(canvas);
 
 const background = {
   img: backgroundImg,
@@ -52,12 +46,12 @@ const player = new Player(
   playerSpriteImg,
   currentAnimationStates,
   background,
-  currentCanvasSpawnPositionX,
-  currentCanvasSpawnPositionY,
-  charSpriteWidth,
-  charSpriteHeight,
-  initialXFrame,
-  initialYFrame,
+  canvas.width / 2 - charSpriteWidth / 2,
+  canvas.height / 2 - charSpriteHeight / 2,
+  currentAnimationStates["width"],
+  currentAnimationStates["height"],
+  currentAnimationStates["initialXFrame"],
+  currentAnimationStates["initialYFrame"],
   10,
   false
 );
@@ -70,10 +64,6 @@ const camera = new Camera(
   canvas.width,
   canvas.height
 );
-
-function drawSprite(img, sX, sY, sW, sH, dX, dY, dW, dH) {
-  ctx.drawImage(img, sX, sY, sW, sH, dX, dY, dW, dH);
-}
 
 window.addEventListener("keydown", function (e) {
   keys[e.key] = true;
@@ -89,40 +79,27 @@ window.addEventListener("keyup", function (e) {
   }
 });
 
-function draw() {
-  ctx.drawImage(
-    background.img,
-    0,
-    0,
-    background.width,
-    background.height,
-    0,
-    0,
-    background.width,
-    background.height
-  );
-  drawSprite(
-    player.img,
-    player.width * player.frameX,
-    player.height * player.frameY,
-    player.width,
-    player.height,
-    player.x,
-    player.y,
-    player.width,
-    player.height
-  );
-}
-
-function render() {
-  ctx.save();
-  ctx.clearRect(0, 0, canvas.width, canvas.height);
-  ctx.translate(-camera.x, -camera.y);
-  draw();
-  ctx.restore();
-}
-
 function update() {
+  const sprites = [];
+  sprites.push({
+    image: background.img,
+    sourceX: 0,
+    sourceY: 0,
+    destinationX: 0,
+    destinationY: 0,
+    width: background.width,
+    height: background.height,
+  });
+  sprites.push({
+    image: player.img,
+    sourceX: player.width * player.frameX,
+    sourceY: player.height * player.frameY,
+    destinationX: player.x,
+    destinationY: player.y,
+    width: player.width,
+    height: player.height,
+  });
+  display.render(sprites, camera);
   player.update(keys);
   camera.update();
 }
@@ -133,7 +110,6 @@ function gameLoop() {
   elapsed = now - then;
   if (elapsed > fpsInterval) {
     then = now - (elapsed % fpsInterval);
-    render();
     update();
   }
 }
