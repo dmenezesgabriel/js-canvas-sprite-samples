@@ -27,6 +27,12 @@ export default class Game {
     );
     const animationStates = await getAnimationStates.json();
 
+    const jungleTilesImg = new Image();
+    jungleTilesImg.src = "assets/img/tf_jungle_tileset.png";
+
+    const getJungleMap = await fetch("resources/jungle_map.json");
+    const jungleMap = await getJungleMap.json();
+
     const currentAnimationStates = animationStates["golden-knight"];
 
     const playerSpriteImg = new Image();
