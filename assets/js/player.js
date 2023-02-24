@@ -10,7 +10,8 @@ export default class Player {
     frameX,
     frameY,
     speed,
-    moving
+    moving,
+    friction = 1
   ) {
     this.img = img;
     this.animationStates = animationStates;
@@ -21,8 +22,16 @@ export default class Player {
     this.height = height;
     this.frameX = frameX;
     this.frameY = frameY;
-    this.speed = speed;
+    this._speed = speed * friction;
     this.moving = moving;
+  }
+
+  getSpeed() {
+    return this._speed;
+  }
+
+  setSpeed(value) {
+    this._speed = value * this.friction;
   }
 
   handleFrame() {
@@ -37,22 +46,22 @@ export default class Player {
 
   update(keys) {
     if (keys["w"] || keys["ArrowUp"]) {
-      this.y -= this.speed;
+      this.y -= this._speed;
       this.frameY = this.animationStates["upFramesY"];
       this.moving = true;
     }
     if (keys["a"] || keys["ArrowLeft"]) {
-      this.x -= this.speed;
+      this.x -= this._speed;
       this.frameY = this.animationStates["leftFramesY"];
       this.moving = true;
     }
     if (keys["s"] || keys["ArrowDown"]) {
-      this.y += this.speed;
+      this.y += this._speed;
       this.frameY = this.animationStates["downFramesY"];
       this.moving = true;
     }
     if (keys["d"] || keys["ArrowRight"]) {
-      this.x += this.speed;
+      this.x += this._speed;
       this.frameY = this.animationStates["rightFramesY"];
       this.moving = true;
     }
