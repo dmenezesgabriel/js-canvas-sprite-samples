@@ -20,28 +20,39 @@ export default class Display {
     this.context.translate(destinationX, destinationY);
   }
 
-  drawMap(image, imageColumns, map, mapColumns, tileSize) {
+  drawMap(tileAtlas, atlasCols, levelMap, mapRows, mapCols, tileSize) {
     /**
      * Draw tile map to the canvas.
      */
-    for (let index = map.length - 1; index > -1; --index) {
-      let value = map[index];
-      let sourceX = (value % imageColumns) * tileSize;
-      let sourceY = Math.floor(value / imageColumns) * tileSize;
-      let destinationX = (index % mapColumns) * tileSize;
-      let destinationY = Math.floor(index / mapColumns) * tileSize;
 
-      this.context.drawImage(
-        image,
-        sourceX,
-        sourceY,
-        tileSize,
-        tileSize,
-        destinationX,
-        destinationY,
-        tileSize,
-        tileSize
-      );
+    let mapIndex = 0;
+    let sourceX = 0;
+    let sourceY = 0;
+
+    const mapHeight = mapRows * tileSize;
+    const mapWidth = mapCols * tileSize;
+
+    for (let col = 0; col < mapHeight; col += tileSize) {
+      for (let row = 0; row < mapWidth; row += tileSize) {
+        let tileVal = levelMap[mapIndex];
+        if (tileVal != 0) {
+          tileVal -= 1;
+          sourceY = Math.floor(tileVal / atlasCols) * tileSize;
+          sourceX = (tileVal % atlasCols) * tileSize;
+          this.context.drawImage(
+            tileAtlas,
+            sourceX,
+            sourceY,
+            tileSize,
+            tileSize,
+            row,
+            col,
+            tileSize,
+            tileSize
+          );
+        }
+        mapIndex++;
+      }
     }
   }
 

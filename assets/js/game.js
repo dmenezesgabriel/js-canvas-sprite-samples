@@ -9,6 +9,7 @@ export default class Game {
     this.canvas.height = 500;
     this.display = new Display(this.canvas);
     this.keys = [];
+    this.maps = {};
   }
   async create() {
     const moveKeys = [
@@ -26,6 +27,7 @@ export default class Game {
       "resources/knights-animation-states.json"
     );
     const animationStates = await getAnimationStates.json();
+    const currentAnimationStates = animationStates["golden-knight"];
 
     const jungleTilesImg = new Image();
     jungleTilesImg.src = "assets/img/tf_jungle_tileset.png";
@@ -33,7 +35,7 @@ export default class Game {
     const getJungleMap = await fetch("resources/jungle_map.json");
     const jungleMap = await getJungleMap.json();
 
-    const currentAnimationStates = animationStates["golden-knight"];
+    this.maps["jungle"] = { tileAtlas: jungleTilesImg, data: jungleMap };
 
     const playerSpriteImg = new Image();
     playerSpriteImg.src = currentAnimationStates["img"];
@@ -92,6 +94,26 @@ export default class Game {
   }
 
   update() {
+    // const backgroundLayer = this.maps.jungle.data.layers.filter(
+    //   (layer) => layer.name === "background"
+    // )[0];
+
+    // const tileAtlas = this.maps.jungle.tileAtlas;
+    // const tileSize = 16;
+    // const atlasCols = 22; // tiled
+    // const levelMap = backgroundLayer["data"];
+    // const mapRows = backgroundLayer["height"];
+    // const mapCols = backgroundLayer["width"];
+
+    // this.display.drawMap(
+    //   tileAtlas,
+    //   atlasCols,
+    //   levelMap,
+    //   mapRows,
+    //   mapCols,
+    //   tileSize
+    // );
+
     const sprites = [];
     sprites.push({
       image: this.background.img,
