@@ -2,6 +2,7 @@ export default class Display {
   constructor(canvas) {
     this.canvas = canvas;
     this.context = canvas.getContext("2d");
+    this.context.imageSmoothingEnabled = false;
   }
 
   save() {
