@@ -20,7 +20,15 @@ export default class Display {
     this.context.translate(destinationX, destinationY);
   }
 
-  drawMap(tileAtlas, atlasCols, levelMap, mapRows, mapCols, tileSize) {
+  drawMap(
+    tileAtlas,
+    atlasCols,
+    levelMap,
+    mapRows,
+    mapCols,
+    tileSize,
+    tileScaleOutput
+  ) {
     /**
      * Draw tile map to the canvas.
      */
@@ -36,7 +44,7 @@ export default class Display {
       for (let row = 0; row < mapWidth; row += tileSize) {
         let tileVal = levelMap[mapIndex];
         if (tileVal != 0) {
-          tileVal -= 1;
+          tileVal -= 1; // tiled starts at 1 instead of 0
           sourceY = Math.floor(tileVal / atlasCols) * tileSize;
           sourceX = (tileVal % atlasCols) * tileSize;
           this.context.drawImage(
@@ -45,10 +53,10 @@ export default class Display {
             sourceY,
             tileSize,
             tileSize,
-            row,
-            col,
-            tileSize,
-            tileSize
+            row * tileScaleOutput,
+            col * tileScaleOutput,
+            tileSize * tileScaleOutput,
+            tileSize * tileScaleOutput
           );
         }
         mapIndex++;
@@ -90,7 +98,15 @@ export default class Display {
     this.context.imageSmoothingEnabled = false;
   }
 
-  render(objects, camera) {
+  render(
+    tileAtlas,
+    mapLayers,
+    tileSize,
+    tileScaleOutput,
+    atlasCols,
+    objects,
+    camera
+  ) {
     /**
      *
      */
@@ -102,6 +118,24 @@ export default class Display {
       this.context.canvas.height
     );
     this.context.translate(-camera.x, -camera.y);
+
+    // Map
+    for (const layer of mapLayers) {
+      const levelMap = layer["data"];
+      const mapRows = layer["height"];
+      const mapCols = layer["width"];
+      this.drawMap(
+        tileAtlas,
+        atlasCols,
+        levelMap,
+        mapRows,
+        mapCols,
+        tileSize,
+        tileScaleOutput
+      );
+    }
+
+    // Objects
     for (const object of objects) {
       this.drawObject(
         object.image,

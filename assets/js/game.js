@@ -39,15 +39,10 @@ export default class Game {
 
     const playerSpriteImg = new Image();
     playerSpriteImg.src = currentAnimationStates["img"];
-    const backgroundImg = new Image();
-    backgroundImg.src = "assets/img/background.jpg";
 
     this.background = {
-      img: backgroundImg,
-      x: 0,
-      y: 0,
-      width: 1280,
-      height: 720,
+      width: 40 * 16 * 2, // tiles * tileSize * scale
+      height: 30 * 16 * 2,
     };
 
     this.player = new Player(
@@ -94,36 +89,13 @@ export default class Game {
   }
 
   update() {
-    // const backgroundLayer = this.maps.jungle.data.layers.filter(
-    //   (layer) => layer.name === "background"
-    // )[0];
-
-    // const tileAtlas = this.maps.jungle.tileAtlas;
-    // const tileSize = 16;
-    // const atlasCols = 22; // tiled
-    // const levelMap = backgroundLayer["data"];
-    // const mapRows = backgroundLayer["height"];
-    // const mapCols = backgroundLayer["width"];
-
-    // this.display.drawMap(
-    //   tileAtlas,
-    //   atlasCols,
-    //   levelMap,
-    //   mapRows,
-    //   mapCols,
-    //   tileSize
-    // );
-
     const sprites = [];
-    sprites.push({
-      image: this.background.img,
-      sourceX: 0,
-      sourceY: 0,
-      destinationX: 0,
-      destinationY: 0,
-      width: this.background.width,
-      height: this.background.height,
-    });
+    // Map
+    const tileAtlas = this.maps.jungle.tileAtlas;
+    const tileSize = 16;
+    const tileScaleOutput = 2;
+    const atlasCols = 22; // tiled
+
     sprites.push({
       image: this.player.img,
       sourceX: this.player.width * this.player.frameX,
@@ -133,7 +105,15 @@ export default class Game {
       width: this.player.width,
       height: this.player.height,
     });
-    this.display.render(sprites, this.camera);
+    this.display.render(
+      tileAtlas,
+      this.maps.jungle.data.layers,
+      tileSize,
+      tileScaleOutput,
+      atlasCols,
+      sprites,
+      this.camera
+    );
     this.player.update(this.keys);
     this.camera.update();
   }
