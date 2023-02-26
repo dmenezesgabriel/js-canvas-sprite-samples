@@ -40,8 +40,8 @@ export default class Display {
     const mapHeight = mapRows * tileSize;
     const mapWidth = mapCols * tileSize;
 
-    for (let col = 0; col < mapHeight; col += tileSize) {
-      for (let row = 0; row < mapWidth; row += tileSize) {
+    for (let row = 0; row < mapHeight; row += tileSize) {
+      for (let col = 0; col < mapWidth; col += tileSize) {
         let tileVal = levelMap[mapIndex];
         if (tileVal != 0) {
           tileVal -= 1; // tiled starts at 1 instead of 0
@@ -53,8 +53,8 @@ export default class Display {
             sourceY,
             tileSize,
             tileSize,
-            row * tileScaleOutput,
             col * tileScaleOutput,
+            row * tileScaleOutput,
             tileSize * tileScaleOutput,
             tileSize * tileScaleOutput
           );
@@ -135,7 +135,7 @@ export default class Display {
       );
     }
 
-    // Objects
+    // Sprites
     for (const object of objects) {
       this.drawObject(
         object.image,
