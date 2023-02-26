@@ -27,7 +27,7 @@ export default class Display {
     mapRows,
     mapCols,
     tileSize,
-    tileScaleOutput
+    tileScaleSize
   ) {
     /**
      * Draw tile map to the canvas.
@@ -45,18 +45,18 @@ export default class Display {
         let tileVal = levelMap[mapIndex];
         if (tileVal != 0) {
           tileVal -= 1; // tiled starts at 1 instead of 0
-          sourceY = Math.floor(tileVal / atlasCols) * tileSize;
-          sourceX = (tileVal % atlasCols) * tileSize;
+          sourceX = (tileVal % atlasCols) * tileSize; // col number * tileSize
+          sourceY = Math.floor(tileVal / atlasCols) * tileSize; // line number * tileSize
           this.context.drawImage(
             tileAtlas,
             sourceX,
             sourceY,
             tileSize,
             tileSize,
-            col * tileScaleOutput,
-            row * tileScaleOutput,
-            tileSize * tileScaleOutput,
-            tileSize * tileScaleOutput
+            col * tileScaleSize,
+            row * tileScaleSize,
+            tileSize * tileScaleSize,
+            tileSize * tileScaleSize
           );
         }
         mapIndex++;
@@ -102,7 +102,7 @@ export default class Display {
     tileAtlas,
     mapLayers,
     tileSize,
-    tileScaleOutput,
+    tileScaleSize,
     atlasCols,
     objects,
     camera
@@ -131,7 +131,7 @@ export default class Display {
         mapRows,
         mapCols,
         tileSize,
-        tileScaleOutput
+        tileScaleSize
       );
     }
 

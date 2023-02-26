@@ -93,7 +93,7 @@ export default class Game {
     // Map
     const tileAtlas = this.maps.jungle.tileAtlas;
     const tileSize = 16;
-    const tileScaleOutput = 2;
+    const tileScaleSize = 2;
     const atlasCols = 22; // tiled
 
     sprites.push({
@@ -109,7 +109,7 @@ export default class Game {
       tileAtlas,
       this.maps.jungle.data.layers,
       tileSize,
-      tileScaleOutput,
+      tileScaleSize,
       atlasCols,
       sprites,
       this.camera
