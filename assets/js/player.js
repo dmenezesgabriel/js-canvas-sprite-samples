@@ -46,20 +46,24 @@ export default class Player {
 
   update(keys) {
     if (keys["w"] || keys["ArrowUp"]) {
+      //  check if can move before assign
       this.y -= this._speed;
       this.frameY = this.animationStates["upFramesY"];
       this.moving = true;
     }
     if (keys["a"] || keys["ArrowLeft"]) {
+      //  check if can move before assign
       this.x -= this._speed;
       this.frameY = this.animationStates["leftFramesY"];
       this.moving = true;
     }
     if (keys["s"] || keys["ArrowDown"]) {
+      //  check if can move before assign
       this.y += this._speed;
       this.frameY = this.animationStates["downFramesY"];
       this.moving = true;
     }
+    //  check if can move before assign
     if (keys["d"] || keys["ArrowRight"]) {
       this.x += this._speed;
       this.frameY = this.animationStates["rightFramesY"];

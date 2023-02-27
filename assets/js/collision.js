@@ -1,7 +1,17 @@
-function mapCollides(player, mapData, tileSetProperties, tileSize, tileScaleSize) {
-  const currentMapCol = Math.floor(player.x / (tileSize * tileScaleSize));
+function mapCollides(
+  player,
+  mapData,
+  tileSetProperties,
+  tileSize,
+  tileScaleSize
+) {
+  //  + player.width = player end
+  const currentMapCol = Math.floor(
+    (player.x + player.width) / (tileSize * tileScaleSize)
+  );
+  //  + player.height = player bottom
   const currentMapRow = Math.floor(
-    (player.y + player.height * 0.8) / (tileSize * tileScaleSize)
+    (player.y + player.height) / (tileSize * tileScaleSize)
   );
 
   const tileIds = [];
