@@ -1,6 +1,7 @@
 import Player from "./player.js";
 import Camera from "./Camera.js";
 import Display from "./display.js";
+import { mapCollides } from "./collision.js";
 
 export default class Game {
   constructor() {
@@ -105,25 +106,13 @@ export default class Game {
     const tileScaleSize = 2;
     const atlasCols = 22; // tiled
 
-    // Collision
-    const currentMapCol = Math.floor(
-      this.player.x / (tileSize * tileScaleSize)
+    const playerMapCollides = mapCollides(
+      this.player,
+      this.maps.jungle.data,
+      this.maps.jungle.tileSetProperties,
+      tileSize,
+      tileScaleSize
     );
-    const currentMapRow = Math.floor(
-      (this.player.y + this.player.height * 0.8) / (tileSize * tileScaleSize)
-    );
-
-    const tileIds = [];
-    for (const layer of this.maps.jungle.data.layers) {
-      const colNumber = layer["width"];
-      const dataIndex = currentMapRow * colNumber + currentMapCol;
-      const data = layer["data"];
-      tileIds.push(data[dataIndex]);
-    }
-    const currentTiles = this.maps.jungle.tileSetProperties["tiles"].filter(
-      (tile) => tileIds.includes(tile.id)
-    );
-    // Check if any of the current tiles have collision
 
     sprites.push({
       image: this.player.img,
