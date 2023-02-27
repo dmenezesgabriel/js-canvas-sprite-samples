@@ -35,7 +35,16 @@ export default class Game {
     const getJungleMap = await fetch("resources/jungle_map.json");
     const jungleMap = await getJungleMap.json();
 
-    this.maps["jungle"] = { tileAtlas: jungleTilesImg, data: jungleMap };
+    const getJungleTilesetProperties = await fetch(
+      "resources/tf_jungle_tileset.json"
+    );
+    const jungleTilesetProperties = await getJungleTilesetProperties.json();
+
+    this.maps["jungle"] = {
+      tileAtlas: jungleTilesImg,
+      data: jungleMap,
+      tileSetProperties: jungleTilesetProperties,
+    };
 
     const playerSpriteImg = new Image();
     playerSpriteImg.src = currentAnimationStates["img"];
@@ -95,6 +104,26 @@ export default class Game {
     const tileSize = 16;
     const tileScaleSize = 2;
     const atlasCols = 22; // tiled
+
+    // Collision
+    const currentMapCol = Math.floor(
+      this.player.x / (tileSize * tileScaleSize)
+    );
+    const currentMapRow = Math.floor(
+      (this.player.y + this.player.height * 0.8) / (tileSize * tileScaleSize)
+    );
+
+    const tileIds = [];
+    for (const layer of this.maps.jungle.data.layers) {
+      const colNumber = layer["width"];
+      const dataIndex = currentMapRow * colNumber + currentMapCol;
+      const data = layer["data"];
+      tileIds.push(data[dataIndex]);
+    }
+    const currentTiles = this.maps.jungle.tileSetProperties["tiles"].filter(
+      (tile) => tileIds.includes(tile.id)
+    );
+    // Check if any of the current tiles have collision
 
     sprites.push({
       image: this.player.img,
