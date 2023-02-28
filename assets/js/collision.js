@@ -14,7 +14,11 @@ function collides(
     const colNumber = layer["width"];
     const dataIndex = currentMapRow * colNumber + currentMapCol;
     const data = layer["data"];
-    tileIds.push(data[dataIndex]);
+    let tileVal = data[dataIndex];
+    if (tileVal != 0) {
+      tileVal -= 1;
+    }
+    tileIds.push(tileVal);
   }
 
   const currentTiles = tileSetProperties["tiles"].filter((tile) =>
@@ -34,8 +38,8 @@ function mapCollides(
   tileSize,
   tileScaleSize
 ) {
-  const objectTop = objectY;
   const objectLeft = objectX;
+  const objectTop = objectY;
   const objectRight = objectX + objectWidth;
   const objectBottom = objectY + objectHeight;
 

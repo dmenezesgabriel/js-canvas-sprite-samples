@@ -64,9 +64,9 @@ export default class Display {
           if (this.debug) {
             this.context.fillStyle = "white";
             this.context.fillText(
-              tileVal,
-              col * tileScaleSize + tileSize * tileScaleSize,
-              row * tileScaleSize
+              `t${tileVal}`,
+              col * tileScaleSize,
+              row * tileScaleSize + 30
             );
             this.context.beginPath();
             this.context.strokeStyle = "green";

@@ -32,6 +32,22 @@ export default class Player {
     this._speed = value * this.friction;
   }
 
+  getLeft() {
+    return this.x;
+  }
+
+  getTop() {
+    return this.y;
+  }
+
+  getRight() {
+    return this.x + this.width;
+  }
+
+  getBottom() {
+    this.y + this.height;
+  }
+
   handleFrame() {
     if (this.frameX < this.animationStates["endXFrames"] && this.moving)
       this.frameX++;
