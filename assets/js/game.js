@@ -58,7 +58,6 @@ export default class Game {
     this.player = new Player(
       playerSpriteImg,
       currentAnimationStates,
-      this.background,
       this.canvas.width / 2 - currentAnimationStates["width"] / 2,
       this.canvas.height / 2 - currentAnimationStates["height"] / 2,
       currentAnimationStates["width"],
@@ -69,14 +68,7 @@ export default class Game {
       false
     );
 
-    this.camera = new Camera(
-      this.player,
-      this.background,
-      0,
-      0,
-      this.canvas.width,
-      this.canvas.height
-    );
+    this.camera = new Camera(0, 0, this.canvas.width, this.canvas.height);
 
     this.camera.x = (this.background.width - this.camera.width) / 2;
     this.camera.y = (this.background.height - this.camera.height) / 2;
@@ -123,6 +115,7 @@ export default class Game {
       width: this.player.width,
       height: this.player.height,
     });
+
     this.display.render(
       tileAtlas,
       this.maps.jungle.data.layers,
@@ -132,7 +125,19 @@ export default class Game {
       sprites,
       this.camera
     );
-    this.player.update(this.keys);
-    this.camera.update();
+
+    this.player.update(
+      this.keys,
+      this.background.width,
+      this.background.height
+    );
+    this.camera.update(
+      this.player.x,
+      this.player.y,
+      this.player.width,
+      this.player.height,
+      this.background.width,
+      this.background.height
+    );
   }
 }

@@ -1,7 +1,5 @@
 export default class Camera {
-  constructor(target, map, x, y, width, height) {
-    this.target = target;
-    this.map = map;
+  constructor(x, y, width, height) {
     this.x = x;
     this.y = y;
     this.width = width;
@@ -20,32 +18,39 @@ export default class Camera {
     return this.y + this.height * 0.75;
   }
 
-  update() {
-    if (this.target.x < this.leftEdge()) {
-      this.x = this.target.x - this.width * 0.25;
+  handleMove(targetX, targetY, targetWidth, targetHeight) {
+    if (targetX < this.leftEdge()) {
+      this.x = targetX - this.width * 0.25;
     }
-    if (this.target.x + this.target.width > this.rightEdge()) {
-      this.x = this.target.x + this.target.width - this.width * 0.75;
+    if (targetX + targetWidth > this.rightEdge()) {
+      this.x = targetX + targetWidth - this.width * 0.75;
     }
-    if (this.target.y < this.topEdge()) {
-      this.y = this.target.y - this.height * 0.25;
+    if (targetY < this.topEdge()) {
+      this.y = targetY - this.height * 0.25;
     }
-    if (this.target.y + this.target.height > this.bottomEdge()) {
-      this.y = this.target.y + this.target.height - this.height * 0.75;
+    if (targetY + targetHeight > this.bottomEdge()) {
+      this.y = targetY + targetHeight - this.height * 0.75;
     }
+  }
 
+  handleMapLimits(mapWidth, mapHeight) {
     // Limits
     if (this.x < 0) {
       this.x = 0;
     }
-    if (this.x + this.width > this.map.width) {
-      this.x = this.map.width - this.width;
+    if (this.x + this.width > mapWidth) {
+      this.x = mapWidth - this.width;
     }
     if (this.y < 0) {
       this.y = 0;
     }
-    if (this.y + this.height > this.map.height) {
-      this.y = this.map.height - this.height;
+    if (this.y + this.height > mapHeight) {
+      this.y = mapHeight - this.height;
     }
+  }
+
+  update(targetX, targetY, targetWidth, targetHeight, mapWidth, mapHeight) {
+    this.handleMove(targetX, targetY, targetWidth, targetHeight);
+    this.handleMapLimits(mapWidth, mapHeight);
   }
 }
