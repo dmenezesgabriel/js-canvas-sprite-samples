@@ -1,5 +1,11 @@
 {
   "columns": 22,
+  "editorsettings": {
+    "export": {
+      "format": "json",
+      "target": "tf_jungle_tileset.json"
+    }
+  },
   "image": "../assets/img/tf_jungle_tileset.png",
   "imageheight": 336,
   "imagewidth": 352,
