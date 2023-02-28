@@ -1,8 +1,9 @@
 export default class Display {
-  constructor(canvas) {
+  constructor(canvas, debug) {
     this.canvas = canvas;
     this.context = canvas.getContext("2d");
     this.context.imageSmoothingEnabled = false;
+    this.debug = debug;
   }
 
   save() {
@@ -59,6 +60,25 @@ export default class Display {
             tileSize * tileScaleSize,
             tileSize * tileScaleSize
           );
+          //  Debug
+          if (this.debug) {
+            this.context.fillStyle = "white";
+            this.context.fillText(
+              tileVal,
+              col * tileScaleSize + tileSize * tileScaleSize,
+              row * tileScaleSize
+            );
+            this.context.beginPath();
+            this.context.strokeStyle = "green";
+            this.context.rect(
+              col * tileScaleSize,
+              row * tileScaleSize,
+              tileSize * tileScaleSize,
+              tileSize * tileScaleSize
+            );
+            this.context.stroke();
+          }
+          // Debug end
         }
         mapIndex++;
       }
@@ -88,6 +108,15 @@ export default class Display {
       width,
       height
     );
+    //  Debug
+    if (this.debug) {
+      this.context.beginPath();
+      this.context.strokeStyle = "blue";
+      this.context.rect(destinationX, destinationY, width, height);
+      this.context.stroke();
+    }
+
+    //  Debug end
   }
 
   resize(height, width) {

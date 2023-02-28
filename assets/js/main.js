@@ -9,7 +9,7 @@ const canvas = document.getElementById("canvas1");
 canvas.width = 500;
 canvas.height = 500;
 
-const display = new Display(canvas);
+const display = new Display(canvas, true);
 
 const camera = new Camera(0, 0, canvas.width, canvas.height);
 

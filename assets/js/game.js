@@ -53,10 +53,10 @@ export default class Game {
       false
     );
 
-    this.camera.x = (this.background.width - this.camera.width) / 2;
-    this.camera.y = (this.background.height - this.camera.height) / 2;
-    this.player.x = (this.background.width - this.camera.width) / 2;
-    this.player.y = (this.background.height - this.camera.height) / 2;
+    this.camera.x = (this.background.width + this.camera.width) / 2;
+    this.camera.y = (this.background.height + this.camera.height) / 2;
+    this.player.x = (this.background.width + this.camera.width) / 2;
+    this.player.y = (this.background.height + this.camera.height) / 2;
   }
 
   update() {
@@ -102,8 +102,8 @@ export default class Game {
     const playerCollide = mapCollides(
       x,
       y,
-      this.player.width / 2,
-      this.player.height * 0.9,
+      this.player.width,
+      this.player.height,
       this.maps.jungle.data,
       this.maps.jungle.tileSetProperties,
       tileSize,
