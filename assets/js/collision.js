@@ -25,7 +25,15 @@ function collides(
     tileIds.includes(tile.id)
   );
 
-  return currentTiles.some((tile) => (tile.properties.collide = true));
+  return currentTiles.some((tile) => {
+    const collide = tile.properties.filter(
+      (property) => property.name === "collides"
+    );
+    if (collide.length > 0) {
+      return collide[0].value === true;
+    }
+    return false;
+  });
 }
 
 function mapCollides(
