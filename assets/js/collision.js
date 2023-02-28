@@ -15,6 +15,7 @@ function collides(
     const dataIndex = currentMapRow * colNumber + currentMapCol;
     const data = layer["data"];
     let tileVal = data[dataIndex];
+    // Tiled layer data starts at 1 instead of 0
     if (tileVal != 0) {
       tileVal -= 1;
     }

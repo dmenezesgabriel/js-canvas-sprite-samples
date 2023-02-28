@@ -46,7 +46,7 @@ export default class Display {
       for (let col = 0; col < mapWidth; col += tileSize) {
         let tileVal = mapData[mapIndex];
         if (tileVal != 0) {
-          tileVal -= 1; // tiled starts at 1 instead of 0
+          tileVal -= 1; // Tiled layer data starts at 1 instead of 0
           sourceX = (tileVal % atlasCols) * tileSize; // col number * tileSize
           sourceY = Math.floor(tileVal / atlasCols) * tileSize; // line number * tileSize
           this.context.drawImage(
