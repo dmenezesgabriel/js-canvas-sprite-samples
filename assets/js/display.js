@@ -147,17 +147,6 @@ export default class Display {
         object.width,
         object.height
       );
-      // Debug
-      this.context.beginPath();
-      this.context.arc(
-        object.destinationX + object.width / 2,
-        object.destinationY + object.height * 0.9,
-        20,
-        0,
-        2 * Math.PI
-      );
-      this.context.stroke();
-      // Debug end
       this.context.restore();
     }
   }

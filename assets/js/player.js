@@ -42,12 +42,10 @@ export default class Player {
     }
   }
 
-  handleMove(keys) {
-    let newX = this.x;
-    let newY = this.y;
-    let isMoving = this.moving;
-    let newFrameY = this.frameY;
-
+  handleMove(keys, playerCollide) {
+    if (playerCollide) {
+      return;
+    }
     if (keys["w"] || keys["ArrowUp"]) {
       //  check if can move before assign
       this.y -= this._speed;
@@ -89,8 +87,8 @@ export default class Player {
     }
   }
 
-  update(keys, mapWidth, mapHeight) {
-    this.handleMove(keys);
+  update(keys, mapWidth, mapHeight, playerCollide) {
+    this.handleMove(keys, playerCollide);
     this.handleMapLimits(mapWidth, mapHeight);
     this.handleFrame();
   }

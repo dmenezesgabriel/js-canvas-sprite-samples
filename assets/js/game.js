@@ -73,17 +73,6 @@ export default class Game {
     const tileScaleSize = 2;
     const atlasCols = 22; // tiled
 
-    const playerMapCollides = mapCollides(
-      this.player.x,
-      this.player.y,
-      this.player.width,
-      this.player.height,
-      this.maps.jungle.data,
-      this.maps.jungle.tileSetProperties,
-      tileSize,
-      tileScaleSize
-    );
-
     sprites.push({
       image: this.player.img,
       sourceX: this.player.width * this.player.frameX,
@@ -104,10 +93,28 @@ export default class Game {
       this.camera
     );
 
+    const { x, y } = this.controller.intentToMove(
+      this.player.x,
+      this.player.y,
+      this.player.getSpeed()
+    );
+
+    const playerCollide = mapCollides(
+      x,
+      y,
+      this.player.width / 2,
+      this.player.height * 0.9,
+      this.maps.jungle.data,
+      this.maps.jungle.tileSetProperties,
+      tileSize,
+      tileScaleSize
+    );
+
     this.player.update(
       this.controller.keys,
       this.background.width,
-      this.background.height
+      this.background.height,
+      playerCollide
     );
     this.camera.update(
       this.player.x,
