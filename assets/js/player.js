@@ -43,6 +43,11 @@ export default class Player {
   }
 
   handleMove(keys) {
+    let newX = this.x;
+    let newY = this.y;
+    let isMoving = this.moving;
+    let newFrameY = this.frameY;
+
     if (keys["w"] || keys["ArrowUp"]) {
       //  check if can move before assign
       this.y -= this._speed;

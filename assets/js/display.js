@@ -24,7 +24,7 @@ export default class Display {
   drawMap(
     tileAtlas,
     atlasCols,
-    levelMap,
+    mapData,
     mapRows,
     mapCols,
     tileSize,
@@ -43,7 +43,7 @@ export default class Display {
 
     for (let row = 0; row < mapHeight; row += tileSize) {
       for (let col = 0; col < mapWidth; col += tileSize) {
-        let tileVal = levelMap[mapIndex];
+        let tileVal = mapData[mapIndex];
         if (tileVal != 0) {
           tileVal -= 1; // tiled starts at 1 instead of 0
           sourceX = (tileVal % atlasCols) * tileSize; // col number * tileSize
@@ -122,13 +122,13 @@ export default class Display {
 
     // Map
     for (const layer of mapLayers) {
-      const levelMap = layer["data"];
+      const mapData = layer["data"];
       const mapRows = layer["height"];
       const mapCols = layer["width"];
       this.drawMap(
         tileAtlas,
         atlasCols,
-        levelMap,
+        mapData,
         mapRows,
         mapCols,
         tileSize,

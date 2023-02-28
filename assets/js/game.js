@@ -1,29 +1,14 @@
 import Player from "./player.js";
-import Camera from "./Camera.js";
-import Display from "./display.js";
 import { mapCollides } from "./collision.js";
 
 export default class Game {
-  constructor() {
-    this.canvas = document.getElementById("canvas1");
-    this.canvas.width = 500;
-    this.canvas.height = 500;
-    this.display = new Display(this.canvas);
-    this.keys = [];
+  constructor(display, camera, controller) {
+    this.display = display;
+    this.camera = camera;
+    this.controller = controller;
     this.maps = {};
   }
   async create() {
-    const moveKeys = [
-      "w",
-      "a",
-      "s",
-      "d",
-      "ArrowUp",
-      "ArrowDown",
-      "ArrowLeft",
-      "ArrowRight",
-    ];
-
     const getAnimationStates = await fetch(
       "resources/knights-animation-states.json"
     );
@@ -58,8 +43,8 @@ export default class Game {
     this.player = new Player(
       playerSpriteImg,
       currentAnimationStates,
-      this.canvas.width / 2 - currentAnimationStates["width"] / 2,
-      this.canvas.height / 2 - currentAnimationStates["height"] / 2,
+      0,
+      0,
       currentAnimationStates["width"],
       currentAnimationStates["height"],
       currentAnimationStates["initialXFrame"],
@@ -68,29 +53,19 @@ export default class Game {
       false
     );
 
-    this.camera = new Camera(0, 0, this.canvas.width, this.canvas.height);
-
     this.camera.x = (this.background.width - this.camera.width) / 2;
     this.camera.y = (this.background.height - this.camera.height) / 2;
     this.player.x = (this.background.width - this.camera.width) / 2;
     this.player.y = (this.background.height - this.camera.height) / 2;
-
-    window.addEventListener("keydown", (e) => {
-      this.keys[e.key] = true;
-      if (moveKeys.includes(e.key)) {
-        this.player.moving = true;
-      }
-    });
-
-    window.addEventListener("keyup", (e) => {
-      delete this.keys[e.key];
-      if (moveKeys.includes(e.key)) {
-        this.player.moving = false;
-      }
-    });
   }
 
   update() {
+    if (this.controller.moving === true) {
+      this.player.moving = true;
+    } else {
+      this.player.moving = false;
+    }
+
     const sprites = [];
     // Map
     const tileAtlas = this.maps.jungle.tileAtlas;
@@ -99,7 +74,10 @@ export default class Game {
     const atlasCols = 22; // tiled
 
     const playerMapCollides = mapCollides(
-      this.player,
+      this.player.x,
+      this.player.y,
+      this.player.width,
+      this.player.height,
       this.maps.jungle.data,
       this.maps.jungle.tileSetProperties,
       tileSize,
@@ -127,7 +105,7 @@ export default class Game {
     );
 
     this.player.update(
-      this.keys,
+      this.controller.keys,
       this.background.width,
       this.background.height
     );
