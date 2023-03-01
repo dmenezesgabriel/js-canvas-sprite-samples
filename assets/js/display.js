@@ -150,7 +150,8 @@ export default class Display {
     this.context.translate(-camera.x, -camera.y);
 
     // Map
-    for (const layer of mapLayers) {
+    const backLayers = mapLayers.filter((layer) => layer.name != "foreground");
+    for (const layer of backLayers) {
       const mapData = layer["data"];
       const mapRows = layer["height"];
       const mapCols = layer["width"];
@@ -176,7 +177,26 @@ export default class Display {
         object.width,
         object.height
       );
-      this.context.restore();
     }
+
+    // Map
+    const frontLayers = mapLayers.filter(
+      (layer) => layer.name === "foreground"
+    );
+    for (const layer of frontLayers) {
+      const mapData = layer["data"];
+      const mapRows = layer["height"];
+      const mapCols = layer["width"];
+      this.drawMap(
+        tileAtlas,
+        atlasCols,
+        mapData,
+        mapRows,
+        mapCols,
+        tileSize,
+        tileScaleSize
+      );
+    }
+    this.context.restore();
   }
 }
