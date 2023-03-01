@@ -1,4 +1,42 @@
+function hitLeft(objectX, objectWidth, currentMapCol, tileSize, tileScaleSize) {
+  const leftSize = currentMapCol * tileSize * tileScaleSize;
+  if (objectX + objectWidth > leftSize) {
+    return true;
+  }
+  return false;
+}
+
+function hitTop(objectY, objectHeight, currentMapRow, tileSize, tileScaleSize) {
+  const top = currentMapRow * tileSize * tileScaleSize;
+  if (objectY + objectHeight < top) {
+    return true;
+  }
+  return false;
+}
+
+function hitRight(objectX, currentMapCol, tileSize, tileScaleSize) {
+  const rightSide =
+    currentMapCol * tileSize * tileScaleSize + tileSize * tileScaleSize;
+  if (objectX < rightSide) {
+    return true;
+  }
+  return false;
+}
+
+function hitBottom(objectY, currentMapRow, tileSize, tileScaleSize) {
+  const bottom =
+    currentMapRow * tileSize * tileScaleSize + tileSize * tileScaleSize;
+  if (objectY < bottom) {
+    return true;
+  }
+  return false;
+}
+
 function collides(
+  objectX,
+  objectY,
+  objectWidth,
+  objectHeight,
   colReference,
   rowReference,
   mapData,
@@ -27,11 +65,30 @@ function collides(
   );
 
   return currentTiles.some((tile) => {
-    const collide = tile.properties.filter(
-      (property) => property.name === "collides"
+    const collisionPropertyNames = ["collides"];
+    const collide = tile.properties.filter((property) =>
+      collisionPropertyNames.includes(property.name)
     );
     if (collide.length > 0) {
-      return collide[0].value === true;
+      return collide.some((property) => {
+        if (property.name === "collidesLeft") {
+          return hitLeft(
+            objectX,
+            objectWidth,
+            currentMapCol,
+            tileSize,
+            tileScaleSize
+          );
+        }
+
+        if (property.name === "collidesBottom") {
+          return hitBottom(objectY, currentMapRow, tileSize, tileScaleSize);
+        }
+
+        if (property.name === "collides") {
+          return property.value;
+        }
+      });
     }
     return false;
   });
@@ -63,6 +120,10 @@ function mapCollides(
 
   for (const combination of combinations) {
     const itCollides = collides(
+      objectX,
+      objectY,
+      objectWidth,
+      objectHeight,
       combination.col,
       combination.row,
       mapData,
