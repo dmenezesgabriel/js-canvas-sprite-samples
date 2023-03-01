@@ -31,21 +31,21 @@ export default class Controller {
   }
 
   intentToMove(currentX, currentY, speed) {
-    let x = currentX;
-    let y = currentY;
+    let newX = currentX;
+    let newY = currentY;
     if (this.keys["w"] || this.keys["ArrowUp"]) {
-      y = currentY - speed;
+      newY = currentY - speed;
     }
     if (this.keys["a"] || this.keys["ArrowLeft"]) {
-      x = currentX - speed;
+      newX = currentX - speed;
     }
     if (this.keys["s"] || this.keys["ArrowDown"]) {
-      y = currentY + speed;
+      newY = currentY + speed;
     }
     if (this.keys["d"] || this.keys["ArrowRight"]) {
-      x = currentX + speed;
+      newX = currentX + speed;
     }
     // console.log(x, y);
-    return { x, y };
+    return { newX, newY };
   }
 }

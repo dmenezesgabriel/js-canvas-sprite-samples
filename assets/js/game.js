@@ -53,10 +53,10 @@ export default class Game {
       false
     );
 
-    this.camera.x = (this.background.width + this.camera.width) / 2;
-    this.camera.y = (this.background.height + this.camera.height) / 2;
-    this.player.x = (this.background.width + this.camera.width) / 2;
-    this.player.y = (this.background.height + this.camera.height) / 2;
+    this.camera.x = 567;
+    this.camera.y = 396;
+    this.player.x = 840;
+    this.player.y = 610;
   }
 
   update() {
@@ -93,17 +93,18 @@ export default class Game {
       this.camera
     );
 
-    const { x, y } = this.controller.intentToMove(
-      this.player.x,
-      this.player.y,
+    // Future collision from intent to move
+    const { newX, newY } = this.controller.intentToMove(
+      this.player.getCollisionX(),
+      this.player.getCollisionY(),
       this.player.getSpeed()
     );
 
     const playerCollide = mapCollides(
-      x,
-      y,
-      this.player.width,
-      this.player.height,
+      newX,
+      newY,
+      this.player.getCollisionWidth(),
+      this.player.getCollisionHeight(),
       this.maps.jungle.data,
       this.maps.jungle.tileSetProperties,
       tileSize,
@@ -124,5 +125,6 @@ export default class Game {
       this.background.width,
       this.background.height
     );
+    // console.log(this.camera.x, this.camera.y, this.player.x, this.player.y);
   }
 }

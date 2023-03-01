@@ -48,6 +48,22 @@ export default class Player {
     this.y + this.height;
   }
 
+  getCollisionX() {
+    return this.x + this.width * 0.3;
+  }
+
+  getCollisionY() {
+    return this.y + this.height * 0.7;
+  }
+
+  getCollisionWidth() {
+    return this.width - this.width * 0.6;
+  }
+
+  getCollisionHeight() {
+    return this.height - this.height * 0.7;
+  }
+
   handleFrame() {
     if (this.frameX < this.animationStates["endXFrames"] && this.moving)
       this.frameX++;
