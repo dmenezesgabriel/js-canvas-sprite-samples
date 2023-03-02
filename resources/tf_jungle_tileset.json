@@ -194,7 +194,7 @@
       "id": 199,
       "properties": [
         {
-          "name": "collides",
+          "name": "collidesLeft",
           "type": "bool",
           "value": true
         }
