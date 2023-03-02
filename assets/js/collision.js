@@ -1,7 +1,6 @@
 function hitLeft(objectX, currentMapCol, tileSize, tileScaleSize) {
   const leftSize = currentMapCol * tileSize * tileScaleSize;
   if (objectX < leftSize) {
-    console.log("collide left");
     return true;
   }
   return false;
@@ -17,14 +16,14 @@ function hitTop(objectY, objectHeight, currentMapRow, tileSize, tileScaleSize) {
 
 function hitRight(
   objectX,
-  objectHeight,
+  objectWidth,
   currentMapCol,
   tileSize,
   tileScaleSize
 ) {
   const rightSide =
     currentMapCol * tileSize * tileScaleSize + tileSize * tileScaleSize;
-  if (objectX + objectHeight > rightSide) {
+  if (objectX + objectWidth > rightSide) {
     return true;
   }
   return false;
@@ -40,7 +39,6 @@ function hitBottom(
   const bottom =
     currentMapRow * tileSize * tileScaleSize + tileSize * tileScaleSize;
   if (objectY + objectHeight > bottom) {
-    console.log("collidesBottom");
     return true;
   }
   return false;
@@ -79,7 +77,6 @@ function collides(
   );
 
   return currentTiles.some((tile) => {
-    console.log(tile.id);
     const collisionPropertyNames = [
       "collides",
       "collidesLeft",
@@ -93,13 +90,7 @@ function collides(
     if (collide.length > 0) {
       return collide.some((property) => {
         if (property.name === "collidesLeft") {
-          return hitLeft(
-            objectX,
-            objectWidth,
-            currentMapCol,
-            tileSize,
-            tileScaleSize
-          );
+          return hitLeft(objectX, currentMapCol, tileSize, tileScaleSize);
         }
 
         if (property.name === "collidesTop") {
@@ -115,7 +106,7 @@ function collides(
         if (property.name === "collidesRight") {
           return hitRight(
             objectX,
-            objectHeight,
+            objectWidth,
             currentMapCol,
             tileSize,
             tileScaleSize
@@ -133,7 +124,6 @@ function collides(
         }
 
         if (property.name === "collides") {
-          console.log("collides");
           return property.value;
         }
       });
