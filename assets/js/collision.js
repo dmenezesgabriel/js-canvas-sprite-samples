@@ -1,6 +1,9 @@
 function hitLeft(objectX, objectWidth, currentMapCol, tileSize, tileScaleSize) {
   const leftSize = currentMapCol * tileSize * tileScaleSize;
-  if (objectX + objectWidth > leftSize) {
+  if (objectX < leftSize) {
+    console.log("collide left");
+    console.log(leftSize);
+    console.log(objectX);
     return true;
   }
   return false;
@@ -23,10 +26,17 @@ function hitRight(objectX, currentMapCol, tileSize, tileScaleSize) {
   return false;
 }
 
-function hitBottom(objectY, currentMapRow, tileSize, tileScaleSize) {
+function hitBottom(
+  objectY,
+  objectHeight,
+  currentMapRow,
+  tileSize,
+  tileScaleSize
+) {
   const bottom =
     currentMapRow * tileSize * tileScaleSize + tileSize * tileScaleSize;
-  if (objectY < bottom) {
+  if (objectY + objectHeight > bottom) {
+    console.log("collidesBottom");
     return true;
   }
   return false;
@@ -65,7 +75,12 @@ function collides(
   );
 
   return currentTiles.some((tile) => {
-    const collisionPropertyNames = ["collides"];
+    console.log(tile.id);
+    const collisionPropertyNames = [
+      "collides",
+      "collidesLeft",
+      "collidesBottom",
+    ];
     const collide = tile.properties.filter((property) =>
       collisionPropertyNames.includes(property.name)
     );
@@ -82,10 +97,17 @@ function collides(
         }
 
         if (property.name === "collidesBottom") {
-          return hitBottom(objectY, currentMapRow, tileSize, tileScaleSize);
+          return hitBottom(
+            objectY,
+            objectHeight,
+            currentMapRow,
+            tileSize,
+            tileScaleSize
+          );
         }
 
         if (property.name === "collides") {
+          console.log("collides");
           return property.value;
         }
       });

@@ -53,10 +53,10 @@ export default class Game {
       false
     );
 
-    this.camera.x = 567;
-    this.camera.y = 396;
-    this.player.x = 840;
-    this.player.y = 610;
+    this.camera.x = 780;
+    this.camera.y = 0;
+    this.player.x = 990;
+    this.player.y = 30;
   }
 
   update() {
