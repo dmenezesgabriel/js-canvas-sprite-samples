@@ -89,24 +89,6 @@ export default class Character {
     this.moving = true;
   }
 
-  handleMove(keys, characterCollide) {
-    if (characterCollide) {
-      return;
-    }
-    if (keys["w"] || keys["ArrowUp"]) {
-      this.moveUp();
-    }
-    if (keys["a"] || keys["ArrowLeft"]) {
-      this.moveLeft();
-    }
-    if (keys["s"] || keys["ArrowDown"]) {
-      this.moveDown();
-    }
-    if (keys["d"] || keys["ArrowRight"]) {
-      this.moveRight();
-    }
-  }
-
   handleMapLimits(mapWidth, mapHeight) {
     if (this.x < 0) {
       this.x = 0;
@@ -130,11 +112,5 @@ export default class Character {
     } else {
       this.frameX = this.animationStates["initialXFrame"];
     }
-  }
-
-  update(keys, mapWidth, mapHeight, characterCollide) {
-    this.handleMove(keys, characterCollide);
-    this.handleMapLimits(mapWidth, mapHeight);
-    this.handleFrame();
   }
 }

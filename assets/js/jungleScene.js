@@ -94,7 +94,7 @@ export default class JungleScene {
     );
 
     // Future collision from intent to move
-    const { newX, newY } = this.controller.intentToMove(
+    const { newX, newY } = this.controller.intentToMoveCharacter(
       this.character.getCollisionX(),
       this.character.getCollisionY(),
       this.character.getSpeed()
@@ -111,11 +111,11 @@ export default class JungleScene {
       tileScaleSize
     );
 
-    this.character.update(
-      this.controller.keys,
+    this.controller.moveCharacter(
+      this.character,
+      characterCollide,
       this.background.width,
-      this.background.height,
-      characterCollide
+      this.background.height
     );
     this.camera.update(
       this.character.x,

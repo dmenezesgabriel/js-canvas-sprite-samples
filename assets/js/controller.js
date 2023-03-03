@@ -30,7 +30,7 @@ export default class Controller {
     });
   }
 
-  intentToMove(currentX, currentY, speed) {
+  intentToMoveCharacter(currentX, currentY, speed) {
     let newX = currentX;
     let newY = currentY;
     if (this.keys["w"] || this.keys["ArrowUp"]) {
@@ -47,5 +47,26 @@ export default class Controller {
     }
     // console.log(x, y);
     return { newX, newY };
+  }
+
+  moveCharacter(character, characterCollide, mapWidth, mapHeight) {
+    if (characterCollide) {
+      return;
+    }
+    if (this.keys["w"] || this.keys["ArrowUp"]) {
+      character.moveUp();
+    }
+    if (this.keys["a"] || this.keys["ArrowLeft"]) {
+      character.moveLeft();
+    }
+    if (this.keys["s"] || this.keys["ArrowDown"]) {
+      character.moveDown();
+    }
+    if (this.keys["d"] || this.keys["ArrowRight"]) {
+      character.moveRight();
+    }
+
+    character.handleMapLimits(mapWidth, mapHeight);
+    character.handleFrame();
   }
 }
