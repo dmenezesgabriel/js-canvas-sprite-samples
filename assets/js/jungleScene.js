@@ -1,7 +1,7 @@
 import Character from "./character.js";
 import { mapCollides } from "./collision.js";
 
-export default class Game {
+export default class JungleScene {
   constructor(display, camera, controller) {
     this.display = display;
     this.camera = camera;

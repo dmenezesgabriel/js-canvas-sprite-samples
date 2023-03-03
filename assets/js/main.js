@@ -1,42 +1,54 @@
-import Game from "./game.js";
+import JungleScene from "./jungleScene.js";
 import Controller from "./controller.js";
 import Display from "./display.js";
 import Camera from "./Camera.js";
 
-let fpsInterval, startTime, now, then, elapsed;
+class Game {
+  constructor(fpsInterval, startTime, now, then, elapsed) {
+    this.fpsInterval = fpsInterval;
+    this.startTime = startTime;
+    this.now = now;
+    this.then = then;
+    this.elapsed = elapsed;
+    this.canvas = document.getElementById("canvas1");
+    this.canvas.width = 500;
+    this.canvas.height = 500;
+    this.camera = new Camera(0, 0, this.canvas.width, this.canvas.height);
+    this.display = new Display(this.canvas, true);
+    this.controller = new Controller();
+    this.frame = this.update.bind(this);
+  }
 
-const canvas = document.getElementById("canvas1");
-canvas.width = 500;
-canvas.height = 500;
+  create() {
+    this.controller.init();
+    this.currentScene = new JungleScene(
+      this.display,
+      this.camera,
+      this.controller
+    );
+  }
 
-const display = new Display(canvas, true);
+  update() {
+    window.requestAnimationFrame(this.frame);
+    this.now = Date.now();
+    this.elapsed = this.now - this.then;
+    if (this.elapsed > this.fpsInterval) {
+      this.then = this.now - (this.elapsed % this.fpsInterval);
+      this.currentScene.update();
+    }
+  }
 
-const camera = new Camera(0, 0, canvas.width, canvas.height);
+  async start(fps) {
+    this.create();
 
-const controller = new Controller();
-controller.init();
+    await this.currentScene.create();
 
-const game = new Game(display, camera, controller);
-
-function gameLoop() {
-  window.requestAnimationFrame(gameLoop);
-  now = Date.now();
-  elapsed = now - then;
-  if (elapsed > fpsInterval) {
-    then = now - (elapsed % fpsInterval);
-    game.update();
+    this.fpsInterval = 1000 / fps; // calculate milliseconds
+    this.then = Date.now();
+    this.startTime = this.then;
+    this.update();
   }
 }
 
-async function startGame(fps) {
-  // center camera
-
-  await game.create();
-
-  fpsInterval = 1000 / fps; // calculate milliseconds
-  then = Date.now();
-  startTime = then;
-  gameLoop();
-}
-
-await startGame(10);
+const game = new Game();
+game.start(10);
