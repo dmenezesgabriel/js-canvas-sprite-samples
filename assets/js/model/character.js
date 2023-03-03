@@ -108,7 +108,7 @@ export default class Character {
     if (this.frameX < this.animationStates["endXFrames"] && this.moving)
       this.frameX++;
     else if (!this.moving) {
-      this.frameX = this.animationStates["stationaryXFrame"];
+      this.frameX = this.animationStates["idleXFrame"];
     } else {
       this.frameX = this.animationStates["initialXFrame"];
     }

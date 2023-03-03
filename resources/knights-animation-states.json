@@ -13,7 +13,7 @@
     "endXFrames": 2,
     "initialYFrame": 0,
     "initialXFrame": 0,
-    "stationaryXFrame": 1
+    "idleXFrame": 1
   },
   "crusader-knight": {
     "img": "assets/img/knights_2x.png",
@@ -29,7 +29,7 @@
     "endXFrames": 5,
     "initialYFrame": 0,
     "initialXFrame": 3,
-    "stationaryXFrame": 4
+    "idleXFrame": 4
   },
   "black-knight": {
     "img": "assets/img/knights_2x.png",
@@ -45,7 +45,7 @@
     "endXFrames": 8,
     "initialYFrame": 0,
     "initialXFrame": 6,
-    "stationaryXFrame": 7
+    "idleXFrame": 7
   },
   "green-knight": {
     "img": "assets/img/knights_2x.png",
@@ -61,6 +61,6 @@
     "endXFrames": 11,
     "initialYFrame": 0,
     "initialXFrame": 9,
-    "stationaryXFrame": 10
+    "idleXFrame": 10
   }
 }
