@@ -31,19 +31,23 @@ export default class CharacterController {
   }
 
   intentToMoveCharacter(character) {
-    let newX = character.x;
-    let newY = character.y;
+    const currentSpeed = character.getSpeed();
+    const currentX = character.getCollisionX();
+    const currentY = character.getCollisionY();
+    let newX = currentX;
+    let newY = currentY;
+
     if (this.keys["w"] || this.keys["ArrowUp"]) {
-      newY = currentY - character.speed;
+      newY = currentY - currentSpeed;
     }
     if (this.keys["a"] || this.keys["ArrowLeft"]) {
-      newX = currentX - character.speed;
+      newX = currentX - currentSpeed;
     }
     if (this.keys["s"] || this.keys["ArrowDown"]) {
-      newY = currentY + character.speed;
+      newY = currentY + currentSpeed;
     }
     if (this.keys["d"] || this.keys["ArrowRight"]) {
-      newX = currentX + character.speed;
+      newX = currentX + currentSpeed;
     }
     // console.log(x, y);
     return { newX, newY };

@@ -1,9 +1,10 @@
 import Character from "../model/character.js";
 import { mapCollides } from "../collision.js";
+import BaseScene from "./baseScene.js";
 
-export default class JungleScene {
+export default class JungleScene extends BaseScene {
   constructor(display, camera, characterController) {
-    this.display = display;
+    super(display);
     this.camera = camera;
     this.characterController = characterController;
     this.maps = {};
