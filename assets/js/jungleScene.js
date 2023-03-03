@@ -2,10 +2,10 @@ import Character from "./character.js";
 import { mapCollides } from "./collision.js";
 
 export default class JungleScene {
-  constructor(display, camera, controller) {
+  constructor(display, camera, characterController) {
     this.display = display;
     this.camera = camera;
-    this.controller = controller;
+    this.characterController = characterController;
     this.maps = {};
   }
   async create() {
@@ -60,7 +60,7 @@ export default class JungleScene {
   }
 
   update() {
-    if (this.controller.moving === true) {
+    if (this.characterController.moving === true) {
       this.character.moving = true;
     } else {
       this.character.moving = false;
@@ -94,10 +94,8 @@ export default class JungleScene {
     );
 
     // Future collision from intent to move
-    const { newX, newY } = this.controller.intentToMoveCharacter(
-      this.character.getCollisionX(),
-      this.character.getCollisionY(),
-      this.character.getSpeed()
+    const { newX, newY } = this.characterController.intentToMoveCharacter(
+      this.character
     );
 
     const characterCollide = mapCollides(
@@ -111,7 +109,7 @@ export default class JungleScene {
       tileScaleSize
     );
 
-    this.controller.moveCharacter(
+    this.characterController.moveCharacter(
       this.character,
       characterCollide,
       this.background.width,

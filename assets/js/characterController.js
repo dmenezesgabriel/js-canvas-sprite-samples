@@ -1,4 +1,4 @@
-export default class Controller {
+export default class CharacterController {
   constructor() {
     this.moveKeys = [
       "w",
@@ -30,20 +30,20 @@ export default class Controller {
     });
   }
 
-  intentToMoveCharacter(currentX, currentY, speed) {
-    let newX = currentX;
-    let newY = currentY;
+  intentToMoveCharacter(character) {
+    let newX = character.x;
+    let newY = character.y;
     if (this.keys["w"] || this.keys["ArrowUp"]) {
-      newY = currentY - speed;
+      newY = currentY - character.speed;
     }
     if (this.keys["a"] || this.keys["ArrowLeft"]) {
-      newX = currentX - speed;
+      newX = currentX - character.speed;
     }
     if (this.keys["s"] || this.keys["ArrowDown"]) {
-      newY = currentY + speed;
+      newY = currentY + character.speed;
     }
     if (this.keys["d"] || this.keys["ArrowRight"]) {
-      newX = currentX + speed;
+      newX = currentX + character.speed;
     }
     // console.log(x, y);
     return { newX, newY };

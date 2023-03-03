@@ -1,5 +1,5 @@
 import JungleScene from "./jungleScene.js";
-import Controller from "./controller.js";
+import CharacterController from "./characterController.js";
 import Display from "./display.js";
 import Camera from "./Camera.js";
 
@@ -15,16 +15,16 @@ class Game {
     this.canvas.height = 500;
     this.camera = new Camera(0, 0, this.canvas.width, this.canvas.height);
     this.display = new Display(this.canvas, true);
-    this.controller = new Controller();
+    this.characterController = new CharacterController();
     this.frame = this.update.bind(this);
   }
 
   create() {
-    this.controller.init();
+    this.characterController.init();
     this.currentScene = new JungleScene(
       this.display,
       this.camera,
-      this.controller
+      this.characterController
     );
   }
 
