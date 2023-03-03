@@ -1,7 +1,7 @@
-import JungleScene from "./jungleScene.js";
-import CharacterController from "./characterController.js";
+import JungleScene from "./view/jungleScene.js";
+import CharacterController from "./controller/characterController.js";
 import Display from "./display.js";
-import Camera from "./Camera.js";
+import Camera from "./camera.js";
 
 class Game {
   constructor(fpsInterval, startTime, now, then, elapsed) {

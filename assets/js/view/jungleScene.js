@@ -1,5 +1,5 @@
-import Character from "./character.js";
-import { mapCollides } from "./collision.js";
+import Character from "../model/character.js";
+import { mapCollides } from "../collision.js";
 
 export default class JungleScene {
   constructor(display, camera, characterController) {
