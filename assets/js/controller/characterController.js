@@ -53,6 +53,21 @@ export default class CharacterController {
     return { newX, newY };
   }
 
+  handleMapLimits(character, mapWidth, mapHeight) {
+    if (character.x < 0) {
+      character.x = 0;
+    }
+    if (character.x + character.width > mapWidth) {
+      character.x = mapWidth - character.width;
+    }
+    if (character.y < 0) {
+      character.y = 0;
+    }
+    if (character.y + character.height > mapHeight) {
+      character.y = mapHeight - character.height;
+    }
+  }
+
   moveCharacter(character, characterCollide, mapWidth, mapHeight) {
     const characterSpeed = character.getSpeed();
     if (characterCollide) {
@@ -72,7 +87,7 @@ export default class CharacterController {
       character.moveRight();
     }
 
-    character.handleMapLimits(mapWidth, mapHeight);
+    this.handleMapLimits(character, mapWidth, mapHeight);
     character.handleFrame();
 
     if (characterCollide) {

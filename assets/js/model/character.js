@@ -89,21 +89,6 @@ export default class Character {
     this.moving = true;
   }
 
-  handleMapLimits(mapWidth, mapHeight) {
-    if (this.x < 0) {
-      this.x = 0;
-    }
-    if (this.x + this.width > mapWidth) {
-      this.x = mapWidth - this.width;
-    }
-    if (this.y < 0) {
-      this.y = 0;
-    }
-    if (this.y + this.height > mapHeight) {
-      this.y = mapHeight - this.height;
-    }
-  }
-
   handleFrame() {
     if (this.frameX < this.animationStates["endXFrames"] && this.moving)
       this.frameX++;
