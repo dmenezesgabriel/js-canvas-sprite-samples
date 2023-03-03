@@ -22,6 +22,7 @@ export default class Player {
     this.frameY = frameY;
     this._speed = speed * friction;
     this.moving = moving;
+    this.friction = friction;
   }
 
   getSpeed() {
