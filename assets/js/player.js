@@ -64,16 +64,6 @@ export default class Player {
     return this.height - this.height * 0.7;
   }
 
-  handleFrame() {
-    if (this.frameX < this.animationStates["endXFrames"] && this.moving)
-      this.frameX++;
-    else if (!this.moving) {
-      this.frameX = this.animationStates["stationaryXFrame"];
-    } else {
-      this.frameX = this.animationStates["initialXFrame"];
-    }
-  }
-
   moveLeft() {
     this.x -= this._speed;
     this.frameY = this.animationStates["leftFramesY"];
@@ -128,6 +118,16 @@ export default class Player {
     }
     if (this.y + this.height > mapHeight) {
       this.y = mapHeight - this.height;
+    }
+  }
+
+  handleFrame() {
+    if (this.frameX < this.animationStates["endXFrames"] && this.moving)
+      this.frameX++;
+    else if (!this.moving) {
+      this.frameX = this.animationStates["stationaryXFrame"];
+    } else {
+      this.frameX = this.animationStates["initialXFrame"];
     }
   }
 
