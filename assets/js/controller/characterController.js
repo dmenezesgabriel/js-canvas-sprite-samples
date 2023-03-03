@@ -54,9 +54,11 @@ export default class CharacterController {
   }
 
   moveCharacter(character, characterCollide, mapWidth, mapHeight) {
+    const characterSpeed = character.getSpeed();
     if (characterCollide) {
-      return;
+      character.setSpeed(0);
     }
+
     if (this.keys["w"] || this.keys["ArrowUp"]) {
       character.moveUp();
     }
@@ -72,5 +74,9 @@ export default class CharacterController {
 
     character.handleMapLimits(mapWidth, mapHeight);
     character.handleFrame();
+
+    if (characterCollide) {
+      character.setSpeed(characterSpeed);
+    }
   }
 }
