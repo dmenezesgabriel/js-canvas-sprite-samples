@@ -1,6 +1,6 @@
 # TODO
 
-## Player
+## Character
 
 - [x] Movement
 - [x] Camera

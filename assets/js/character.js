@@ -1,4 +1,4 @@
-export default class Player {
+export default class Character {
   constructor(
     img,
     animationStates,
@@ -89,8 +89,8 @@ export default class Player {
     this.moving = true;
   }
 
-  handleMove(keys, playerCollide) {
-    if (playerCollide) {
+  handleMove(keys, characterCollide) {
+    if (characterCollide) {
       return;
     }
     if (keys["w"] || keys["ArrowUp"]) {
@@ -132,8 +132,8 @@ export default class Player {
     }
   }
 
-  update(keys, mapWidth, mapHeight, playerCollide) {
-    this.handleMove(keys, playerCollide);
+  update(keys, mapWidth, mapHeight, characterCollide) {
+    this.handleMove(keys, characterCollide);
     this.handleMapLimits(mapWidth, mapHeight);
     this.handleFrame();
   }

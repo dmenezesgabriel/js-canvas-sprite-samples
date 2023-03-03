@@ -130,7 +130,7 @@ export default class Display {
 
   render(
     tileAtlas,
-    mapLayers,
+    macharacters,
     tileSize,
     tileScaleSize,
     atlasCols,
@@ -150,7 +150,9 @@ export default class Display {
     this.context.translate(-camera.x, -camera.y);
 
     // Map
-    const backLayers = mapLayers.filter((layer) => layer.name != "foreground");
+    const backLayers = macharacters.filter(
+      (layer) => layer.name != "foreground"
+    );
     for (const layer of backLayers) {
       const mapData = layer["data"];
       const mapRows = layer["height"];
@@ -180,7 +182,7 @@ export default class Display {
     }
 
     // Map
-    const frontLayers = mapLayers.filter(
+    const frontLayers = macharacters.filter(
       (layer) => layer.name === "foreground"
     );
     for (const layer of frontLayers) {

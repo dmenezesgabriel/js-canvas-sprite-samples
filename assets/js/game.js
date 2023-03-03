@@ -1,4 +1,4 @@
-import Player from "./player.js";
+import Character from "./character.js";
 import { mapCollides } from "./collision.js";
 
 export default class Game {
@@ -32,16 +32,16 @@ export default class Game {
       tileSetProperties: jungleTilesetProperties,
     };
 
-    const playerSpriteImg = new Image();
-    playerSpriteImg.src = currentAnimationStates["img"];
+    const characterSpriteImg = new Image();
+    characterSpriteImg.src = currentAnimationStates["img"];
 
     this.background = {
       width: 40 * 16 * 2, // tiles * tileSize * scale
       height: 30 * 16 * 2,
     };
 
-    this.player = new Player(
-      playerSpriteImg,
+    this.character = new Character(
+      characterSpriteImg,
       currentAnimationStates,
       0,
       0,
@@ -55,15 +55,15 @@ export default class Game {
 
     this.camera.x = 780;
     this.camera.y = 0;
-    this.player.x = 990;
-    this.player.y = 30;
+    this.character.x = 990;
+    this.character.y = 30;
   }
 
   update() {
     if (this.controller.moving === true) {
-      this.player.moving = true;
+      this.character.moving = true;
     } else {
-      this.player.moving = false;
+      this.character.moving = false;
     }
 
     const sprites = [];
@@ -74,13 +74,13 @@ export default class Game {
     const atlasCols = 22; // tiled
 
     sprites.push({
-      image: this.player.img,
-      sourceX: this.player.width * this.player.frameX,
-      sourceY: this.player.height * this.player.frameY,
-      destinationX: this.player.x,
-      destinationY: this.player.y,
-      width: this.player.width,
-      height: this.player.height,
+      image: this.character.img,
+      sourceX: this.character.width * this.character.frameX,
+      sourceY: this.character.height * this.character.frameY,
+      destinationX: this.character.x,
+      destinationY: this.character.y,
+      width: this.character.width,
+      height: this.character.height,
     });
 
     this.display.render(
@@ -95,36 +95,36 @@ export default class Game {
 
     // Future collision from intent to move
     const { newX, newY } = this.controller.intentToMove(
-      this.player.getCollisionX(),
-      this.player.getCollisionY(),
-      this.player.getSpeed()
+      this.character.getCollisionX(),
+      this.character.getCollisionY(),
+      this.character.getSpeed()
     );
 
-    const playerCollide = mapCollides(
+    const characterCollide = mapCollides(
       newX,
       newY,
-      this.player.getCollisionWidth(),
-      this.player.getCollisionHeight(),
+      this.character.getCollisionWidth(),
+      this.character.getCollisionHeight(),
       this.maps.jungle.data,
       this.maps.jungle.tileSetProperties,
       tileSize,
       tileScaleSize
     );
 
-    this.player.update(
+    this.character.update(
       this.controller.keys,
       this.background.width,
       this.background.height,
-      playerCollide
+      characterCollide
     );
     this.camera.update(
-      this.player.x,
-      this.player.y,
-      this.player.width,
-      this.player.height,
+      this.character.x,
+      this.character.y,
+      this.character.width,
+      this.character.height,
       this.background.width,
       this.background.height
     );
-    // console.log(this.camera.x, this.camera.y, this.player.x, this.player.y);
+    // console.log(this.camera.x, this.camera.y, this.character.x, this.character.y);
   }
 }
