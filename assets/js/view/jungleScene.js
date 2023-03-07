@@ -1,6 +1,6 @@
 import Character from "../model/character.js";
 import TileMap from "../model/tileMap.js";
-import { mapCollides } from "../collision.js";
+import { mapCollides } from "../helper/collision.js";
 import BaseScene from "./baseScene.js";
 
 export default class JungleScene extends BaseScene {
