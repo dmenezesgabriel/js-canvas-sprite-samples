@@ -1,4 +1,5 @@
 import Character from "../model/character.js";
+import TileMap from "../model/tileMap.js";
 import { mapCollides } from "../collision.js";
 import BaseScene from "./baseScene.js";
 
@@ -27,19 +28,21 @@ export default class JungleScene extends BaseScene {
     );
     const jungleTilesetProperties = await getJungleTilesetProperties.json();
 
-    this.maps["jungle"] = {
-      tileAtlas: jungleTilesImg,
-      data: jungleMap,
-      tileSetProperties: jungleTilesetProperties,
-    };
+    this.map = new TileMap(
+      "jungle",
+      jungleTilesImg,
+      22,
+      jungleMap,
+      jungleTilesetProperties,
+      16,
+      2,
+      this.display
+    );
+
+    this.map.createLayersFromMapData();
 
     const characterSpriteImg = new Image();
     characterSpriteImg.src = currentAnimationStates["img"];
-
-    this.background = {
-      width: 40 * 16 * 2, // tiles * tileSize * scale
-      height: 30 * 16 * 2,
-    };
 
     this.character = new Character(
       characterSpriteImg,
@@ -67,32 +70,30 @@ export default class JungleScene extends BaseScene {
       this.character.moving = false;
     }
 
-    const sprites = [];
-    // Map
-    const tileAtlas = this.maps.jungle.tileAtlas;
-    const tileSize = 16;
-    const tileScaleSize = 2;
-    const atlasCols = 22; // tiled
+    // Draw
+    this.display.beforeDraw(this.camera);
 
-    sprites.push({
-      image: this.character.img,
-      sourceX: this.character.width * this.character.frameX,
-      sourceY: this.character.height * this.character.frameY,
-      destinationX: this.character.x,
-      destinationY: this.character.y,
-      width: this.character.width,
-      height: this.character.height,
-    });
+    for (const key of Object.keys(this.map.layers)) {
+      const layerObject = this.map.layers[key];
+      if (layerObject.name != "foreground") layerObject.drawLayer();
+    }
 
-    this.display.render(
-      tileAtlas,
-      this.maps.jungle.data.layers,
-      tileSize,
-      tileScaleSize,
-      atlasCols,
-      sprites,
-      this.camera
+    this.display.drawObject(
+      this.character.img,
+      this.character.width * this.character.frameX,
+      this.character.height * this.character.frameY,
+      this.character.x,
+      this.character.y,
+      this.character.width,
+      this.character.height
     );
+
+    for (const key of Object.keys(this.map.layers)) {
+      const layerObject = this.map.layers[key];
+      if (layerObject.name === "foreground") layerObject.drawLayer();
+    }
+
+    this.display.afterDraw();
 
     // Future collision from intent to move
     const { newX, newY } = this.characterController.intentToMoveCharacter(
@@ -104,25 +105,25 @@ export default class JungleScene extends BaseScene {
       newY,
       this.character.getCollisionWidth(),
       this.character.getCollisionHeight(),
-      this.maps.jungle.data,
-      this.maps.jungle.tileSetProperties,
-      tileSize,
-      tileScaleSize
+      this.map.mapData,
+      this.map.tileSetProperties,
+      this.map.tileSize,
+      this.map.tileScaleSize
     );
 
     this.characterController.moveCharacter(
       this.character,
       characterCollide,
-      this.background.width,
-      this.background.height
+      this.map.width,
+      this.map.height
     );
     this.camera.update(
       this.character.x,
       this.character.y,
       this.character.width,
       this.character.height,
-      this.background.width,
-      this.background.height
+      this.map.width,
+      this.map.height
     );
     // console.log(this.camera.x, this.camera.y, this.character.x, this.character.y);
   }

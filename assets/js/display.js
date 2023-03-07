@@ -25,9 +25,9 @@ export default class Display {
   drawMapLayer(
     tileAtlas,
     atlasCols,
-    mapData,
-    mapRows,
-    mapCols,
+    layerData,
+    layerRows,
+    layerCols,
     tileSize,
     tileScaleSize
   ) {
@@ -39,12 +39,12 @@ export default class Display {
     let sourceX = 0;
     let sourceY = 0;
 
-    const mapHeight = mapRows * tileSize;
-    const mapWidth = mapCols * tileSize;
+    const layerHeight = layerRows * tileSize;
+    const layerWidth = layerCols * tileSize;
 
-    for (let row = 0; row < mapHeight; row += tileSize) {
-      for (let col = 0; col < mapWidth; col += tileSize) {
-        let tileVal = mapData[mapIndex];
+    for (let row = 0; row < layerHeight; row += tileSize) {
+      for (let col = 0; col < layerWidth; col += tileSize) {
+        let tileVal = layerData[mapIndex];
         if (tileVal != 0) {
           tileVal -= 1; // Tiled layer data starts at 1 instead of 0
           sourceX = (tileVal % atlasCols) * tileSize; // col number * tileSize
@@ -128,18 +128,7 @@ export default class Display {
     this.context.imageSmoothingEnabled = false;
   }
 
-  render(
-    tileAtlas,
-    mapLayers,
-    tileSize,
-    tileScaleSize,
-    atlasCols,
-    objects,
-    camera
-  ) {
-    /**
-     *
-     */
+  beforeDraw(camera) {
     this.context.save();
     this.context.clearRect(
       0,
@@ -148,55 +137,9 @@ export default class Display {
       this.context.canvas.height
     );
     this.context.translate(-camera.x, -camera.y);
+  }
 
-    // Map
-    const backLayers = mapLayers.filter((layer) => layer.name != "foreground");
-    for (const layer of backLayers) {
-      const mapData = layer["data"];
-      const mapRows = layer["height"];
-      const mapCols = layer["width"];
-      this.drawMapLayer(
-        tileAtlas,
-        atlasCols,
-        mapData,
-        mapRows,
-        mapCols,
-        tileSize,
-        tileScaleSize
-      );
-    }
-
-    // Sprites
-    for (const object of objects) {
-      this.drawObject(
-        object.image,
-        object.sourceX,
-        object.sourceY,
-        object.destinationX,
-        object.destinationY,
-        object.width,
-        object.height
-      );
-    }
-
-    // Map
-    const frontLayers = mapLayers.filter(
-      (layer) => layer.name === "foreground"
-    );
-    for (const layer of frontLayers) {
-      const mapData = layer["data"];
-      const mapRows = layer["height"];
-      const mapCols = layer["width"];
-      this.drawMapLayer(
-        tileAtlas,
-        atlasCols,
-        mapData,
-        mapRows,
-        mapCols,
-        tileSize,
-        tileScaleSize
-      );
-    }
+  afterDraw() {
     this.context.restore();
   }
 }

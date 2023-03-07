@@ -51,7 +51,7 @@ function collides(
   objectHeight,
   colReference,
   rowReference,
-  mapData,
+  layerData,
   tileSetProperties,
   tileSize,
   tileScaleSize
@@ -60,7 +60,7 @@ function collides(
   const currentMapRow = Math.floor(rowReference / (tileSize * tileScaleSize));
 
   const tileIds = [];
-  for (const layer of mapData.layers) {
+  for (const layer of layerData.layers) {
     const colNumber = layer["width"];
     const dataIndex = currentMapRow * colNumber + currentMapCol;
     const data = layer["data"];
@@ -137,7 +137,7 @@ function mapCollides(
   objectY,
   objectWidth,
   objectHeight,
-  mapData,
+  layerData,
   tileSetProperties,
   tileSize,
   tileScaleSize
@@ -164,7 +164,7 @@ function mapCollides(
       objectHeight,
       combination.col,
       combination.row,
-      mapData,
+      layerData,
       tileSetProperties,
       tileSize,
       tileScaleSize
