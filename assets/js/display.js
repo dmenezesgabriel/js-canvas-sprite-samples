@@ -22,7 +22,7 @@ export default class Display {
     this.context.translate(destinationX, destinationY);
   }
 
-  drawMap(
+  drawMapLayer(
     tileAtlas,
     atlasCols,
     mapData,
@@ -155,7 +155,7 @@ export default class Display {
       const mapData = layer["data"];
       const mapRows = layer["height"];
       const mapCols = layer["width"];
-      this.drawMap(
+      this.drawMapLayer(
         tileAtlas,
         atlasCols,
         mapData,
@@ -187,7 +187,7 @@ export default class Display {
       const mapData = layer["data"];
       const mapRows = layer["height"];
       const mapCols = layer["width"];
-      this.drawMap(
+      this.drawMapLayer(
         tileAtlas,
         atlasCols,
         mapData,
