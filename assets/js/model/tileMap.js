@@ -16,20 +16,12 @@ export default class TileMap {
     this.tileAtlas = tileAtlas;
     this.tileAtlasCols = tileAtlasCols;
     this.tileSetProperties = tileSetProperties;
-    this._height = this.mapData.height;
-    this._width = this.mapData.width;
+    this.height = this.mapData.height * tileSize * tileScaleSize;
+    this.width = this.mapData.width * tileSize * tileScaleSize;
     this.tileSize = tileSize;
     this.tileScaleSize = tileScaleSize;
     this.display = display;
     this.layers = {};
-  }
-
-  get height() {
-    this._height * this.tileSize * this.tileScaleSize;
-  }
-
-  get width() {
-    this._width = this.tileSize * this.tileScaleSize;
   }
 
   createLayer(name, layerData, layerRows, layerCols) {
