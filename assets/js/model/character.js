@@ -47,35 +47,38 @@ export default class Character extends GameObject {
 
   moveLeft() {
     this.x -= this._speed;
-    this.spriteFrameRow = this.animationStates["leftFramesY"];
+    this.spriteFrameRow = this.animationStates["walkLeftFramesRow"];
     this.moving = true;
   }
 
   moveUp() {
     this.y -= this._speed;
-    this.spriteFrameRow = this.animationStates["upFramesY"];
+    this.spriteFrameRow = this.animationStates["walkUpFramesRow"];
     this.moving = true;
   }
 
   moveRight() {
     this.x += this._speed;
-    this.spriteFrameRow = this.animationStates["rightFramesY"];
+    this.spriteFrameRow = this.animationStates["walkRightFramesRow"];
     this.moving = true;
   }
 
   moveDown() {
     this.y += this._speed;
-    this.spriteFrameRow = this.animationStates["downFramesY"];
+    this.spriteFrameRow = this.animationStates["walkDownFramesRow"];
     this.moving = true;
   }
 
   handleFrame() {
-    if (this.spriteFrameCol < this.animationStates["endXFrames"] && this.moving)
+    if (
+      this.spriteFrameCol < this.animationStates["lastWalkFramesCol"] &&
+      this.moving
+    )
       this.spriteFrameCol++;
     else if (!this.moving) {
-      this.spriteFrameCol = this.animationStates["idleXFrame"];
+      this.spriteFrameCol = this.animationStates["idleFrameCol"];
     } else {
-      this.spriteFrameCol = this.animationStates["initialXFrame"];
+      this.spriteFrameCol = this.animationStates["initialFrameCol"];
     }
   }
 }

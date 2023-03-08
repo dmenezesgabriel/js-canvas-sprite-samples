@@ -50,7 +50,7 @@ export default class JungleScene extends BaseScene {
       0,
       currentAnimationStates["width"],
       currentAnimationStates["height"],
-      currentAnimationStates["initialXFrame"],
+      currentAnimationStates["initialFrameCol"],
       currentAnimationStates["initialYFrame"],
       10,
       false
