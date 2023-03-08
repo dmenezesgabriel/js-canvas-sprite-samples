@@ -1,4 +1,4 @@
-export default class gameObject {
+export default class GameObject {
   constructor(x, y, width, height, speed, friction = 1) {
     this.x = x;
     this.y = y;
