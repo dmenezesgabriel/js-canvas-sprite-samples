@@ -15,16 +15,16 @@ export default class CharacterController {
   }
 
   init() {
-    window.addEventListener("keydown", (e) => {
-      this.keys[e.key] = true;
-      if (this.moveKeys.includes(e.key)) {
+    window.addEventListener("keydown", (event) => {
+      this.keys[event.key] = true;
+      if (this.moveKeys.includes(event.key)) {
         this.moving = true;
       }
     });
 
-    window.addEventListener("keyup", (e) => {
-      delete this.keys[e.key];
-      if (this.moveKeys.includes(e.key)) {
+    window.addEventListener("keyup", (event) => {
+      delete this.keys[event.key];
+      if (this.moveKeys.includes(event.key)) {
         this.moving = false;
       }
     });
