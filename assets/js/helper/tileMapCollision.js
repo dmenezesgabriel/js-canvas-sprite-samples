@@ -44,7 +44,7 @@ function hitBottom(
   return false;
 }
 
-function collides(
+function tileMapLayerGameObjectCollides(
   objectX,
   objectY,
   objectWidth,
@@ -157,7 +157,7 @@ function mapCollides(
   const hasCollision = [];
 
   for (const combination of combinations) {
-    const itCollides = collides(
+    const itCollides = tileMapLayerGameObjectCollides(
       objectX,
       objectY,
       objectWidth,
@@ -175,4 +175,4 @@ function mapCollides(
   return hasCollision.some((value) => value === true);
 }
 
-export { mapCollides };
+export { mapCollides, tileMapLayerGameObjectCollides };

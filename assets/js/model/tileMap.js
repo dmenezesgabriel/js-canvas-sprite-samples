@@ -29,6 +29,7 @@ export default class TileMap {
       name,
       this.tileAtlas,
       this.tileAtlasCols,
+      this.tileSetProperties,
       layerData,
       layerRows,
       layerCols,

@@ -1,4 +1,6 @@
-export default class Character {
+import gameObject from "./gameObject.js";
+
+export default class Character extends gameObject {
   constructor(
     img,
     animationStates,
@@ -12,43 +14,13 @@ export default class Character {
     moving,
     friction = 1
   ) {
+    super(x, y, width, height, speed, friction);
     this.img = img;
     this.animationStates = animationStates;
-    this.x = x;
-    this.y = y;
-    this.width = width;
-    this.height = height;
     this.frameX = frameX;
     this.frameY = frameY;
-    this._speed = speed * friction;
     this.moving = moving;
-    this.friction = friction;
   }
-
-  getSpeed() {
-    return this._speed;
-  }
-
-  setSpeed(value) {
-    this._speed = value * this.friction;
-  }
-
-  getLeft() {
-    return this.x;
-  }
-
-  getTop() {
-    return this.y;
-  }
-
-  getRight() {
-    return this.x + this.width;
-  }
-
-  getBottom() {
-    this.y + this.height;
-  }
-
   getCollisionX() {
     return this.x + this.width * 0.3;
   }

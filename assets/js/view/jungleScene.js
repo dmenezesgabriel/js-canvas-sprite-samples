@@ -1,6 +1,6 @@
 import Character from "../model/character.js";
 import TileMap from "../model/tileMap.js";
-import { mapCollides } from "../helper/collision.js";
+import { mapCollides } from "../helper/tileMapCollision.js";
 import BaseScene from "./baseScene.js";
 
 export default class JungleScene extends BaseScene {
@@ -75,7 +75,7 @@ export default class JungleScene extends BaseScene {
 
     for (const key of Object.keys(this.map.layers)) {
       const layerObject = this.map.layers[key];
-      if (layerObject.name != "foreground") layerObject.drawLayer();
+      if (layerObject.name != "foreground") layerObject.draw();
     }
 
     this.display.drawObject(
@@ -90,7 +90,7 @@ export default class JungleScene extends BaseScene {
 
     for (const key of Object.keys(this.map.layers)) {
       const layerObject = this.map.layers[key];
-      if (layerObject.name === "foreground") layerObject.drawLayer();
+      if (layerObject.name === "foreground") layerObject.draw();
     }
 
     this.display.afterDraw();
