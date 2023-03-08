@@ -8,19 +8,27 @@ export default class Character extends GameObject {
     y,
     width,
     height,
-    frameX,
-    frameY,
+    spriteFrameCol,
+    spriteFrameRow,
     speed,
     moving,
     friction = 1
   ) {
-    super(x, y, width, height, speed, friction);
-    this.img = img;
+    super(
+      img,
+      x,
+      y,
+      width,
+      height,
+      spriteFrameCol,
+      spriteFrameRow,
+      speed,
+      friction
+    );
     this.animationStates = animationStates;
-    this.frameX = frameX;
-    this.frameY = frameY;
     this.moving = moving;
   }
+
   getCollisionX() {
     return this.x + this.width * 0.3;
   }
@@ -39,35 +47,35 @@ export default class Character extends GameObject {
 
   moveLeft() {
     this.x -= this._speed;
-    this.frameY = this.animationStates["leftFramesY"];
+    this.spriteFrameRow = this.animationStates["leftFramesY"];
     this.moving = true;
   }
 
   moveUp() {
     this.y -= this._speed;
-    this.frameY = this.animationStates["upFramesY"];
+    this.spriteFrameRow = this.animationStates["upFramesY"];
     this.moving = true;
   }
 
   moveRight() {
     this.x += this._speed;
-    this.frameY = this.animationStates["rightFramesY"];
+    this.spriteFrameRow = this.animationStates["rightFramesY"];
     this.moving = true;
   }
 
   moveDown() {
     this.y += this._speed;
-    this.frameY = this.animationStates["downFramesY"];
+    this.spriteFrameRow = this.animationStates["downFramesY"];
     this.moving = true;
   }
 
   handleFrame() {
-    if (this.frameX < this.animationStates["endXFrames"] && this.moving)
-      this.frameX++;
+    if (this.spriteFrameCol < this.animationStates["endXFrames"] && this.moving)
+      this.spriteFrameCol++;
     else if (!this.moving) {
-      this.frameX = this.animationStates["idleXFrame"];
+      this.spriteFrameCol = this.animationStates["idleXFrame"];
     } else {
-      this.frameX = this.animationStates["initialXFrame"];
+      this.spriteFrameCol = this.animationStates["initialXFrame"];
     }
   }
 }

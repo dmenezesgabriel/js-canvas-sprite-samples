@@ -8,8 +8,7 @@ export default class TileMap {
     mapData,
     tileSetProperties,
     tileSize,
-    tileScaleSize,
-    display = null
+    tileScaleSize
   ) {
     this.name = name;
     this.mapData = mapData;
@@ -20,7 +19,6 @@ export default class TileMap {
     this.width = this.mapData.width * tileSize * tileScaleSize;
     this.tileSize = tileSize;
     this.tileScaleSize = tileScaleSize;
-    this.display = display;
     this.layers = {};
   }
 
@@ -34,8 +32,7 @@ export default class TileMap {
       layerRows,
       layerCols,
       this.tileSize,
-      this.tileScaleSize,
-      this.display
+      this.tileScaleSize
     );
   }
 

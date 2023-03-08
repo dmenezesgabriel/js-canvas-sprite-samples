@@ -35,8 +35,7 @@ export default class JungleScene extends BaseScene {
       jungleMap,
       jungleTilesetProperties,
       16,
-      2,
-      this.display
+      2
     );
 
     this.map.createLayersFromMapData();
@@ -75,22 +74,14 @@ export default class JungleScene extends BaseScene {
 
     for (const key of Object.keys(this.map.layers)) {
       const layerObject = this.map.layers[key];
-      if (layerObject.name != "foreground") layerObject.draw();
+      if (layerObject.name != "foreground") layerObject.draw(this.display);
     }
 
-    this.display.drawObject(
-      this.character.img,
-      this.character.width * this.character.frameX,
-      this.character.height * this.character.frameY,
-      this.character.x,
-      this.character.y,
-      this.character.width,
-      this.character.height
-    );
+    this.character.draw(this.display);
 
     for (const key of Object.keys(this.map.layers)) {
       const layerObject = this.map.layers[key];
-      if (layerObject.name === "foreground") layerObject.draw();
+      if (layerObject.name === "foreground") layerObject.draw(this.display);
     }
 
     this.display.afterDraw();
@@ -117,6 +108,7 @@ export default class JungleScene extends BaseScene {
       this.map.width,
       this.map.height
     );
+
     this.camera.update(
       this.character.x,
       this.character.y,

@@ -1,9 +1,22 @@
 export default class GameObject {
-  constructor(x, y, width, height, speed, friction = 1) {
+  constructor(
+    img,
+    x,
+    y,
+    width,
+    height,
+    spriteFrameCol,
+    spriteFrameRow,
+    speed,
+    friction = 1
+  ) {
+    this.img = img;
     this.x = x;
     this.y = y;
     this.width = width;
     this.height = height;
+    this.spriteFrameCol = spriteFrameCol;
+    this.spriteFrameRow = spriteFrameRow;
     this._speed = speed;
     this.friction = friction;
   }
@@ -29,5 +42,17 @@ export default class GameObject {
 
   getBottom() {
     this.y + this.height;
+  }
+
+  draw(display) {
+    display.drawObject(
+      this.img,
+      this.width * this.spriteFrameCol,
+      this.height * this.spriteFrameRow,
+      this.x,
+      this.y,
+      this.width,
+      this.height
+    );
   }
 }
