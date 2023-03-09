@@ -1,48 +1,4 @@
-function hitLeft(objectX, currentMapCol, tileSize, tileScaleSize) {
-  const leftSize = currentMapCol * tileSize * tileScaleSize;
-  if (objectX < leftSize) {
-    return true;
-  }
-  return false;
-}
-
-function hitTop(objectY, objectHeight, currentMapRow, tileSize, tileScaleSize) {
-  const top = currentMapRow * tileSize * tileScaleSize;
-  if (objectY + objectHeight > top) {
-    return true;
-  }
-  return false;
-}
-
-function hitRight(
-  objectX,
-  objectWidth,
-  currentMapCol,
-  tileSize,
-  tileScaleSize
-) {
-  const rightSide =
-    currentMapCol * tileSize * tileScaleSize + tileSize * tileScaleSize;
-  if (objectX + objectWidth > rightSide) {
-    return true;
-  }
-  return false;
-}
-
-function hitBottom(
-  objectY,
-  objectHeight,
-  currentMapRow,
-  tileSize,
-  tileScaleSize
-) {
-  const bottom =
-    currentMapRow * tileSize * tileScaleSize + tileSize * tileScaleSize;
-  if (objectY + objectHeight > bottom) {
-    return true;
-  }
-  return false;
-}
+import TileCollision from "./TileCollision.js";
 
 function tileMapLayerGameObjectCollides(
   objectX,
@@ -90,11 +46,16 @@ function tileMapLayerGameObjectCollides(
     if (collide.length > 0) {
       return collide.some((property) => {
         if (property.name === "collidesLeft") {
-          return hitLeft(objectX, currentMapCol, tileSize, tileScaleSize);
+          return TileCollision.collideLeft(
+            objectX,
+            currentMapCol,
+            tileSize,
+            tileScaleSize
+          );
         }
 
         if (property.name === "collidesTop") {
-          return hitTop(
+          return TileCollision.collideTop(
             objectY,
             objectHeight,
             currentMapRow,
@@ -104,7 +65,7 @@ function tileMapLayerGameObjectCollides(
         }
 
         if (property.name === "collidesRight") {
-          return hitRight(
+          return TileCollision.collideRight(
             objectX,
             objectWidth,
             currentMapCol,
@@ -114,7 +75,7 @@ function tileMapLayerGameObjectCollides(
         }
 
         if (property.name === "collidesBottom") {
-          return hitBottom(
+          return TileCollision.collideBottom(
             objectY,
             objectHeight,
             currentMapRow,
