@@ -12,7 +12,8 @@ export default class Character extends GameObject {
     spriteFrameRow,
     speed,
     moving,
-    friction = 1
+    friction = 0,
+    scaleSize
   ) {
     super(
       img,
@@ -23,7 +24,8 @@ export default class Character extends GameObject {
       spriteFrameCol,
       spriteFrameRow,
       speed,
-      friction
+      friction,
+      scaleSize
     );
     this.animationStates = animationStates;
     this.moving = moving;

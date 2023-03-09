@@ -53,7 +53,9 @@ export default class JungleScene extends BaseScene {
       currentAnimationStates["initialFrameCol"],
       currentAnimationStates["initialYFrame"],
       10,
-      false
+      false,
+      0,
+      1
     );
 
     this.camera.x = 780;

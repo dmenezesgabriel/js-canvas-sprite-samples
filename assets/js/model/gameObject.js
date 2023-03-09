@@ -8,24 +8,42 @@ export default class GameObject {
     spriteFrameCol,
     spriteFrameRow,
     speed,
-    friction = 1
+    friction = 0,
+    scaleSize = 1
   ) {
     this.img = img;
     this.x = x;
     this.y = y;
-    this.width = width;
-    this.height = height;
+    this._width = width;
+    this._height = height;
     this.spriteFrameCol = spriteFrameCol;
     this.spriteFrameRow = spriteFrameRow;
     this._speed = speed;
     this.friction = friction;
+    this.scaleSize = scaleSize;
   }
+
+  get height() {
+    return this._height * this.scaleSize;
+  }
+  set height(value) {
+    this._height = value;
+  }
+
+  get width() {
+    return this._width * this.scaleSize;
+  }
+
+  set width(value) {
+    this._width = value;
+  }
+
   getSpeed() {
-    return this._speed;
+    return this._speed - this._speed * this.friction;
   }
 
   setSpeed(value) {
-    this._speed = value * this.friction;
+    this._speed = value;
   }
 
   getLeft() {
@@ -37,22 +55,23 @@ export default class GameObject {
   }
 
   getRight() {
-    return this.x + this.width;
+    return this.x + this.width * this.scaleSize;
   }
 
   getBottom() {
-    this.y + this.height;
+    this.y + this.height * this.scaleSize;
   }
 
   draw(display) {
     display.drawObject(
       this.img,
-      this.width * this.spriteFrameCol,
-      this.height * this.spriteFrameRow,
+      this._width * this.spriteFrameCol,
+      this._height * this.spriteFrameRow,
       this.x,
       this.y,
-      this.width,
-      this.height
+      this._width,
+      this._height,
+      this.scaleSize
     );
   }
 }

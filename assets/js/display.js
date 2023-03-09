@@ -92,7 +92,8 @@ export default class Display {
     destinationX,
     destinationY,
     width,
-    height
+    height,
+    scale = 1
   ) {
     /**
      * Draw Object to the canvas.
@@ -105,14 +106,19 @@ export default class Display {
       height,
       destinationX,
       destinationY,
-      width,
-      height
+      width * scale,
+      height * scale
     );
     //  Debug
     if (this.debug) {
       this.context.beginPath();
       this.context.strokeStyle = "blue";
-      this.context.rect(destinationX, destinationY, width, height);
+      this.context.rect(
+        destinationX,
+        destinationY,
+        width * scale,
+        height * scale
+      );
       this.context.stroke();
     }
 
