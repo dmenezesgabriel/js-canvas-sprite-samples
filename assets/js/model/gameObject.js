@@ -38,11 +38,11 @@ export default class GameObject {
     this._width = value;
   }
 
-  getSpeed() {
+  get speed() {
     return this._speed - this._speed * this.friction;
   }
 
-  setSpeed(value) {
+  set speed(value) {
     this._speed = value;
   }
 

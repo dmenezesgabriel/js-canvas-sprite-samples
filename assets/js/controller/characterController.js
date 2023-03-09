@@ -31,7 +31,7 @@ export default class CharacterController {
   }
 
   intentToMoveCharacter(character) {
-    const currentSpeed = character.getSpeed();
+    const currentSpeed = character.speed;
     const currentX = character.getCollisionX();
     const currentY = character.getCollisionY();
     let newX = currentX;
@@ -69,9 +69,9 @@ export default class CharacterController {
   }
 
   moveCharacter(character, characterCollide, mapWidth, mapHeight) {
-    const characterSpeed = character.getSpeed();
+    const characterSpeed = character.speed;
     if (characterCollide) {
-      character.setSpeed(0);
+      character.speed = 0;
     }
 
     if (this.keys["w"] || this.keys["ArrowUp"]) {
@@ -91,7 +91,7 @@ export default class CharacterController {
     character.handleFrame();
 
     if (characterCollide) {
-      character.setSpeed(characterSpeed);
+      character.speed = characterSpeed;
     }
   }
 }
