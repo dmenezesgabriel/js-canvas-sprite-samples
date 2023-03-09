@@ -55,7 +55,7 @@ export default class JungleScene extends BaseScene {
       10,
       false,
       0,
-      1
+      2
     );
 
     this.camera.x = 780;

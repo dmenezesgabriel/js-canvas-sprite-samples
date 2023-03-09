@@ -1,8 +1,8 @@
 {
   "golden-knight": {
-    "img": "assets/img/knights_2x.png",
-    "width": 52,
-    "height": 72,
+    "img": "assets/img/knights_1x.png",
+    "width": 26,
+    "height": 36,
     "walkDownFramesRow": 0,
     "walkLeftFramesRow": 1,
     "walkRightFramesRow": 2,
