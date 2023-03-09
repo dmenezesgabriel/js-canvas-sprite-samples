@@ -1,7 +1,7 @@
-import Character from "../model/character.js";
-import TileMap from "../model/tileMap.js";
-import { mapCollides } from "../helper/tileMapCollision.js";
-import BaseScene from "./baseScene.js";
+import Character from "../model/Character.js";
+import TileMap from "../model/TileMap.js";
+import TileMapCollision from "../helper/TileMapCollision.js";
+import BaseScene from "./BaseScene.js";
 
 export default class JungleScene extends BaseScene {
   constructor(display, camera, characterController) {
@@ -93,7 +93,7 @@ export default class JungleScene extends BaseScene {
       this.character
     );
 
-    const characterCollide = mapCollides(
+    const characterCollide = TileMapCollision.collidesGameObject(
       newX,
       newY,
       this.character.getCollisionWidth(),

@@ -1,4 +1,4 @@
-import TileMapLayer from "./tileMapLayer.js";
+import TileMapLayer from "./TileMapLayer.js";
 
 export default class TileMap {
   constructor(

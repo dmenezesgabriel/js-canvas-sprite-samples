@@ -1,6 +1,6 @@
 import JungleScene from "./view/jungleScene.js";
-import CharacterController from "./controller/characterController.js";
-import Display from "./display.js";
+import CharacterController from "./controller/CharacterController.js";
+import Display from "./Display.js";
 import Camera from "./camera.js";
 
 class Game {

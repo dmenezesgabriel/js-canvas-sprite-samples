@@ -33,37 +33,3 @@ export default class TileMapLayer {
     );
   }
 }
-
-// hasCollision(objectX, objectY, objectWidth, objectHeight) {
-//   const objectLeft = objectX;
-//   const objectTop = objectY;
-//   const objectRight = objectX + objectWidth;
-//   const objectBottom = objectY + objectHeight;
-
-//   const objectVertices = [
-//     { x: objectLeft, y: objectTop },
-//     { x: objectRight, y: objectTop },
-//     { x: objectLeft, y: objectBottom },
-//     { x: objectRight, y: objectBottom },
-//   ];
-
-//   const verticesCollisions = [];
-
-//   for (const objectVertex of objectVertices) {
-//     const itCollides = tileMapLayerGameObjectCollides(
-//       objectX,
-//       objectY,
-//       objectWidth,
-//       objectHeight,
-//       objectVertex.x,
-//       objectVertex.y,
-//       this.layerData,
-//       this.tileSetProperties,
-//       this.tileSize,
-//       this.tileScaleSize
-//     );
-//     verticesCollisions.push(itCollides);
-//   }
-
-//   return verticesCollisions.some((value) => value === true);
-// }
