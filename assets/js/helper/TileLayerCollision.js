@@ -1,6 +1,14 @@
 import TileCollision from "./TileCollision.js";
 
 export default class TileLayerCollision {
+  static collisionPropertyNames = [
+    "collides",
+    "collidesLeft",
+    "collidesTop",
+    "collidesRight",
+    "collidesBottom",
+  ];
+
   static collidesByProperty(
     property,
     objectX,
@@ -49,6 +57,26 @@ export default class TileLayerCollision {
     }
   }
 
+  static getCurrentMapCol(colReference, tileSize, tileScaleSize) {
+    return Math.floor(colReference / (tileSize * tileScaleSize));
+  }
+
+  static getCurrentMapRow(rowReference, tileSize, tileScaleSize) {
+    return Math.floor(rowReference / (tileSize * tileScaleSize));
+  }
+
+  static getTile(currentMapCol, currentMapRow, layer) {
+    const colNumber = layer["width"];
+    const dataIndex = currentMapRow * colNumber + currentMapCol;
+    const data = layer["data"];
+    let tileVal = data[dataIndex];
+    // Tiled layer data starts at 1 instead of 0
+    if (tileVal != 0) {
+      tileVal -= 1;
+    }
+    return tileVal;
+  }
+
   static collidesGameObject(
     objectX,
     objectY,
@@ -61,35 +89,31 @@ export default class TileLayerCollision {
     tileSize,
     tileScaleSize
   ) {
-    const currentMapCol = Math.floor(colReference / (tileSize * tileScaleSize));
-    const currentMapRow = Math.floor(rowReference / (tileSize * tileScaleSize));
+    const currentMapCol = this.getCurrentMapCol(
+      colReference,
+      tileSize,
+      tileScaleSize
+    );
+    const currentMapRow = this.getCurrentMapRow(
+      rowReference,
+      tileSize,
+      tileScaleSize
+    );
 
-    const colNumber = layer["width"];
-    const dataIndex = currentMapRow * colNumber + currentMapCol;
-    const data = layer["data"];
-    let tileVal = data[dataIndex];
-    // Tiled layer data starts at 1 instead of 0
-    if (tileVal != 0) {
-      tileVal -= 1;
-    }
+    const tileVal = this.getTile(currentMapCol, currentMapRow, layer);
 
     const currentTiles = tileSetProperties["tiles"].filter(
       (tile) => tileVal === tile.id
     );
 
-    return currentTiles.some((tile) => {
-      const collisionPropertyNames = [
-        "collides",
-        "collidesLeft",
-        "collidesTop",
-        "collidesRight",
-        "collidesBottom",
-      ];
-      const collide = tile.properties.filter((property) =>
-        collisionPropertyNames.includes(property.name)
+    if (currentTiles.length > 0) {
+      const tile = currentTiles[0];
+
+      const tileProperties = tile.properties.filter((property) =>
+        this.collisionPropertyNames.includes(property.name)
       );
-      if (collide.length > 0) {
-        return collide.some((property) => {
+      if (tileProperties.length > 0) {
+        return tileProperties.some((property) => {
           return this.collidesByProperty(
             property,
             objectX,
@@ -104,7 +128,7 @@ export default class TileLayerCollision {
         });
       }
       return false;
-    });
+    }
   }
 }
 
