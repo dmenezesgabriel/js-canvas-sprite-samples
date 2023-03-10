@@ -103,10 +103,14 @@ export default class JungleScene extends BaseScene {
       this.map.tileSize,
       this.map.tileScaleSize
     );
+    if (characterCollide) {
+      this.playerCharacter.isColliding = true;
+    } else {
+      this.playerCharacter.isColliding = false;
+    }
 
     this.characterController.moveCharacter(
       this.playerCharacter,
-      characterCollide,
       this.map.width,
       this.map.height
     );

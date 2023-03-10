@@ -68,9 +68,9 @@ export default class CharacterController {
     }
   }
 
-  moveCharacter(character, characterCollide, mapWidth, mapHeight) {
+  moveCharacter(character, mapWidth, mapHeight) {
     const characterSpeed = character.speed;
-    if (characterCollide) {
+    if (character.isColliding) {
       character.speed = 0;
     }
 
@@ -90,7 +90,7 @@ export default class CharacterController {
     this.handleMapLimits(character, mapWidth, mapHeight);
     character.handleFrame();
 
-    if (characterCollide) {
+    if (character.isColliding) {
       character.speed = characterSpeed;
     }
   }

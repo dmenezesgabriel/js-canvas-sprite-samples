@@ -13,7 +13,8 @@ export default class Character extends GameObject {
     speed,
     moving,
     friction = 0,
-    scaleSize
+    scaleSize,
+    isColliding = false
   ) {
     super(
       img,
@@ -25,7 +26,8 @@ export default class Character extends GameObject {
       spriteFrameRow,
       speed,
       friction,
-      scaleSize
+      scaleSize,
+      isColliding
     );
     this.animationStates = animationStates;
     this.moving = moving;

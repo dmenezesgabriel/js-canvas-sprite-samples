@@ -9,7 +9,8 @@ export default class GameObject {
     spriteFrameRow,
     speed,
     friction = 0,
-    scaleSize = 1
+    scaleSize = 1,
+    isColliding = false
   ) {
     this.img = img;
     this.x = x;
@@ -21,6 +22,7 @@ export default class GameObject {
     this._speed = speed;
     this.friction = friction;
     this.scaleSize = scaleSize;
+    this._isColliding = isColliding;
   }
 
   get height() {
@@ -44,6 +46,14 @@ export default class GameObject {
 
   set speed(value) {
     this._speed = value;
+  }
+
+  get isColliding() {
+    return this._isColliding;
+  }
+
+  set isColliding(value) {
+    this._isColliding = value;
   }
 
   getLeft() {
