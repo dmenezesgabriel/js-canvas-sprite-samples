@@ -43,7 +43,7 @@ export default class JungleScene extends BaseScene {
     const characterSpriteImg = new Image();
     characterSpriteImg.src = currentAnimationStates["img"];
 
-    this.character = new Character(
+    this.playerCharacter = new Character(
       characterSpriteImg,
       currentAnimationStates,
       0,
@@ -60,15 +60,15 @@ export default class JungleScene extends BaseScene {
 
     this.camera.x = 780;
     this.camera.y = 0;
-    this.character.x = 990;
-    this.character.y = 30;
+    this.playerCharacter.x = 990;
+    this.playerCharacter.y = 30;
   }
 
   update() {
     if (this.characterController.moving === true) {
-      this.character.moving = true;
+      this.playerCharacter.moving = true;
     } else {
-      this.character.moving = false;
+      this.playerCharacter.moving = false;
     }
 
     // Draw
@@ -79,7 +79,7 @@ export default class JungleScene extends BaseScene {
       if (layerObject.name != "foreground") layerObject.draw(this.display);
     }
 
-    this.character.draw(this.display);
+    this.playerCharacter.draw(this.display);
 
     for (const key of Object.keys(this.map.layers)) {
       const layerObject = this.map.layers[key];
@@ -90,14 +90,14 @@ export default class JungleScene extends BaseScene {
 
     // Future collision from intent to move
     const { newX, newY } = this.characterController.intentToMoveCharacter(
-      this.character
+      this.playerCharacter
     );
 
     const characterCollide = TileMapCollision.collidesGameObject(
       newX,
       newY,
-      this.character.getCollisionWidth(),
-      this.character.getCollisionHeight(),
+      this.playerCharacter.getCollisionWidth(),
+      this.playerCharacter.getCollisionHeight(),
       this.map.mapData,
       this.map.tileSetProperties,
       this.map.tileSize,
@@ -105,17 +105,17 @@ export default class JungleScene extends BaseScene {
     );
 
     this.characterController.moveCharacter(
-      this.character,
+      this.playerCharacter,
       characterCollide,
       this.map.width,
       this.map.height
     );
 
     this.camera.update(
-      this.character.x,
-      this.character.y,
-      this.character.width,
-      this.character.height,
+      this.playerCharacter.x,
+      this.playerCharacter.y,
+      this.playerCharacter.width,
+      this.playerCharacter.height,
       this.map.width,
       this.map.height
     );
