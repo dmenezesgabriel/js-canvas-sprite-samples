@@ -1,6 +1,20 @@
 import { TileLayerCollision } from "../helper/TileLayerCollision.js";
 
 export default class TileMapCollision {
+  static getGameObjectVertices(objectX, objectY, objectWidth, objectHeight) {
+    const objectLeft = objectX;
+    const objectTop = objectY;
+    const objectRight = objectX + objectWidth;
+    const objectBottom = objectY + objectHeight;
+
+    return [
+      { x: objectLeft, y: objectTop },
+      { x: objectRight, y: objectTop },
+      { x: objectLeft, y: objectBottom },
+      { x: objectRight, y: objectBottom },
+    ];
+  }
+
   static collidesGameObject(
     objectX,
     objectY,
@@ -11,17 +25,12 @@ export default class TileMapCollision {
     tileSize,
     tileScaleSize
   ) {
-    const objectLeft = objectX;
-    const objectTop = objectY;
-    const objectRight = objectX + objectWidth;
-    const objectBottom = objectY + objectHeight;
-
-    const objectVertices = [
-      { x: objectLeft, y: objectTop },
-      { x: objectRight, y: objectTop },
-      { x: objectLeft, y: objectBottom },
-      { x: objectRight, y: objectBottom },
-    ];
+    const objectVertices = this.getGameObjectVertices(
+      objectX,
+      objectY,
+      objectWidth,
+      objectHeight
+    );
 
     const hasCollision = [];
 
@@ -42,7 +51,6 @@ export default class TileMapCollision {
         hasCollision.push(itCollides);
       }
     }
-
     return hasCollision.some((value) => value === true);
   }
 }
