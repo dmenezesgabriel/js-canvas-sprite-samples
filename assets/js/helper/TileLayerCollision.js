@@ -12,47 +12,40 @@ export default class TileLayerCollision {
     tileSize,
     tileScaleSize
   ) {
-    if (property.name === "collidesLeft") {
-      return TileCollision.collideLeft(
-        objectX,
-        currentMapCol,
-        tileSize,
-        tileScaleSize
-      );
-    }
-
-    if (property.name === "collidesTop") {
-      return TileCollision.collideTop(
-        objectY,
-        objectHeight,
-        currentMapRow,
-        tileSize,
-        tileScaleSize
-      );
-    }
-
-    if (property.name === "collidesRight") {
-      return TileCollision.collideRight(
-        objectX,
-        objectWidth,
-        currentMapCol,
-        tileSize,
-        tileScaleSize
-      );
-    }
-
-    if (property.name === "collidesBottom") {
-      return TileCollision.collideBottom(
-        objectY,
-        objectHeight,
-        currentMapRow,
-        tileSize,
-        tileScaleSize
-      );
-    }
-
-    if (property.name === "collides") {
-      return property.value;
+    switch (property.name) {
+      case "collidesLeft":
+        return TileCollision.collideLeft(
+          objectX,
+          currentMapCol,
+          tileSize,
+          tileScaleSize
+        );
+      case "collidesTop":
+        return TileCollision.collideTop(
+          objectY,
+          objectHeight,
+          currentMapRow,
+          tileSize,
+          tileScaleSize
+        );
+      case "collidesRight":
+        return TileCollision.collideRight(
+          objectX,
+          objectWidth,
+          currentMapCol,
+          tileSize,
+          tileScaleSize
+        );
+      case "collidesBottom":
+        return TileCollision.collideBottom(
+          objectY,
+          objectHeight,
+          currentMapRow,
+          tileSize,
+          tileScaleSize
+        );
+      case "collides":
+        return property.value;
     }
   }
 
