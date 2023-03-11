@@ -30,7 +30,7 @@ export default class CharacterController {
     });
   }
 
-  intentToMoveCharacter(character) {
+  updateCharacterNextXY(character) {
     const currentSpeed = character.speed;
     const currentX = character.collisionX;
     const currentY = character.collisionY;
@@ -49,7 +49,6 @@ export default class CharacterController {
     if (this.keys["d"] || this.keys["ArrowRight"]) {
       newX = currentX + currentSpeed;
     }
-    // console.log(x, y);
     character.nextX = newX;
     character.nextY = newY;
   }
