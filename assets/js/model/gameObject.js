@@ -1,4 +1,6 @@
-export default class GameObject {
+import EventEmitter from "../helper/EventEmitter.js";
+
+export default class GameObject extends EventEmitter {
   constructor(
     img,
     x,
@@ -12,6 +14,7 @@ export default class GameObject {
     scaleSize = 1,
     isColliding = false
   ) {
+    super();
     this.img = img;
     this.x = x;
     this.y = y;
@@ -32,7 +35,10 @@ export default class GameObject {
   }
 
   set nextX(value) {
-    this._nextX = value;
+    if (this._nextX != value) {
+      this._nextX = value;
+      this.emit("next-x-changed");
+    }
   }
 
   get nextY() {
@@ -40,7 +46,10 @@ export default class GameObject {
   }
 
   set nextY(value) {
-    this._nextY = value;
+    if (this._nextY != value) {
+      this._nextY = value;
+      this.emit("next-y-changed");
+    }
   }
 
   get height() {
