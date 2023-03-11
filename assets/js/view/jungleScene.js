@@ -2,7 +2,6 @@ import Character from "../model/Character.js";
 import TileMap from "../model/TileMap.js";
 import TileMapCollision from "../helper/TileMapCollision.js";
 import BaseScene from "./BaseScene.js";
-import CameraController from "../controller/CameraController.js";
 
 export default class JungleScene extends BaseScene {
   constructor(display, camera, cameraController, characterController) {
@@ -25,17 +24,17 @@ export default class JungleScene extends BaseScene {
     const getJungleMap = await fetch("resources/jungle_map.json");
     const jungleMap = await getJungleMap.json();
 
-    const getJungleTilesetProperties = await fetch(
+    const getJungleTileSetProperties = await fetch(
       "resources/tf_jungle_tileset.json"
     );
-    const jungleTilesetProperties = await getJungleTilesetProperties.json();
+    const jungleTileSetProperties = await getJungleTileSetProperties.json();
 
     this.map = new TileMap(
       "jungle",
       jungleTilesImg,
       22,
       jungleMap,
-      jungleTilesetProperties,
+      jungleTileSetProperties,
       16,
       2
     );
