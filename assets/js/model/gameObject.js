@@ -37,7 +37,7 @@ export default class GameObject extends EventEmitter {
   set nextX(value) {
     if (this._nextX != value) {
       this._nextX = value;
-      this.emit("next-x-changed");
+      this.emit("nextXChanged");
     }
   }
 
@@ -48,7 +48,7 @@ export default class GameObject extends EventEmitter {
   set nextY(value) {
     if (this._nextY != value) {
       this._nextY = value;
-      this.emit("next-y-changed");
+      this.emit("nextYChanged");
     }
   }
 

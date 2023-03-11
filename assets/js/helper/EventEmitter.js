@@ -38,9 +38,10 @@ export default class EventEmitter {
   }
 
   emit(eventName, ...args) {
+    console.log("emitting", eventName);
     const fns = this.listeners[eventName];
     if (!fns) return false;
-    fns.array.forEach((fn) => {
+    fns.forEach((fn) => {
       fn(...args);
     });
     return true;

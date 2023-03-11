@@ -11,6 +11,25 @@ export default class JungleScene extends BaseScene {
     this.characterController = characterController;
     this.maps = {};
   }
+
+  checkPlayerCharacterMapCollision(playerCharacter, map) {
+    const characterCollide = TileMapCollision.collidesGameObject(
+      playerCharacter.nextX,
+      playerCharacter.nextY,
+      playerCharacter.collisionWidth,
+      playerCharacter.collisionHeight,
+      map.mapData,
+      map.tileSetProperties,
+      map.tileSize,
+      map.tileScaleSize
+    );
+    if (characterCollide) {
+      playerCharacter.isColliding = true;
+    } else {
+      playerCharacter.isColliding = false;
+    }
+  }
+
   async create() {
     const getAnimationStates = await fetch(
       "resources/knights-animation-states.json"
@@ -63,6 +82,14 @@ export default class JungleScene extends BaseScene {
     this.camera.y = 0;
     this.playerCharacter.x = 990;
     this.playerCharacter.y = 30;
+
+    this.playerCharacter.on("nextXChanged", () =>
+      this.checkPlayerCharacterMapCollision(this.playerCharacter, this.map)
+    );
+
+    this.playerCharacter.on("nextYChanged", () =>
+      this.checkPlayerCharacterMapCollision(this.playerCharacter, this.map)
+    );
   }
 
   update() {
@@ -91,21 +118,6 @@ export default class JungleScene extends BaseScene {
 
     // Future collision from intent to move
     this.characterController.updateCharacterNextXY(this.playerCharacter);
-    const characterCollide = TileMapCollision.collidesGameObject(
-      this.playerCharacter.nextX,
-      this.playerCharacter.nextY,
-      this.playerCharacter.collisionWidth,
-      this.playerCharacter.collisionHeight,
-      this.map.mapData,
-      this.map.tileSetProperties,
-      this.map.tileSize,
-      this.map.tileScaleSize
-    );
-    if (characterCollide) {
-      this.playerCharacter.isColliding = true;
-    } else {
-      this.playerCharacter.isColliding = false;
-    }
 
     this.characterController.moveCharacter(
       this.playerCharacter,
