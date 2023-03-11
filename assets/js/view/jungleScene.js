@@ -116,9 +116,6 @@ export default class JungleScene extends BaseScene {
 
     this.display.afterDraw();
 
-    // Future collision from intent to move
-    this.characterController.updateCharacterNextXY(this.playerCharacter);
-
     this.characterController.moveCharacter(
       this.playerCharacter,
       this.map.width,

@@ -69,6 +69,7 @@ export default class CharacterController {
   }
 
   moveCharacter(character, mapWidth, mapHeight) {
+    this.updateCharacterNextXY(character);
     const characterSpeed = character.speed;
     if (character.isColliding) {
       character.speed = 0;
