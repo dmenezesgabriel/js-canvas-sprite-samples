@@ -50,7 +50,8 @@ export default class CharacterController {
       newX = currentX + currentSpeed;
     }
     // console.log(x, y);
-    return { newX, newY };
+    character.nextX = newX;
+    character.nextY = newY;
   }
 
   handleMapLimits(character, mapWidth, mapHeight) {

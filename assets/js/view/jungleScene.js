@@ -91,13 +91,10 @@ export default class JungleScene extends BaseScene {
     this.display.afterDraw();
 
     // Future collision from intent to move
-    const { newX, newY } = this.characterController.intentToMoveCharacter(
-      this.playerCharacter
-    );
-
+    this.characterController.intentToMoveCharacter(this.playerCharacter);
     const characterCollide = TileMapCollision.collidesGameObject(
-      newX,
-      newY,
+      this.playerCharacter.nextX,
+      this.playerCharacter.nextY,
       this.playerCharacter.collisionWidth,
       this.playerCharacter.collisionHeight,
       this.map.mapData,

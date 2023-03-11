@@ -15,6 +15,8 @@ export default class GameObject {
     this.img = img;
     this.x = x;
     this.y = y;
+    this._nextX = this.x;
+    this._nextY = this.y;
     this._width = width;
     this._height = height;
     this.spriteFrameCol = spriteFrameCol;
@@ -23,6 +25,22 @@ export default class GameObject {
     this.friction = friction;
     this.scaleSize = scaleSize;
     this._isColliding = isColliding;
+  }
+
+  get nextX() {
+    return this._nextX || this.x;
+  }
+
+  set nextX(value) {
+    this._nextX = value;
+  }
+
+  get nextY() {
+    return this._nextY || this.y;
+  }
+
+  set nextY(value) {
+    this._nextY = value;
   }
 
   get height() {
