@@ -2,11 +2,13 @@ import Character from "../model/Character.js";
 import TileMap from "../model/TileMap.js";
 import TileMapCollision from "../helper/TileMapCollision.js";
 import BaseScene from "./BaseScene.js";
+import CameraController from "../controller/CameraController.js";
 
 export default class JungleScene extends BaseScene {
-  constructor(display, camera, characterController) {
+  constructor(display, camera, cameraController, characterController) {
     super(display);
     this.camera = camera;
+    this.cameraController = cameraController;
     this.characterController = characterController;
     this.maps = {};
   }
@@ -115,7 +117,8 @@ export default class JungleScene extends BaseScene {
       this.map.height
     );
 
-    this.camera.update(
+    this.cameraController.moveCamera(
+      this.camera,
       this.playerCharacter.x,
       this.playerCharacter.y,
       this.playerCharacter.width,
@@ -123,6 +126,5 @@ export default class JungleScene extends BaseScene {
       this.map.width,
       this.map.height
     );
-    // console.log(this.camera.x, this.camera.y, this.character.x, this.character.y);
   }
 }
