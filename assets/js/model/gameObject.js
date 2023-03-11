@@ -56,19 +56,19 @@ export default class GameObject {
     this._isColliding = value;
   }
 
-  getLeft() {
+  get left() {
     return this.x;
   }
 
-  getTop() {
+  get top() {
     return this.y;
   }
 
-  getRight() {
+  get right() {
     return this.x + this.width * this.scaleSize;
   }
 
-  getBottom() {
+  get bottom() {
     this.y + this.height * this.scaleSize;
   }
 

@@ -32,8 +32,8 @@ export default class CharacterController {
 
   intentToMoveCharacter(character) {
     const currentSpeed = character.speed;
-    const currentX = character.getCollisionX();
-    const currentY = character.getCollisionY();
+    const currentX = character.collisionX;
+    const currentY = character.collisionY;
     let newX = currentX;
     let newY = currentY;
 

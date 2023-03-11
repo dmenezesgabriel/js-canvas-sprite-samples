@@ -33,19 +33,19 @@ export default class Character extends GameObject {
     this.moving = moving;
   }
 
-  getCollisionX() {
+  get collisionX() {
     return this.x + this.width * 0.3;
   }
 
-  getCollisionY() {
+  get collisionY() {
     return this.y + this.height * 0.7;
   }
 
-  getCollisionWidth() {
+  get collisionWidth() {
     return this.width - this.width * 0.6;
   }
 
-  getCollisionHeight() {
+  get collisionHeight() {
     return this.height - this.height * 0.7;
   }
 

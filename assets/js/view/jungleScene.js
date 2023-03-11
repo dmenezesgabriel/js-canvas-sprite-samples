@@ -98,8 +98,8 @@ export default class JungleScene extends BaseScene {
     const characterCollide = TileMapCollision.collidesGameObject(
       newX,
       newY,
-      this.playerCharacter.getCollisionWidth(),
-      this.playerCharacter.getCollisionHeight(),
+      this.playerCharacter.collisionWidth,
+      this.playerCharacter.collisionHeight,
       this.map.mapData,
       this.map.tileSetProperties,
       this.map.tileSize,
