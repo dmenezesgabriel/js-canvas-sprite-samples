@@ -19,6 +19,7 @@ export default class TileMapLayer {
     this.layerCols = layerCols;
     this.tileSize = tileSize;
     this.tileScaleSize = tileScaleSize;
+    this.isTileMapLayer = true;
   }
 
   draw(display) {

@@ -80,7 +80,10 @@ export default class GameObject extends EventEmitter {
   }
 
   set isColliding(value) {
-    this._isColliding = value;
+    if (this._isColliding != value) {
+      this._isColliding = value;
+      this.emit("isCollidingChanged");
+    }
   }
 
   get left() {

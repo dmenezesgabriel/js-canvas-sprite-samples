@@ -31,6 +31,7 @@ export default class Character extends GameObject {
     );
     this.animationStates = animationStates;
     this.moving = moving;
+    this.isBody = true;
   }
 
   get collisionX() {

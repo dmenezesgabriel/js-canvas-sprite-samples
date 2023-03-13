@@ -83,12 +83,11 @@ export default class JungleScene extends BaseScene {
     this.playerCharacter.x = 990;
     this.playerCharacter.y = 30;
 
-    this.playerCharacter.on("nextXChanged", () =>
-      this.checkPlayerCharacterMapCollision(this.playerCharacter, this.map)
-    );
-
-    this.playerCharacter.on("nextYChanged", () =>
-      this.checkPlayerCharacterMapCollision(this.playerCharacter, this.map)
+    this.world.addCollider(
+      "player-map-collision",
+      this.playerCharacter,
+      this.map,
+      () => console.log("Player collided with TileMap")
     );
   }
 

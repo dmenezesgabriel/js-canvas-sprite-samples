@@ -20,6 +20,7 @@ export default class TileMap {
     this.tileSize = tileSize;
     this.tileScaleSize = tileScaleSize;
     this.layers = {};
+    this.isTileMap = true;
   }
 
   createLayer(name, layerData, layerRows, layerCols) {
