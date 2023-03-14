@@ -77,58 +77,83 @@ export default class TileLayerCollision {
     return tileVal;
   }
 
+  static getGameObjectVertices(objectX, objectY, objectWidth, objectHeight) {
+    const objectLeft = objectX;
+    const objectTop = objectY;
+    const objectRight = objectX + objectWidth;
+    const objectBottom = objectY + objectHeight;
+
+    return [
+      { x: objectLeft, y: objectTop },
+      { x: objectRight, y: objectTop },
+      { x: objectLeft, y: objectBottom },
+      { x: objectRight, y: objectBottom },
+    ];
+  }
+
   static collidesGameObject(
     objectX,
     objectY,
     objectWidth,
     objectHeight,
-    colReference,
-    rowReference,
     layer,
     tileSetProperties,
     tileSize,
     tileScaleSize
   ) {
-    const currentMapCol = this.getCurrentMapCol(
-      colReference,
-      tileSize,
-      tileScaleSize
-    );
-    const currentMapRow = this.getCurrentMapRow(
-      rowReference,
-      tileSize,
-      tileScaleSize
+    const objectVertices = this.getGameObjectVertices(
+      objectX,
+      objectY,
+      objectWidth,
+      objectHeight
     );
 
-    const tileVal = this.getTile(currentMapCol, currentMapRow, layer);
+    const hasCollision = [];
 
-    const currentTiles = tileSetProperties["tiles"].filter(
-      (tile) => tileVal === tile.id
-    );
-
-    if (currentTiles.length > 0) {
-      const tile = currentTiles[0];
-
-      const tileProperties = tile.properties.filter((property) =>
-        this.collisionPropertyNames.includes(property.name)
+    for (const objectVertex of objectVertices) {
+      const currentMapCol = this.getCurrentMapCol(
+        objectVertex.x,
+        tileSize,
+        tileScaleSize
       );
-      if (tileProperties.length > 0) {
-        return tileProperties.some((property) => {
-          return this.collidesByProperty(
-            property,
-            objectX,
-            objectY,
-            objectWidth,
-            objectHeight,
-            currentMapCol,
-            currentMapRow,
-            tileSize,
-            tileScaleSize
-          );
-        });
+      const currentMapRow = this.getCurrentMapRow(
+        objectVertex.y,
+        tileSize,
+        tileScaleSize
+      );
+
+      const tileVal = this.getTile(currentMapCol, currentMapRow, layer);
+
+      const currentTiles = tileSetProperties["tiles"].filter(
+        (tile) => tileVal === tile.id
+      );
+
+      if (currentTiles.length > 0) {
+        const tile = currentTiles[0];
+
+        const tileProperties = tile.properties.filter((property) =>
+          this.collisionPropertyNames.includes(property.name)
+        );
+        let itCollides = false;
+        if (tileProperties.length > 0) {
+          itCollides = tileProperties.some((property) => {
+            return this.collidesByProperty(
+              property,
+              objectX,
+              objectY,
+              objectWidth,
+              objectHeight,
+              currentMapCol,
+              currentMapRow,
+              tileSize,
+              tileScaleSize
+            );
+          });
+        }
+        hasCollision.push(itCollides);
       }
-      return false;
     }
+    return hasCollision.some((value) => value === true);
   }
 }
 
