@@ -37,8 +37,8 @@ export default class JungleScene extends BaseScene {
     const animationStates = await getAnimationStates.json();
     const currentAnimationStates = animationStates["golden-knight"];
 
-    const jungleTilesImg = new Image();
-    jungleTilesImg.src = "assets/img/tf_jungle_tileset.png";
+    const jungleTileAtlas = new Image();
+    jungleTileAtlas.src = "assets/img/tf_jungle_tileset.png";
 
     const getJungleMap = await fetch("resources/jungle_map.json");
     const jungleMap = await getJungleMap.json();
@@ -48,17 +48,26 @@ export default class JungleScene extends BaseScene {
     );
     const jungleTileSetProperties = await getJungleTileSetProperties.json();
 
-    this.map = new TileMap(
-      "jungle",
-      jungleTilesImg,
-      22,
-      jungleMap,
-      jungleTileSetProperties,
-      16,
-      2
-    );
+    this.map = new TileMap("jungle", jungleMap, 16, 2);
 
-    this.map.createLayersFromMapData();
+    const layerNames = [
+      "background",
+      "path",
+      "lagoon",
+      "trees",
+      "bushes",
+      "foreground",
+    ];
+    for (const name of layerNames) {
+      this.map.addLayer(
+        name,
+        jungleTileAtlas,
+        22,
+        jungleTileSetProperties,
+        16,
+        2
+      );
+    }
 
     const characterSpriteImg = new Image();
     characterSpriteImg.src = currentAnimationStates["img"];
@@ -84,11 +93,19 @@ export default class JungleScene extends BaseScene {
     this.playerCharacter.y = 30;
 
     this.world.addCollider(
-      "player-map-collision",
+      "playerBackgroundCollision",
       this.playerCharacter,
-      this.map,
-      () => console.log("Player collided with TileMap")
+      this.map.getLayer("background"),
+      (objectA, objectB) =>
+        console.log("Player collided with background", objectA, objectB)
     );
+
+    // this.world.addCollider(
+    //   "player-trees-collision",
+    //   this.playerCharacter,
+    //   this.map.getLayer("trees"),
+    //   () => console.log("Player collided with trees")
+    // );
   }
 
   update() {

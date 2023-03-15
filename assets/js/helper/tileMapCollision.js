@@ -1,4 +1,4 @@
-import { TileLayerCollision } from "../helper/TileLayerCollision.js";
+import { TileMapLayerCollision } from "./TileMapLayerCollision.js";
 
 export default class TileMapCollision {
   static collidesGameObject(
@@ -14,7 +14,7 @@ export default class TileMapCollision {
     const hasCollision = [];
 
     for (const layer of layerData.layers) {
-      const itCollides = TileLayerCollision.collidesGameObject(
+      const itCollides = TileMapLayerCollision.collidesGameObject(
         objectX,
         objectY,
         objectWidth,

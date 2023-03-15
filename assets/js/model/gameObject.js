@@ -36,8 +36,8 @@ export default class GameObject extends EventEmitter {
 
   set nextX(value) {
     if (this._nextX != value) {
+      this.emit("nextXChanged", [value]);
       this._nextX = value;
-      this.emit("nextXChanged");
     }
   }
 
@@ -47,8 +47,8 @@ export default class GameObject extends EventEmitter {
 
   set nextY(value) {
     if (this._nextY != value) {
+      this.emit("nextYChanged", [value]);
       this._nextY = value;
-      this.emit("nextYChanged");
     }
   }
 
@@ -81,8 +81,8 @@ export default class GameObject extends EventEmitter {
 
   set isColliding(value) {
     if (this._isColliding != value) {
+      this.emit("isCollidingChanged", [value]);
       this._isColliding = value;
-      this.emit("isCollidingChanged");
     }
   }
 

@@ -1,6 +1,6 @@
 import TileCollision from "./TileCollision.js";
 
-export default class TileLayerCollision {
+export default class TileMapLayerCollision {
   static collisionPropertyNames = [
     "collides",
     "collidesLeft",
@@ -65,10 +65,10 @@ export default class TileLayerCollision {
     return Math.floor(rowReference / (tileSize * tileScaleSize));
   }
 
-  static getTile(currentMapCol, currentMapRow, layer) {
-    const colNumber = layer["width"];
+  static getTile(currentMapCol, currentMapRow, layerWidth, layerData) {
+    const colNumber = layerWidth;
     const dataIndex = currentMapRow * colNumber + currentMapCol;
-    const data = layer["data"];
+    const data = layerData;
     let tileVal = data[dataIndex];
     // Tiled layer data starts at 1 instead of 0
     if (tileVal != 0) {
@@ -96,7 +96,8 @@ export default class TileLayerCollision {
     objectY,
     objectWidth,
     objectHeight,
-    layer,
+    layerWidth,
+    layerData,
     tileSetProperties,
     tileSize,
     tileScaleSize
@@ -122,7 +123,12 @@ export default class TileLayerCollision {
         tileScaleSize
       );
 
-      const tileVal = this.getTile(currentMapCol, currentMapRow, layer);
+      const tileVal = this.getTile(
+        currentMapCol,
+        currentMapRow,
+        layerWidth,
+        layerData
+      );
 
       const currentTiles = tileSetProperties["tiles"].filter(
         (tile) => tileVal === tile.id
@@ -157,4 +163,4 @@ export default class TileLayerCollision {
   }
 }
 
-export { TileLayerCollision };
+export { TileMapLayerCollision };

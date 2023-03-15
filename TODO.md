@@ -5,7 +5,7 @@
 - [x] Movement
 - [x] Camera
 - [x] Screen Limits
-- [] Collision surface
+- [x] Collision surface
 
 ## Tile Map
 
@@ -14,7 +14,7 @@
 
 ## Collision
 
-- [] Handle collision
+- [x] Handle collision
 
 ## Enemies
 

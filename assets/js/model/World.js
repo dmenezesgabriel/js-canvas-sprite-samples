@@ -1,9 +1,6 @@
-/**
- * example implementation
- * https://github.com/photonstorm/phaser/blob/468bf7821d87a40208d73cb8d686b96d25d96ebf/src/physics/arcade/World.js#L1927
- */
 import TileMapCollision from "../helper/TileMapCollision.js";
-import Collider from "../helper/Collider.js";
+import TileMapLayerCollision from "../helper/TileMapLayerCollision.js";
+import Collider from "./Collider.js";
 import EventEmitter from "../helper/EventEmitter.js";
 
 export default class World extends EventEmitter {
@@ -18,8 +15,8 @@ export default class World extends EventEmitter {
     this.colliders.push(collider);
   }
 
-  handleGameObjectTileMapCollision(gameObject, tileMap) {
-    gameObject.isColliding = TileMapCollision.collidesGameObject(
+  handleGameObjectTileMapCollision(gameObject, tileMap, collider) {
+    const collisionOccurs = TileMapCollision.collidesGameObject(
       gameObject.nextX,
       gameObject.nextY,
       gameObject.collisionWidth,
@@ -29,6 +26,25 @@ export default class World extends EventEmitter {
       tileMap.tileSize,
       tileMap.tileScaleSize
     );
+    collider.isActive = collisionOccurs;
+    return collisionOccurs;
+  }
+
+  handleGameObjectTileMapLayerCollision(gameObject, tileMapLayer, collider) {
+    const collisionOccurs = TileMapLayerCollision.collidesGameObject(
+      gameObject.nextX,
+      gameObject.nextY,
+      gameObject.collisionWidth,
+      gameObject.collisionHeight,
+      tileMapLayer.layerCols,
+      tileMapLayer.layerData,
+      tileMapLayer.tileSetProperties,
+      tileMapLayer.tileSize,
+      tileMapLayer.tileScaleSize
+    );
+
+    collider.isActive = collisionOccurs;
+    return collisionOccurs;
   }
 
   setupCollider(collider) {
@@ -38,19 +54,61 @@ export default class World extends EventEmitter {
 
     if (objectA.isBody) {
       if (objectB.isBody) {
-        //
+        // Not implemented
       } else if (objectB.isTileMap) {
         objectA.on("nextXChanged", () =>
-          this.handleGameObjectTileMapCollision(objectA, objectB)
+          this.handleGameObjectTileMapCollision(objectA, objectB, collider)
         );
         objectA.on("nextYChanged", () =>
-          this.handleGameObjectTileMapCollision(objectA, objectB)
+          this.handleGameObjectTileMapCollision(objectA, objectB, collider)
         );
         if (callback) {
-          objectA.on("isCollidingChanged", () => callback());
+          collider.on("onCollide", (objectA, objectB) =>
+            callback(objectA, objectB)
+          );
         }
       } else if (objectB.isTileMapLayer) {
-        //
+        objectA.on("nextXChanged", () =>
+          this.handleGameObjectTileMapLayerCollision(objectA, objectB, collider)
+        );
+        objectA.on("nextYChanged", () =>
+          this.handleGameObjectTileMapLayerCollision(objectA, objectB, collider)
+        );
+        if (callback) {
+          collider.on("onCollide", (objectA, objectB) =>
+            callback(objectA, objectB)
+          );
+        }
+      }
+    }
+    if (objectA.isTileMap) {
+      if (objectB.isBody) {
+        objectA.on("nextXChanged", () =>
+          this.handleGameObjectTileMapCollision(objectB, objectA)
+        );
+        objectA.on("nextYChanged", () =>
+          this.handleGameObjectTileMapCollision(objectB, objectA)
+        );
+        if (callback) {
+          collider.on("onCollide", (objectA, objectB) =>
+            callback(objectA, objectB)
+          );
+        }
+      }
+    }
+    if (objectA.isTileMapLayer) {
+      if (objectB.isBody) {
+        objectA.on("nextXChanged", () =>
+          this.handleGameObjectTileMapLayerCollision(objectB, objectA)
+        );
+        objectA.on("nextYChanged", () =>
+          this.handleGameObjectTileMapLayerCollision(objectB, objectA)
+        );
+        if (callback) {
+          collider.on("onCollide", (objectA, objectB) =>
+            callback(objectA, objectB)
+          );
+        }
       }
     }
   }
