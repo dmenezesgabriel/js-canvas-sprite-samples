@@ -1,6 +1,5 @@
 import Character from "../model/Character.js";
 import TileMap from "../model/TileMap.js";
-import TileMapCollision from "../helper/TileMapCollision.js";
 import BaseScene from "./BaseScene.js";
 
 export default class JungleScene extends BaseScene {
@@ -82,12 +81,12 @@ export default class JungleScene extends BaseScene {
         console.log("Player collided with background", objectA)
     );
 
-    // this.world.addCollider(
-    //   "player-trees-collision",
-    //   this.playerCharacter,
-    //   this.map.getLayer("trees"),
-    //   () => console.log("Player collided with trees")
-    // );
+    this.world.addCollider(
+      "player-trees-collision",
+      this.playerCharacter,
+      this.map.getLayer("trees"),
+      () => console.log("Player collided with trees")
+    );
   }
 
   update() {

@@ -1,4 +1,3 @@
-import TileMapCollision from "../helper/TileMapCollision.js";
 import TileMapLayerCollision from "../helper/TileMapLayerCollision.js";
 import Collider from "./Collider.js";
 import EventEmitter from "../helper/EventEmitter.js";
@@ -15,22 +14,6 @@ export default class World extends EventEmitter {
     this.colliders.push(collider);
   }
 
-  handleGameObjectTileMapCollision(gameObject, tileMap, collider) {
-    const collisionOccurs = TileMapCollision.collidesGameObject(
-      gameObject.nextX,
-      gameObject.nextY,
-      gameObject.collisionWidth,
-      gameObject.collisionHeight,
-      tileMap.mapData,
-      tileMap.tileSetProperties,
-      tileMap.tileSize,
-      tileMap.tileScaleSize
-    );
-    collider.isActive = collisionOccurs;
-    gameObject.isColliding = collisionOccurs;
-    return collisionOccurs;
-  }
-
   handleGameObjectTileMapLayerCollision(gameObject, tileMapLayer, collider) {
     const collisionOccurs = TileMapLayerCollision.collidesGameObject(
       gameObject.nextX,
@@ -43,8 +26,13 @@ export default class World extends EventEmitter {
       tileMapLayer.tileSize,
       tileMapLayer.tileScaleSize
     );
+
     collider.isActive = collisionOccurs;
-    gameObject.isColliding = collisionOccurs;
+    // TODO
+    // Improve collision
+    gameObject.isColliding = gameObject.colliders.some(
+      (collider) => collider.isActive && collider.overlapOnly === false
+    );
     return collisionOccurs;
   }
 
@@ -53,21 +41,12 @@ export default class World extends EventEmitter {
     const objectB = collider.objectB;
     const callback = collider.callback;
 
+    objectA.colliders.push(collider);
+    objectB.colliders.push(collider);
+
     if (objectA.isBody) {
       if (objectB.isBody) {
         // Not implemented
-      } else if (objectB.isTileMap) {
-        objectA.on("nextXChanged", () =>
-          this.handleGameObjectTileMapCollision(objectA, objectB, collider)
-        );
-        objectA.on("nextYChanged", () =>
-          this.handleGameObjectTileMapCollision(objectA, objectB, collider)
-        );
-        if (callback) {
-          collider.on("onCollide", (objectA, objectB) =>
-            callback(objectA, objectB)
-          );
-        }
       } else if (objectB.isTileMapLayer) {
         objectA.on("nextXChanged", () =>
           this.handleGameObjectTileMapLayerCollision(objectA, objectB, collider)
@@ -82,21 +61,7 @@ export default class World extends EventEmitter {
         }
       }
     }
-    if (objectA.isTileMap) {
-      if (objectB.isBody) {
-        objectA.on("nextXChanged", () =>
-          this.handleGameObjectTileMapCollision(objectB, objectA)
-        );
-        objectA.on("nextYChanged", () =>
-          this.handleGameObjectTileMapCollision(objectB, objectA)
-        );
-        if (callback) {
-          collider.on("onCollide", (objectA, objectB) =>
-            callback(objectA, objectB)
-          );
-        }
-      }
-    }
+
     if (objectA.isTileMapLayer) {
       if (objectB.isBody) {
         objectA.on("nextXChanged", () =>

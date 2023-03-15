@@ -20,6 +20,7 @@ export default class TileMapLayer {
     this.tileSize = tileSize;
     this.tileScaleSize = tileScaleSize;
     this.isTileMapLayer = true;
+    this.colliders = [];
   }
 
   draw(display) {

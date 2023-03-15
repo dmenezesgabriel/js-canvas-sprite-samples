@@ -28,6 +28,7 @@ export default class GameObject extends EventEmitter {
     this.friction = friction;
     this.scaleSize = scaleSize;
     this._isColliding = isColliding;
+    this.colliders = [];
   }
 
   get nextX() {
