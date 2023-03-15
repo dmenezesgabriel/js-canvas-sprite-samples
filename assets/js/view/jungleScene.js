@@ -1,4 +1,4 @@
-import Character from "../model/Character.js";
+import { goldenKnight } from "../characters/GoldenKnight.js";
 import TileMap from "../model/TileMap.js";
 import BaseScene from "./BaseScene.js";
 
@@ -12,12 +12,6 @@ export default class JungleScene extends BaseScene {
   }
 
   async create() {
-    const getAnimationStates = await fetch(
-      "resources/knights-animation-states.json"
-    );
-    const animationStates = await getAnimationStates.json();
-    const currentAnimationStates = animationStates["golden-knight"];
-
     const jungleTileAtlas = new Image();
     jungleTileAtlas.src = "assets/img/tf_jungle_tileset.png";
 
@@ -50,23 +44,7 @@ export default class JungleScene extends BaseScene {
       );
     }
 
-    const characterSpriteImg = new Image();
-    characterSpriteImg.src = currentAnimationStates["img"];
-
-    this.playerCharacter = new Character(
-      characterSpriteImg,
-      currentAnimationStates,
-      0,
-      0,
-      currentAnimationStates["width"],
-      currentAnimationStates["height"],
-      currentAnimationStates["initialFrameCol"],
-      currentAnimationStates["initialYFrame"],
-      10,
-      false,
-      0,
-      2
-    );
+    this.playerCharacter = goldenKnight;
 
     this.camera.x = 780;
     this.camera.y = 0;
