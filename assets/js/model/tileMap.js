@@ -18,25 +18,6 @@ export default class TileMap {
     }
   }
 
-  createLayer(name, layerData, layerRows, layerCols) {
-    /**
-     * @returns {TileMapLayer}
-     */
-    const layer = new TileMapLayer(
-      name,
-      this.tileAtlas,
-      this.tileAtlasCols,
-      this.tileSetProperties,
-      layerData,
-      layerRows,
-      layerCols,
-      this.tileSize,
-      this.tileScaleSize
-    );
-    this.layers[name] = layer;
-    return layer;
-  }
-
   addLayer(
     name,
     tileAtlas,
@@ -72,16 +53,5 @@ export default class TileMap {
     );
     this.layers[layer.name] = layerObject;
     return layerObject;
-  }
-
-  createLayersFromMapData() {
-    for (const layer of this.mapData.layers) {
-      this.createLayer(
-        layer.name,
-        layer["data"],
-        layer["height"],
-        layer["width"]
-      );
-    }
   }
 }

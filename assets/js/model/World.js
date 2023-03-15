@@ -27,6 +27,7 @@ export default class World extends EventEmitter {
       tileMap.tileScaleSize
     );
     collider.isActive = collisionOccurs;
+    gameObject.isColliding = collisionOccurs;
     return collisionOccurs;
   }
 
@@ -42,8 +43,8 @@ export default class World extends EventEmitter {
       tileMapLayer.tileSize,
       tileMapLayer.tileScaleSize
     );
-
     collider.isActive = collisionOccurs;
+    gameObject.isColliding = collisionOccurs;
     return collisionOccurs;
   }
 

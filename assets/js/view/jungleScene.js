@@ -12,24 +12,6 @@ export default class JungleScene extends BaseScene {
     this.maps = {};
   }
 
-  checkPlayerCharacterMapCollision(playerCharacter, map) {
-    const characterCollide = TileMapCollision.collidesGameObject(
-      playerCharacter.nextX,
-      playerCharacter.nextY,
-      playerCharacter.collisionWidth,
-      playerCharacter.collisionHeight,
-      map.mapData,
-      map.tileSetProperties,
-      map.tileSize,
-      map.tileScaleSize
-    );
-    if (characterCollide) {
-      playerCharacter.isColliding = true;
-    } else {
-      playerCharacter.isColliding = false;
-    }
-  }
-
   async create() {
     const getAnimationStates = await fetch(
       "resources/knights-animation-states.json"
@@ -97,7 +79,7 @@ export default class JungleScene extends BaseScene {
       this.playerCharacter,
       this.map.getLayer("background"),
       (objectA, objectB) =>
-        console.log("Player collided with background", objectA, objectB)
+        console.log("Player collided with background", objectA)
     );
 
     // this.world.addCollider(

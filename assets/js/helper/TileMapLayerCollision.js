@@ -65,8 +65,8 @@ export default class TileMapLayerCollision {
     return Math.floor(rowReference / (tileSize * tileScaleSize));
   }
 
-  static getTile(currentMapCol, currentMapRow, layerWidth, layerData) {
-    const colNumber = layerWidth;
+  static getTile(currentMapCol, currentMapRow, layerCols, layerData) {
+    const colNumber = layerCols;
     const dataIndex = currentMapRow * colNumber + currentMapCol;
     const data = layerData;
     let tileVal = data[dataIndex];
@@ -96,7 +96,7 @@ export default class TileMapLayerCollision {
     objectY,
     objectWidth,
     objectHeight,
-    layerWidth,
+    layerCols,
     layerData,
     tileSetProperties,
     tileSize,
@@ -126,7 +126,7 @@ export default class TileMapLayerCollision {
       const tileVal = this.getTile(
         currentMapCol,
         currentMapRow,
-        layerWidth,
+        layerCols,
         layerData
       );
 
