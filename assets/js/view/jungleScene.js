@@ -77,12 +77,31 @@ export default class JungleScene extends BaseScene {
       "playerBackgroundCollision",
       this.playerCharacter,
       this.map.getLayer("background"),
-      (objectA, objectB) =>
-        console.log("Player collided with background", objectA)
+      (objectA, objectB) => console.log("Player collided with background")
     );
 
     this.world.addCollider(
-      "player-trees-collision",
+      "playerPathCollision",
+      this.playerCharacter,
+      this.map.getLayer("path"),
+      () => console.log("Player collided with path")
+    );
+
+    this.world.addCollider(
+      "playerLagoonCollision",
+      this.playerCharacter,
+      this.map.getLayer("lagoon"),
+      () => console.log("Player collided with lagoon")
+    );
+    this.world.addCollider(
+      "playerBushesCollision",
+      this.playerCharacter,
+      this.map.getLayer("bushes"),
+      () => console.log("Player collided with bushes")
+    );
+
+    this.world.addCollider(
+      "playerTreesCollision",
       this.playerCharacter,
       this.map.getLayer("trees"),
       () => console.log("Player collided with trees")
