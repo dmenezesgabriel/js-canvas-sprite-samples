@@ -21,3 +21,9 @@
 - [] Movement
 - [] Screen Limits
 - [] Collision Surface
+
+## Game style
+
+- Top down RPG
+- Beat'em up combat
+- Co-operative (web-rtc?)
