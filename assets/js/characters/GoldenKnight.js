@@ -1,7 +1,7 @@
 import Battler from "../model/Battler.js";
 import animationManager from "../animations/GoldenKnight.js";
 
-class GoldenKnight extends Battler {
+export default class GoldenKnight extends Battler {
   constructor(
     name,
     x,
@@ -69,26 +69,3 @@ class GoldenKnight extends Battler {
     this.animationManager.play("idle-down");
   }
 }
-
-const getAnimationStates = await fetch(
-  "resources/knights-animation-states.json"
-);
-const animationStates = await getAnimationStates.json();
-const currentAnimationStates = animationStates["golden-knight"];
-
-const characterSpriteImg = new Image();
-characterSpriteImg.src = currentAnimationStates["img"];
-
-const goldenKnight = new GoldenKnight(
-  "Golden Knight",
-  0,
-  0,
-  currentAnimationStates["width"],
-  currentAnimationStates["height"],
-  10,
-  false,
-  0,
-  2
-);
-
-export { goldenKnight };

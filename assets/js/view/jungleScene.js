@@ -1,4 +1,4 @@
-import { goldenKnight } from "../characters/GoldenKnight.js";
+import GoldenKnight from "../characters/GoldenKnight.js";
 import TileMap from "../model/TileMap.js";
 import BaseScene from "./BaseScene.js";
 
@@ -44,7 +44,23 @@ export default class JungleScene extends BaseScene {
       );
     }
 
-    this.playerCharacter = goldenKnight;
+    const getAnimationStates = await fetch(
+      "resources/knights-animation-states.json"
+    );
+    const animationStates = await getAnimationStates.json();
+    const currentAnimationStates = animationStates["golden-knight"];
+
+    this.playerCharacter = new GoldenKnight(
+      "Golden Knight",
+      0,
+      0,
+      currentAnimationStates["width"],
+      currentAnimationStates["height"],
+      10,
+      false,
+      0,
+      2
+    );
 
     this.camera.x = 780;
     this.camera.y = 0;
