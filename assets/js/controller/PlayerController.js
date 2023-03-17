@@ -88,8 +88,11 @@ export default class PlayerController {
       character.moveRight();
     }
 
+    if (!character.moving) {
+      character.idle();
+    }
+
     this.handleMapLimits(character, mapWidth, mapHeight);
-    character.handleFrame();
 
     if (character.isColliding) {
       character.speed = characterSpeed;

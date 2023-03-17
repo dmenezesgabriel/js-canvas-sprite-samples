@@ -2,28 +2,22 @@ import EventEmitter from "../helper/EventEmitter.js";
 
 export default class GameObject extends EventEmitter {
   constructor(
-    img,
     x,
     y,
     width,
     height,
-    spriteFrameCol,
-    spriteFrameRow,
     speed,
     friction = 0,
     scaleSize = 1,
     isColliding = false
   ) {
     super();
-    this.img = img;
     this.x = x;
     this.y = y;
     this._nextX = this.x;
     this._nextY = this.y;
     this._width = width;
     this._height = height;
-    this.spriteFrameCol = spriteFrameCol;
-    this.spriteFrameRow = spriteFrameRow;
     this._speed = speed;
     this.friction = friction;
     this.scaleSize = scaleSize;
@@ -101,18 +95,5 @@ export default class GameObject extends EventEmitter {
 
   get bottom() {
     this.y + this.height * this.scaleSize;
-  }
-
-  draw(display) {
-    display.drawObject(
-      this.img,
-      this._width * this.spriteFrameCol,
-      this._height * this.spriteFrameRow,
-      this.x,
-      this.y,
-      this._width,
-      this._height,
-      this.scaleSize
-    );
   }
 }

@@ -4,14 +4,10 @@ import HealthBar from "./HealthBar.js";
 export default class Battler extends Character {
   constructor(
     name,
-    img,
-    animationStates,
     x,
     y,
     width,
     height,
-    spriteFrameCol,
-    spriteFrameRow,
     speed,
     moving,
     friction = 0,
@@ -20,14 +16,10 @@ export default class Battler extends Character {
   ) {
     super(
       name,
-      img,
-      animationStates,
       x,
       y,
       width,
       height,
-      spriteFrameCol,
-      spriteFrameRow,
       speed,
       moving,
       friction,

@@ -28,9 +28,10 @@ export default class Animation {
   }
 
   update() {
-    if (this.spriteFrameCol < this.end) {
-      this.spriteFrameCol++;
+    if (this.frameCol < this.end) {
+      this.frameCol++;
+    } else {
+      this.frameCol = this.start;
     }
-    this.spriteFrameCol = this.start;
   }
 }
