@@ -4,9 +4,6 @@ export default class Animation {
     img,
     frameWidth,
     frameHeight,
-    frameX,
-    frameY,
-    scaleSize,
     frameCol,
     frameRow,
     start,
@@ -16,9 +13,6 @@ export default class Animation {
     this.img = img;
     this.frameWidth = frameWidth;
     this.frameHeight = frameHeight;
-    this.frameX = frameX;
-    this.frameY = frameY;
-    this.scaleSize = scaleSize;
     this.frameCol = frameCol;
     this.frameRow = frameRow;
     this.start = start;
