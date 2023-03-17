@@ -1,4 +1,4 @@
-export default class CharacterController {
+export default class PlayerController {
   constructor() {
     this.moveKeys = [
       "w",

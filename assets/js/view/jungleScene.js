@@ -3,11 +3,11 @@ import TileMap from "../model/TileMap.js";
 import BaseScene from "./BaseScene.js";
 
 export default class JungleScene extends BaseScene {
-  constructor(display, camera, cameraController, characterController) {
+  constructor(display, camera, cameraController, playerController) {
     super(display);
     this.camera = camera;
     this.cameraController = cameraController;
-    this.characterController = characterController;
+    this.playerController = playerController;
     this.maps = {};
   }
 
@@ -93,7 +93,7 @@ export default class JungleScene extends BaseScene {
   }
 
   update() {
-    if (this.characterController.moving === true) {
+    if (this.playerController.moving === true) {
       this.playerCharacter.moving = true;
     } else {
       this.playerCharacter.moving = false;
@@ -116,7 +116,7 @@ export default class JungleScene extends BaseScene {
 
     this.display.afterDraw();
 
-    this.characterController.moveCharacter(
+    this.playerController.moveCharacter(
       this.playerCharacter,
       this.map.width,
       this.map.height
