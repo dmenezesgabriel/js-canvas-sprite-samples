@@ -19,6 +19,14 @@ export default class Animation {
     this.end = end;
   }
 
+  get frameX() {
+    return this.frameWidth * this.frameCol;
+  }
+
+  get frameY() {
+    return this.frameHeight * this.frameRow;
+  }
+
   update() {
     if (this.spriteFrameCol < this.end) {
       this.spriteFrameCol++;
