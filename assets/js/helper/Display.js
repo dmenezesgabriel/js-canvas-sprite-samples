@@ -113,6 +113,7 @@ export default class Display {
     if (this.debug) {
       this.context.beginPath();
       this.context.strokeStyle = "blue";
+      this.context.lineWidth = 2;
       this.context.rect(
         destinationX,
         destinationY,

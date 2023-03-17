@@ -2,6 +2,7 @@ import GameObject from "./GameObject.js";
 
 export default class Character extends GameObject {
   constructor(
+    name,
     img,
     animationStates,
     x,
@@ -29,6 +30,7 @@ export default class Character extends GameObject {
       scaleSize,
       isColliding
     );
+    this.name = name;
     this.animationStates = animationStates;
     this.moving = moving;
     this.isBody = true;
@@ -48,6 +50,10 @@ export default class Character extends GameObject {
 
   get collisionHeight() {
     return this.height - this.height * 0.7;
+  }
+
+  draw(display) {
+    super.draw(display);
   }
 
   moveLeft() {

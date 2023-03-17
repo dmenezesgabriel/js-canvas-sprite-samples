@@ -55,7 +55,13 @@ export default class JungleScene extends BaseScene {
       "playerBackgroundCollision",
       this.playerCharacter,
       this.map.getLayer("background"),
-      (objectA, objectB) => console.log("Player collided with background")
+      (objectA, objectB) => {
+        console.log("Player collided with background");
+
+        // Damage
+        objectA.health = objectA.health - 10;
+        console.log(objectA.health);
+      }
     );
 
     this.world.addCollider(

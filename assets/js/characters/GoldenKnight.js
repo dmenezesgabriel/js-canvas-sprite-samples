@@ -1,4 +1,4 @@
-import Character from "../model/Character.js";
+import Battler from "../model/Battler.js";
 
 const getAnimationStates = await fetch(
   "resources/knights-animation-states.json"
@@ -9,7 +9,8 @@ const currentAnimationStates = animationStates["golden-knight"];
 const characterSpriteImg = new Image();
 characterSpriteImg.src = currentAnimationStates["img"];
 
-const goldenKnight = new Character(
+const goldenKnight = new Battler(
+  "Golden Knight",
   characterSpriteImg,
   currentAnimationStates,
   0,
