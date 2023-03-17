@@ -1,4 +1,5 @@
 import GameObject from "./GameObject.js";
+import drawName from "../utils/drawName.js";
 
 export default class Character extends GameObject {
   constructor(
@@ -54,6 +55,7 @@ export default class Character extends GameObject {
 
   draw(display) {
     super.draw(display);
+    drawName(display, this.x + this.width / 2, this.y, this.name, "#fff");
   }
 
   moveLeft() {

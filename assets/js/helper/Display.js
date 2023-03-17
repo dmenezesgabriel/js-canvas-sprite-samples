@@ -22,6 +22,12 @@ export default class Display {
     this.context.translate(destinationX, destinationY);
   }
 
+  drawText(x, y, text, color, font) {
+    this.context.fillStyle = color;
+    this.context.font = font;
+    this.context.fillText(text, x, y);
+  }
+
   drawMapLayer(
     tileAtlas,
     atlasCols,
