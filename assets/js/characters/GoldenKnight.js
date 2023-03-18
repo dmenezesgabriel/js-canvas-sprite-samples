@@ -65,6 +65,21 @@ export default class GoldenKnight extends Battler {
 
   idle() {
     super.idle();
-    this.animationManager.play("idle-down");
+    switch (this.direction) {
+      case "Left":
+        this.animationManager.play("idle-left");
+        break;
+      case "Up":
+        this.animationManager.play("idle-up");
+        break;
+      case "Right":
+        this.animationManager.play("idle-right");
+        break;
+      case "Down":
+        this.animationManager.play("idle-down");
+        break;
+      default:
+        this.animationManager.play("idle-down");
+    }
   }
 }

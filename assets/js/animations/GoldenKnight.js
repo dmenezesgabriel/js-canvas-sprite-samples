@@ -55,6 +55,39 @@ animationManager.addAnimation(
 );
 
 animationManager.addAnimation(
+  "idle-left",
+  characterSpriteImg,
+  currentAnimationStates["width"],
+  currentAnimationStates["height"],
+  currentAnimationStates["idleFrameCol"],
+  currentAnimationStates["walkLeftFramesRow"],
+  currentAnimationStates["idleFrameCol"],
+  currentAnimationStates["idleFrameCol"]
+);
+
+animationManager.addAnimation(
+  "idle-up",
+  characterSpriteImg,
+  currentAnimationStates["width"],
+  currentAnimationStates["height"],
+  currentAnimationStates["idleFrameCol"],
+  currentAnimationStates["walkUpFramesRow"],
+  currentAnimationStates["idleFrameCol"],
+  currentAnimationStates["idleFrameCol"]
+);
+
+animationManager.addAnimation(
+  "idle-right",
+  characterSpriteImg,
+  currentAnimationStates["width"],
+  currentAnimationStates["height"],
+  currentAnimationStates["idleFrameCol"],
+  currentAnimationStates["walkRightFramesRow"],
+  currentAnimationStates["idleFrameCol"],
+  currentAnimationStates["idleFrameCol"]
+);
+
+animationManager.addAnimation(
   "idle-down",
   characterSpriteImg,
   currentAnimationStates["width"],
