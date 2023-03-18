@@ -24,6 +24,10 @@
 - [ ] Screen Limits
 - [ ] Collision Surface
 
+## Mechanics
+
+- [ ] Path finding
+
 ## Game style
 
 - Top down RPG
