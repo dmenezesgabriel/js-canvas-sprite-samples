@@ -1,5 +1,6 @@
 import GameObject from "./GameObject.js";
 import drawName from "../utils/drawName.js";
+import Direction from "../enum/Direction.js";
 
 export default class Character extends GameObject {
   constructor(
@@ -18,6 +19,7 @@ export default class Character extends GameObject {
     this.name = name;
     this.moving = moving;
     this.isBody = true;
+    this.direction = null;
   }
 
   get collisionX() {
@@ -41,21 +43,25 @@ export default class Character extends GameObject {
   }
 
   moveLeft() {
+    this.direction = Direction.Left;
     this.x -= this._speed;
     this.moving = true;
   }
 
   moveUp() {
+    this.direction = Direction.Up;
     this.y -= this._speed;
     this.moving = true;
   }
 
   moveRight() {
+    this.direction = Direction.Right;
     this.x += this._speed;
     this.moving = true;
   }
 
   moveDown() {
+    this.direction = Direction.Down;
     this.y += this._speed;
     this.moving = true;
   }

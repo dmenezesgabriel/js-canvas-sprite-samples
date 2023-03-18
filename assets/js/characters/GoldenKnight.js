@@ -1,6 +1,5 @@
 import Battler from "../model/Battler.js";
 import animationManager from "../animations/GoldenKnight.js";
-
 export default class GoldenKnight extends Battler {
   constructor(
     name,
@@ -27,7 +26,7 @@ export default class GoldenKnight extends Battler {
       isColliding
     );
     this.animationManager = animationManager;
-    animationManager.play("idle-down");
+    this.idle();
   }
 
   draw(display) {
