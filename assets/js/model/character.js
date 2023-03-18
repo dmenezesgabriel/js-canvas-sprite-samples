@@ -20,6 +20,7 @@ export default class Character extends GameObject {
     this.moving = moving;
     this.isBody = true;
     this.direction = null;
+    this.orientation = null;
   }
 
   get collisionX() {
@@ -43,7 +44,7 @@ export default class Character extends GameObject {
   }
 
   moveLeft() {
-    this.direction = Direction.Left;
+    this.orientation = this.direction = Direction.Left;
     this.x -= this._speed;
     this.moving = true;
   }
@@ -55,7 +56,7 @@ export default class Character extends GameObject {
   }
 
   moveRight() {
-    this.direction = Direction.Right;
+    this.orientation = this.direction = Direction.Right;
     this.x += this._speed;
     this.moving = true;
   }
