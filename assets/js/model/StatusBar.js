@@ -1,22 +1,22 @@
-export default class HealthBar {
-  constructor(x, y, width, height, maxHealth, color) {
+export default class StatusBar {
+  constructor(x, y, width, height, maxValue, color) {
     this.x = x;
     this.y = y;
     this.width = width;
     this.height = height;
-    this.maxHealth = maxHealth;
+    this.maxValue = maxValue;
     this.maxWidth = width;
-    this._health = maxHealth;
+    this._value = maxValue;
     this.color = color;
   }
 
-  get health() {
-    return this._health;
+  get value() {
+    return this._value;
   }
 
-  set health(value) {
-    this._health = value;
-    this.width = (this._health / this.maxHealth) * this.maxWidth;
+  set value(value) {
+    this._value = value;
+    this.width = (this._value / this.maxValue) * this.maxWidth;
   }
 
   draw(display) {

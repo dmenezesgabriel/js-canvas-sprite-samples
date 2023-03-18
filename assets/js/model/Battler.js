@@ -1,5 +1,5 @@
 import DynamicBody from "./DynamicBody.js";
-import HealthBar from "./HealthBar.js";
+import StatusBar from "./StatusBar.js";
 
 export default class Battler extends DynamicBody {
   constructor(
@@ -27,7 +27,12 @@ export default class Battler extends DynamicBody {
       isColliding
     );
     this._health = 100;
-    this.healthBar = new HealthBar(
+    this._mana = 100;
+    this.setupStatusBars();
+  }
+
+  setupStatusBars() {
+    this.healthBar = new StatusBar(
       this.x + 2,
       this.y + this.height + 3,
       this.width - 4,
@@ -35,16 +40,34 @@ export default class Battler extends DynamicBody {
       this._health,
       "green"
     );
+    this.manaBar = new StatusBar(
+      this.x + 2,
+      this.y + this.height + 3 + 8,
+      this.width - 4,
+      8,
+      this._health,
+      "blue"
+    );
   }
 
   get health() {
     return this._health;
   }
 
+  get mana() {
+    return this._mana;
+  }
+
   set health(value) {
     this._health = value;
 
-    this.healthBar.health = value;
+    this.healthBar.value = value;
+  }
+
+  set mana(value) {
+    this._mana = value;
+
+    this.manaBar.value = value;
   }
 
   draw(display) {
@@ -52,5 +75,9 @@ export default class Battler extends DynamicBody {
     this.healthBar.x = this.x + 2;
     this.healthBar.y = this.y + this.height + 3;
     this.healthBar.draw(display);
+
+    this.manaBar.x = this.x + 2;
+    this.manaBar.y = this.y + this.height + 3 + 8;
+    this.manaBar.draw(display);
   }
 }
