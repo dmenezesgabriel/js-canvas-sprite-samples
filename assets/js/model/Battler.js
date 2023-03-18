@@ -1,7 +1,7 @@
-import Character from "./Character.js";
+import DynamicBody from "./DynamicBody.js";
 import HealthBar from "./HealthBar.js";
 
-export default class Battler extends Character {
+export default class Battler extends DynamicBody {
   constructor(
     name,
     x,

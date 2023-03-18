@@ -2,7 +2,7 @@ import GameObject from "./GameObject.js";
 import drawName from "../utils/drawName.js";
 import Direction from "../enum/Direction.js";
 
-export default class Character extends GameObject {
+export default class DynamicBody extends GameObject {
   constructor(
     name,
     x,
