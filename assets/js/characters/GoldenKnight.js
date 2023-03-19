@@ -1,6 +1,6 @@
-import Battler from "../model/Battler.js";
+import Character from "../model/Character.js";
 import animationManager from "../animations/GoldenKnight.js";
-export default class GoldenKnight extends Battler {
+export default class GoldenKnight extends Character {
   constructor(
     name,
     x,

@@ -1,7 +1,7 @@
 import DynamicBody from "./DynamicBody.js";
 import StatusBar from "./StatusBar.js";
 
-export default class Battler extends DynamicBody {
+export default class Character extends DynamicBody {
   constructor(
     name,
     x,
