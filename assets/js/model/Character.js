@@ -1,5 +1,6 @@
 import DynamicBody from "./DynamicBody.js";
 import StatusBar from "./StatusBar.js";
+import drawName from "../utils/drawName.js";
 
 export default class Character extends DynamicBody {
   constructor(
@@ -71,7 +72,7 @@ export default class Character extends DynamicBody {
   }
 
   draw(display) {
-    super.draw(display);
+    drawName(display, this.x + this.width / 2, this.y, this.name, "#fff");
     this.healthBar.x = this.x + 2;
     this.healthBar.y = this.y + this.height + 3;
     this.healthBar.draw(display);

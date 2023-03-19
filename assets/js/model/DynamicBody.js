@@ -1,5 +1,4 @@
 import GameObject from "./GameObject.js";
-import drawName from "../utils/drawName.js";
 import Direction from "../enum/Direction.js";
 
 export default class DynamicBody extends GameObject {
@@ -47,10 +46,6 @@ export default class DynamicBody extends GameObject {
 
   get collisionHeight() {
     return this.height - this.height * 0.7;
-  }
-
-  draw(display) {
-    drawName(display, this.x + this.width / 2, this.y, this.name, "#fff");
   }
 
   moveLeft() {
