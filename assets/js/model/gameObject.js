@@ -1,16 +1,7 @@
 import EventEmitter from "../helper/EventEmitter.js";
 
 export default class GameObject extends EventEmitter {
-  constructor(
-    x,
-    y,
-    width,
-    height,
-    speed,
-    friction = 0,
-    scaleSize = 1,
-    isColliding = false
-  ) {
+  constructor(x, y, width, height, scaleSize = 1, isColliding = false) {
     super();
     this.x = x;
     this.y = y;
@@ -18,8 +9,6 @@ export default class GameObject extends EventEmitter {
     this._nextY = this.y;
     this._width = width;
     this._height = height;
-    this._speed = speed;
-    this.friction = friction;
     this.scaleSize = scaleSize;
     this._isColliding = isColliding;
     this.colliders = [];
@@ -60,14 +49,6 @@ export default class GameObject extends EventEmitter {
 
   set width(value) {
     this._width = value;
-  }
-
-  get speed() {
-    return this._speed - this._speed * this.friction;
-  }
-
-  set speed(value) {
-    this._speed = value;
   }
 
   get isColliding() {

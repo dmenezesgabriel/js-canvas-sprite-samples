@@ -15,12 +15,22 @@ export default class DynamicBody extends GameObject {
     scaleSize,
     isColliding = false
   ) {
-    super(x, y, width, height, speed, friction, scaleSize, isColliding);
+    super(x, y, width, height, scaleSize, isColliding);
     this.name = name;
     this.moving = moving;
+    this._speed = speed;
+    this.friction = friction;
     this.isBody = true;
     this.direction = null;
     this.orientation = null;
+  }
+
+  get speed() {
+    return this._speed - this._speed * this.friction;
+  }
+
+  set speed(value) {
+    this._speed = value;
   }
 
   get collisionX() {
