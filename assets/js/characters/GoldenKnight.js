@@ -1,5 +1,6 @@
 import Character from "../model/Character.js";
 import animationManager from "../animations/GoldenKnight.js";
+import Sword from "../weapons/Sword.js";
 export default class GoldenKnight extends Character {
   constructor(
     name,
@@ -27,10 +28,28 @@ export default class GoldenKnight extends Character {
     );
     this.animationManager = animationManager;
     this.idle();
+
+    this.weapon = new Sword(
+      "sword",
+      this.x,
+      this.y,
+      16,
+      16,
+      0,
+      false,
+      0,
+      3,
+      false
+    );
   }
 
   draw(display) {
     super.draw(display);
+
+    if (["Left", "Right"].includes(this.direction)) {
+      this.weapon.draw(display);
+    }
+
     display.drawObject(
       this.animationManager.currentAnimation.img,
       this.animationManager.currentAnimation.frameX,
@@ -41,20 +60,36 @@ export default class GoldenKnight extends Character {
       this._height,
       this.scaleSize
     );
+
+    if (this.direction === "Up") {
+      this.weapon.draw(display);
+    }
   }
 
   moveLeft() {
     super.moveLeft();
+
+    this.weapon.x = this.x + this.width;
+    this.weapon.y = this.y + this.height / 2;
+
     this.animationManager.play("move-left");
   }
 
   moveUp() {
     super.moveUp();
+
+    this.weapon.x = this.x + this.width * 0.75;
+    this.weapon.y = this.y + this.height / 2;
+
     this.animationManager.play("move-up");
   }
 
   moveRight() {
     super.moveRight();
+
+    this.weapon.x = this.x + this.width * 0.5;
+    this.weapon.y = this.y + this.height / 2;
+
     this.animationManager.play("move-right");
   }
 

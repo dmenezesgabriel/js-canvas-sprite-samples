@@ -99,11 +99,21 @@ export default class Display {
     destinationY,
     width,
     height,
-    scale = 1
+    scale = 1,
+    rotate = 0
   ) {
     /**
      * Draw Object to the canvas.
      */
+    if (rotate) {
+      const centerX = destinationX + width / 2;
+      const centerY = destinationY + height / 2;
+
+      this.save();
+      this.context.translate(centerX, centerY);
+      this.context.rotate(rotate);
+      this.context.translate(-centerX, -centerY);
+    }
     this.context.drawImage(
       image,
       sourceX,
@@ -115,6 +125,7 @@ export default class Display {
       width * scale,
       height * scale
     );
+
     //  Debug
     if (this.debug) {
       this.context.beginPath();
@@ -130,6 +141,10 @@ export default class Display {
     }
 
     //  Debug end
+
+    if (rotate) {
+      this.restore();
+    }
   }
 
   resize(height, width) {

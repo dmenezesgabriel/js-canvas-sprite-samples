@@ -13,7 +13,8 @@ export default class Character extends DynamicBody {
     moving,
     friction = 0,
     scaleSize,
-    isColliding = false
+    isColliding = false,
+    items
   ) {
     super(
       name,
@@ -29,6 +30,7 @@ export default class Character extends DynamicBody {
     );
     this._health = 100;
     this._mana = 100;
+    this.items = items;
     this.setupStatusBars();
   }
 

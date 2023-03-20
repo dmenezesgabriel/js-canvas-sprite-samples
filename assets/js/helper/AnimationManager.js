@@ -14,7 +14,8 @@ export default class AnimationManager {
     frameCol,
     frameRow,
     start,
-    end
+    end,
+    rotate
   ) {
     const animation = new Animation(
       key,
@@ -24,7 +25,8 @@ export default class AnimationManager {
       frameCol,
       frameRow,
       start,
-      end
+      end,
+      rotate
     );
 
     this.animations[key] = animation;

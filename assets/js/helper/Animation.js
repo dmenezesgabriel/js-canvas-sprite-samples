@@ -7,7 +7,8 @@ export default class Animation {
     frameCol,
     frameRow,
     start,
-    end
+    end,
+    rotate
   ) {
     this.key = key;
     this.img = img;
@@ -17,6 +18,7 @@ export default class Animation {
     this.frameRow = frameRow;
     this.start = start;
     this.end = end;
+    this.rotate = rotate;
   }
 
   get frameX() {
