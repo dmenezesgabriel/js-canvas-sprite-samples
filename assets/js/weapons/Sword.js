@@ -30,6 +30,16 @@ export default class Sword extends Weapon {
     this.animationManager.play("idle");
   }
 
+  attack(direction) {
+    console.log("Sword attack");
+    this.direction = direction;
+    this.ang = 10;
+    setInterval(() => {
+      this.animationManager.currentAnimation.rotate =
+        ((this.ang += 5) * Math.PI) / 180;
+    }, 200);
+  }
+
   draw(display) {
     display.drawObject(
       this.animationManager.currentAnimation.img,

@@ -69,8 +69,8 @@ export default class GoldenKnight extends Character {
   moveLeft() {
     super.moveLeft();
 
-    this.weapon.x = this.x + this.width;
-    this.weapon.y = this.y + this.height / 2;
+    this.weapon.x = this.x + this.width * 0.75;
+    this.weapon.y = this.y + this.height * 0.6;
 
     this.animationManager.play("move-left");
   }
@@ -78,8 +78,8 @@ export default class GoldenKnight extends Character {
   moveUp() {
     super.moveUp();
 
-    this.weapon.x = this.x + this.width * 0.75;
-    this.weapon.y = this.y + this.height / 2;
+    this.weapon.x = this.x + this.width * 0.48;
+    this.weapon.y = this.y + this.height * 0.6;
 
     this.animationManager.play("move-up");
   }
@@ -87,8 +87,8 @@ export default class GoldenKnight extends Character {
   moveRight() {
     super.moveRight();
 
-    this.weapon.x = this.x + this.width * 0.5;
-    this.weapon.y = this.y + this.height / 2;
+    this.weapon.x = this.x + this.width * 0.2;
+    this.weapon.y = this.y + this.height * 0.6;
 
     this.animationManager.play("move-right");
   }
@@ -116,5 +116,10 @@ export default class GoldenKnight extends Character {
       default:
         this.animationManager.play("idle-down");
     }
+  }
+
+  attack() {
+    console.log("Attacking");
+    this.weapon.attack(this.direction);
   }
 }

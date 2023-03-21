@@ -106,13 +106,13 @@ export default class Display {
      * Draw Object to the canvas.
      */
     if (rotate) {
-      const centerX = destinationX + width / 2;
-      const centerY = destinationY + height / 2;
+      const centerX = destinationX;
+      const centerY = destinationY;
 
       this.save();
       this.context.translate(centerX, centerY);
       this.context.rotate(rotate);
-      this.context.translate(-centerX, -centerY);
+      // this.context.translate(-centerX, -centerY);
     }
     this.context.drawImage(
       image,
@@ -120,8 +120,8 @@ export default class Display {
       sourceY,
       width,
       height,
-      destinationX,
-      destinationY,
+      rotate ? 0 - (width * scale) / 2 : destinationX,
+      rotate ? 0 - (height * scale) / 2 : destinationY,
       width * scale,
       height * scale
     );
@@ -132,8 +132,8 @@ export default class Display {
       this.context.strokeStyle = "blue";
       this.context.lineWidth = 2;
       this.context.rect(
-        destinationX,
-        destinationY,
+        rotate ? 0 - (width * scale) / 2 : destinationX,
+        rotate ? 0 - (height * scale) / 2 : destinationY,
         width * scale,
         height * scale
       );

@@ -73,6 +73,10 @@ export default class Character extends DynamicBody {
     this.manaBar.value = value;
   }
 
+  attack() {
+    // Not Implemented
+  }
+
   draw(display) {
     drawName(display, this.x + this.width / 2, this.y, this.name, "#fff");
     this.healthBar.x = this.x + 2;

@@ -10,6 +10,7 @@ export default class PlayerController {
       "ArrowLeft",
       "ArrowRight",
     ];
+    this.attackKeys = ["k"];
     this.keys = [];
     this.moving = false;
   }
@@ -86,6 +87,9 @@ export default class PlayerController {
     }
     if (this.keys["d"] || this.keys["ArrowRight"]) {
       character.moveRight();
+    }
+    if (this.keys["k"]) {
+      character.attack();
     }
 
     if (!character.moving) {
