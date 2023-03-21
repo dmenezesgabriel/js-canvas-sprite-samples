@@ -28,8 +28,12 @@
 
 - [ ] Path finding
 
+## Animation
+
+- [ ] Sequence
+
 ## Game style
 
 - Top down RPG
-- Beat'em up combat
+- Beat'em up combat?
 - Co-operative (web-rtc?)
