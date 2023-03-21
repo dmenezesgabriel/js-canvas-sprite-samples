@@ -43,13 +43,7 @@ export default class GoldenKnight extends Character {
     );
   }
 
-  draw(display) {
-    super.draw(display);
-
-    if (["Left", "Right"].includes(this.direction)) {
-      this.weapon.draw(display);
-    }
-
+  _draw(display) {
     display.drawObject(
       this.animationManager.currentAnimation.img,
       this.animationManager.currentAnimation.frameX,
@@ -60,9 +54,19 @@ export default class GoldenKnight extends Character {
       this._height,
       this.scaleSize
     );
+  }
 
-    if (this.direction === "Up") {
+  draw(display) {
+    super.draw(display);
+
+    if (["Left", "Right"].includes(this.direction)) {
       this.weapon.draw(display);
+      this._draw(display);
+    } else if (this.direction === "Up") {
+      this._draw(display);
+      this.weapon.draw(display);
+    } else {
+      this._draw(display);
     }
   }
 

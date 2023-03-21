@@ -100,7 +100,8 @@ export default class Display {
     width,
     height,
     scale = 1,
-    rotate = 0
+    rotate = 0,
+    flip = {}
   ) {
     /**
      * Draw Object to the canvas.
