@@ -16,7 +16,7 @@ class Game {
     this.canvas.height = 500;
     this.camera = new Camera(0, 0, this.canvas.width, this.canvas.height);
     this.cameraController = new CameraController();
-    this.display = new Display(this.canvas, true);
+    this.display = new Display(this.canvas, false);
     this.playerController = new PlayerController();
     this.frame = this.update.bind(this);
   }

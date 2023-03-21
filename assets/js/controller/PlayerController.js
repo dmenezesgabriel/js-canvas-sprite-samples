@@ -92,7 +92,7 @@ export default class PlayerController {
       character.attack();
     }
 
-    if (!character.moving) {
+    if (!character.moving && !character.isAttacking) {
       character.idle();
     }
 

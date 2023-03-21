@@ -26,6 +26,7 @@ export default class GoldenKnight extends Character {
       scaleSize,
       isColliding
     );
+    this.isAttacking = false;
     this.animationManager = animationManager;
     this.idle();
 
@@ -70,30 +71,36 @@ export default class GoldenKnight extends Character {
     }
   }
 
-  moveLeft() {
-    super.moveLeft();
-
+  idleWeaponLeft() {
     this.weapon.x = this.x + this.width * 0.75;
     this.weapon.y = this.y + this.height * 0.6;
+  }
 
+  idleWeaponRight() {
+    this.weapon.x = this.x + this.width * 0.2;
+    this.weapon.y = this.y + this.height * 0.6;
+  }
+
+  idleWeaponUp() {
+    this.weapon.x = this.x + this.width * 0.48;
+    this.weapon.y = this.y + this.height * 0.6;
+  }
+
+  moveLeft() {
+    super.moveLeft();
+    this.idleWeaponLeft();
     this.animationManager.play("move-left");
   }
 
   moveUp() {
     super.moveUp();
-
-    this.weapon.x = this.x + this.width * 0.48;
-    this.weapon.y = this.y + this.height * 0.6;
-
+    this.idleWeaponUp();
     this.animationManager.play("move-up");
   }
 
   moveRight() {
     super.moveRight();
-
-    this.weapon.x = this.x + this.width * 0.2;
-    this.weapon.y = this.y + this.height * 0.6;
-
+    this.idleWeaponRight();
     this.animationManager.play("move-right");
   }
 
@@ -107,12 +114,15 @@ export default class GoldenKnight extends Character {
     switch (this.direction) {
       case "Left":
         this.animationManager.play("idle-left");
+        this.idleWeaponLeft();
         break;
       case "Up":
         this.animationManager.play("idle-up");
+        this.idleWeaponUp();
         break;
       case "Right":
         this.animationManager.play("idle-right");
+        this.idleWeaponRight();
         break;
       case "Down":
         this.animationManager.play("idle-down");
@@ -123,7 +133,35 @@ export default class GoldenKnight extends Character {
   }
 
   attack() {
-    console.log("Attacking");
+    if (this.isAttacking) return;
+    const cachedX = this.x;
+    const cachedY = this.y;
+
+    this.isAttacking = true;
     this.weapon.attack(this.direction);
+    switch (this.direction) {
+      case "Left":
+        this.x -= 5;
+        this.animationManager.play("move-left");
+        break;
+      case "Up":
+        this.animationManager.play("move-up");
+        break;
+      case "Right":
+        this.x += 5;
+        this.animationManager.play("move-right");
+        break;
+      case "Down":
+        this.animationManager.play("move-down");
+        break;
+      default:
+        this.animationManager.play("move-down");
+    }
+
+    setTimeout(() => {
+      this.isAttacking = false;
+      this.x = cachedX;
+      this.y = cachedY;
+    }, 100);
   }
 }
