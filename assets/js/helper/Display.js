@@ -100,29 +100,39 @@ export default class Display {
     width,
     height,
     scale = 1,
-    rotate = 0,
-    flip = {}
+    rotate = null,
+    flip = null
   ) {
     /**
      * Draw Object to the canvas.
      */
+    let _destinationX = destinationX;
+    let _destinationY = destinationY;
+
+    this.save();
     if (rotate) {
       const centerX = destinationX;
       const centerY = destinationY;
 
-      this.save();
       this.context.translate(centerX, centerY);
       this.context.rotate(rotate);
-      // this.context.translate(-centerX, -centerY);
+      _destinationX = 0 - (width * scale) / 2;
+      _destinationY = 0 - (height * scale) / 2;
     }
+
+    if (flip) {
+      this.context.scale(-1, 1);
+      _destinationX = -_destinationX - width * 2;
+    }
+
     this.context.drawImage(
       image,
       sourceX,
       sourceY,
       width,
       height,
-      rotate ? 0 - (width * scale) / 2 : destinationX,
-      rotate ? 0 - (height * scale) / 2 : destinationY,
+      _destinationX,
+      _destinationY,
       width * scale,
       height * scale
     );
@@ -133,8 +143,8 @@ export default class Display {
       this.context.strokeStyle = "blue";
       this.context.lineWidth = 2;
       this.context.rect(
-        rotate ? 0 - (width * scale) / 2 : destinationX,
-        rotate ? 0 - (height * scale) / 2 : destinationY,
+        _destinationX,
+        _destinationY,
         width * scale,
         height * scale
       );
@@ -142,10 +152,11 @@ export default class Display {
     }
 
     //  Debug end
-
-    if (rotate) {
-      this.restore();
+    if (flip) {
+      this.context.scale(-1, 1);
     }
+
+    this.restore();
   }
 
   resize(height, width) {

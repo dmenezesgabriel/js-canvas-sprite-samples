@@ -1,6 +1,6 @@
 import Character from "../model/Character.js";
-import animationManager from "../animations/GoldenKnight.js";
-export default class GoldenKnight extends Character {
+import animationManager from "../animations/BlackKnight.js";
+export default class BlackKnight extends Character {
   constructor(
     name,
     x,
@@ -26,6 +26,7 @@ export default class GoldenKnight extends Character {
       isColliding
     );
     this.isAttacking = false;
+    this._inBattle = false;
     this.animationManager = animationManager;
     this.idle();
   }
@@ -39,7 +40,9 @@ export default class GoldenKnight extends Character {
       this.y,
       this._width,
       this._height,
-      this.scaleSize
+      this.scaleSize,
+      this.animationManager.currentAnimation.rotate,
+      this.animationManager.currentAnimation.flip
     );
   }
 
@@ -48,28 +51,59 @@ export default class GoldenKnight extends Character {
     this._draw(display);
   }
 
+  set inBattle(value) {
+    this._inBattle = value;
+    setTimeout(() => {
+      if (this._inBattle) {
+        this._inBattle = false;
+      }
+    }, 5000);
+  }
+
   moveLeft() {
     super.moveLeft();
+    this._width = 26;
     this.animationManager.play("move-left");
   }
 
   moveUp() {
     super.moveUp();
+    this._width = 26;
     this.animationManager.play("move-up");
   }
 
   moveRight() {
     super.moveRight();
+    this._width = 26;
     this.animationManager.play("move-right");
   }
 
   moveDown() {
     super.moveDown();
+    this._width = 26;
     this.animationManager.play("move-down");
   }
 
   idle() {
     super.idle();
+
+    if (this._inBattle) {
+      this._width = 48;
+      switch (this.direction) {
+        case "Left":
+          this.animationManager.play("battle-ready-weapon-left");
+          break;
+        case "Right":
+          this.animationManager.play("battle-ready-weapon-right");
+          break;
+        default:
+          this.animationManager.play("battle-ready-weapon-right");
+          break;
+      }
+      return;
+    }
+
+    this._width = 26;
     switch (this.direction) {
       case "Left":
         this.animationManager.play("idle-left");
@@ -85,6 +119,7 @@ export default class GoldenKnight extends Character {
         break;
       default:
         this.animationManager.play("idle-down");
+        break;
     }
   }
 

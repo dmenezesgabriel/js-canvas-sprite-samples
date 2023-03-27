@@ -1,0 +1,33 @@
+{
+  "black-knight": {
+    "img": "assets/img/theblackknight_1.png",
+    "width": 26,
+    "height": 36,
+    "walkDownFramesRow": 0,
+    "walkLeftFramesRow": 1,
+    "walkRightFramesRow": 2,
+    "walkUpFramesRow": 3,
+    "startYFrames": 0,
+    "endYFrames": 3,
+    "startXFrames": 0,
+    "lastWalkFramesCol": 2,
+    "initialYFrame": 0,
+    "initialFrameCol": 0,
+    "idleFrameCol": 1
+  },
+  "black-knight-battler-ready": {
+    "img": "assets/img/blackknight_sheet.png",
+    "width": 48,
+    "height": 58,
+    "noWeaponFramesRow": 0,
+    "swordIdleFramesRow": 1,
+    "useSkillFramesRow": 2,
+    "startYFrames": 0,
+    "endYFrames": 3,
+    "startXFrames": 0,
+    "lastPositionFramesCol": 2,
+    "initialYFrame": 0,
+    "initialFrameCol": 0,
+    "middleFrameCol": 1
+  }
+}

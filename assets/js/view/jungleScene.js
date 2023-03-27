@@ -1,4 +1,4 @@
-import GoldenKnight from "../characters/GoldenKnight.js";
+import BlackKnight from "../characters/BlackKnight.js";
 import TileMap from "../model/TileMap.js";
 import BaseScene from "./BaseScene.js";
 
@@ -44,18 +44,12 @@ export default class JungleScene extends BaseScene {
       );
     }
 
-    const getAnimationStates = await fetch(
-      "resources/knights-animation-states.json"
-    );
-    const animationStates = await getAnimationStates.json();
-    const currentAnimationStates = animationStates["golden-knight"];
-
-    this.playerCharacter = new GoldenKnight(
-      "Golden Knight",
+    this.playerCharacter = new BlackKnight(
+      "Black Knight",
       0,
       0,
-      currentAnimationStates["width"],
-      currentAnimationStates["height"],
+      26,
+      36,
       10,
       false,
       0,
@@ -76,6 +70,7 @@ export default class JungleScene extends BaseScene {
 
         // Damage
         objectA.health = objectA.health - 10;
+        objectA.inBattle = true;
         console.log(objectA.health);
       }
     );

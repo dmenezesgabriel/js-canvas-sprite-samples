@@ -78,12 +78,12 @@ export default class Character extends DynamicBody {
   }
 
   draw(display) {
-    drawName(display, this.x + this.width / 2, this.y, this.name, "#fff");
-    this.healthBar.x = this.x + 2;
+    drawName(display, this.x + this.width / 2, this.y - 5, this.name, "#fff");
+    this.healthBar.x = this.x + this.width / 2 - this.healthBar.maxWidth / 2;
     this.healthBar.y = this.y + this.height + 3;
     this.healthBar.draw(display);
 
-    this.manaBar.x = this.x + 2;
+    this.manaBar.x = this.x + this.width / 2 - this.manaBar.maxWidth / 2;
     this.manaBar.y = this.y + this.height + 3 + 8;
     this.manaBar.draw(display);
   }

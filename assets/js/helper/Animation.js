@@ -8,7 +8,8 @@ export default class Animation {
     frameRow,
     start,
     end,
-    rotate
+    rotate,
+    flip
   ) {
     this.key = key;
     this.img = img;
@@ -19,6 +20,7 @@ export default class Animation {
     this.start = start;
     this.end = end;
     this.rotate = rotate;
+    this.flip = flip;
   }
 
   get frameX() {
