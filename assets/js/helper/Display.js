@@ -122,7 +122,7 @@ export default class Display {
 
     if (flip) {
       this.context.scale(-1, 1);
-      _destinationX = -_destinationX - width * 2;
+      _destinationX = -_destinationX - width * scale;
     }
 
     this.context.drawImage(
