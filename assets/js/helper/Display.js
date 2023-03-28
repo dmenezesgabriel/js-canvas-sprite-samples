@@ -28,6 +28,24 @@ export default class Display {
     this.context.fillText(text, x, y);
   }
 
+  _debugDrawMapLayer(row, col, tileVal, tileSize, tileScaleSize) {
+    this.context.fillStyle = "white";
+    this.context.fillText(
+      `t${tileVal}`,
+      col * tileScaleSize,
+      row * tileScaleSize + 30
+    );
+    this.context.beginPath();
+    this.context.strokeStyle = "green";
+    this.context.rect(
+      col * tileScaleSize,
+      row * tileScaleSize,
+      tileSize * tileScaleSize,
+      tileSize * tileScaleSize
+    );
+    this.context.stroke();
+  }
+
   drawMapLayer(
     tileAtlas,
     atlasCols,
@@ -66,29 +84,21 @@ export default class Display {
             tileSize * tileScaleSize,
             tileSize * tileScaleSize
           );
-          //  Debug
           if (this.debug) {
-            this.context.fillStyle = "white";
-            this.context.fillText(
-              `t${tileVal}`,
-              col * tileScaleSize,
-              row * tileScaleSize + 30
-            );
-            this.context.beginPath();
-            this.context.strokeStyle = "green";
-            this.context.rect(
-              col * tileScaleSize,
-              row * tileScaleSize,
-              tileSize * tileScaleSize,
-              tileSize * tileScaleSize
-            );
-            this.context.stroke();
+            this._debugDrawMapLayer(row, col, tileVal, tileSize, tileScaleSize);
           }
-          // Debug end
         }
         mapIndex++;
       }
     }
+  }
+
+  _debugDrawObject(x, y, width, height, scale) {
+    this.context.beginPath();
+    this.context.strokeStyle = "blue";
+    this.context.lineWidth = 2;
+    this.context.rect(x, y, width * scale, height * scale);
+    this.context.stroke();
   }
 
   drawObject(
@@ -101,7 +111,7 @@ export default class Display {
     height,
     scale = 1,
     rotate = null,
-    flip = null
+    flip = false
   ) {
     /**
      * Draw Object to the canvas.
@@ -110,6 +120,7 @@ export default class Display {
     let _destinationY = destinationY;
 
     this.save();
+
     if (rotate) {
       const centerX = destinationX;
       const centerY = destinationY;
@@ -137,21 +148,10 @@ export default class Display {
       height * scale
     );
 
-    //  Debug
     if (this.debug) {
-      this.context.beginPath();
-      this.context.strokeStyle = "blue";
-      this.context.lineWidth = 2;
-      this.context.rect(
-        _destinationX,
-        _destinationY,
-        width * scale,
-        height * scale
-      );
-      this.context.stroke();
+      this._debugDrawObject(_destinationX, _destinationY, width, height, scale);
     }
 
-    //  Debug end
     if (flip) {
       this.context.scale(-1, 1);
     }
