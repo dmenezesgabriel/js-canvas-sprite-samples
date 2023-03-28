@@ -19,7 +19,7 @@ class Game {
     this.display = new Display(this.canvas, true);
     this.playerController = new PlayerController();
     this.frame = this.update.bind(this);
-    this.activeScenes = {};
+    this.scenes = [];
   }
 
   create() {
@@ -31,7 +31,11 @@ class Game {
       this.playerController
     );
 
-    this.activeScenes["jungle"] = jungleScene;
+    this.scenes.push({
+      name: "jungle",
+      isActive: true,
+      sceneObject: jungleScene,
+    });
 
     this.display.on("mousedown", (x, y) => {
       console.log("Clicked", "x: ", x, " y: ", y);
@@ -44,8 +48,11 @@ class Game {
     this.elapsed = this.now - this.then;
     if (this.elapsed > this.fpsInterval) {
       this.then = this.now - (this.elapsed % this.fpsInterval);
-      for (const activeSceneName of Object.keys(this.activeScenes)) {
-        this.activeScenes[activeSceneName].update();
+      const activeScenes = this.scenes.filter(
+        (scene) => scene.isActive === true
+      );
+      for (const scene of activeScenes) {
+        scene.sceneObject.update();
       }
     }
   }
@@ -53,8 +60,10 @@ class Game {
   async start(fps) {
     this.create();
 
-    for (const activeSceneName of Object.keys(this.activeScenes)) {
-      await this.activeScenes[activeSceneName].create();
+    const activeScenes = this.scenes.filter((scene) => scene.isActive === true);
+
+    for (const scene of activeScenes) {
+      await scene.sceneObject.create();
     }
 
     this.fpsInterval = 1000 / fps; // calculate milliseconds
