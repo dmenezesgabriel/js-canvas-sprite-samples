@@ -25,6 +25,11 @@ export default class BlackKnight extends Character {
       scaleSize,
       isColliding
     );
+    this._movingWidth = 26;
+    this._movingHeight = 36;
+    this._battlingWidth = 48;
+    this._battlingHeight = 48;
+    this._attackingWidth = 48;
     this.animationManager = animationManager;
     this.idle();
   }
@@ -51,25 +56,29 @@ export default class BlackKnight extends Character {
 
   moveLeft() {
     super.moveLeft();
-    this._width = 26;
+    this._width = this._movingWidth;
+    this._height = this._movingHeight;
     this.animationManager.play("move-left");
   }
 
   moveUp() {
     super.moveUp();
-    this._width = 26;
+    this._width = this._movingWidth;
+    this._height = this._movingHeight;
     this.animationManager.play("move-up");
   }
 
   moveRight() {
     super.moveRight();
-    this._width = 26;
+    this._width = this._movingWidth;
+    this._height = this._movingHeight;
     this.animationManager.play("move-right");
   }
 
   moveDown() {
     super.moveDown();
-    this._width = 26;
+    this._width = this._movingWidth;
+    this._height = this._movingHeight;
     this.animationManager.play("move-down");
   }
 
@@ -77,7 +86,7 @@ export default class BlackKnight extends Character {
     super.idle();
 
     if (this._inBattle) {
-      this._width = 48;
+      this._width = this._battlingWidth;
       switch (this.direction) {
         case "Left":
           this.animationManager.play("battle-ready-weapon-left");
@@ -92,7 +101,8 @@ export default class BlackKnight extends Character {
       return;
     }
 
-    this._width = 26;
+    this._width = this._movingWidth;
+    this._height = this._movingHeight;
     switch (this.direction) {
       case "Left":
         this.animationManager.play("idle-left");
@@ -113,6 +123,19 @@ export default class BlackKnight extends Character {
   }
 
   attack() {
-    console.log("Attack");
+    super.attack();
+    this._width = this._attackingWidth;
+    this._height = this._battlingHeight;
+    switch (this.direction) {
+      case "Left":
+        this.animationManager.play("light-attack-sword-left");
+        break;
+      case "Right":
+        this.animationManager.play("light-attack-sword-right");
+        break;
+      default:
+        this.animationManager.play("light-attack-sword-right");
+        break;
+    }
   }
 }

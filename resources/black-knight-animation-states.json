@@ -23,11 +23,26 @@
     "swordIdleFramesRow": 1,
     "useSkillFramesRow": 2,
     "startYFrames": 0,
-    "endYFrames": 3,
+    "endYFrames": 0,
     "startXFrames": 0,
     "lastPositionFramesCol": 2,
     "initialYFrame": 0,
     "initialFrameCol": 0,
     "middleFrameCol": 1
+  },
+  "black-knight-battler-light-sword-attack": {
+    "img": "assets/img/blackknight_sheet.png",
+    "width": 48,
+    "height": 58,
+    "noWeaponFramesRow": 0,
+    "swordIdleFramesRow": 0,
+    "useSkillFramesRow": 2,
+    "startYFrames": 0,
+    "endYFrames": 0,
+    "startXFrames": 3,
+    "lastPositionFramesCol": 5,
+    "initialYFrame": 0,
+    "initialFrameCol": 3,
+    "middleFrameCol": 4
   }
 }

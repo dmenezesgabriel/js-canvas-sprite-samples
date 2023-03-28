@@ -28,21 +28,12 @@ export default class Character extends DynamicBody {
       scaleSize,
       isColliding
     );
-    this.isAttacking = false;
+    this._isAttacking = false;
     this._inBattle = false;
     this._health = 100;
     this._mana = 100;
     this.items = items;
     this.setupStatusBars();
-  }
-
-  set inBattle(value) {
-    this._inBattle = value;
-    setTimeout(() => {
-      if (this._inBattle) {
-        this._inBattle = false;
-      }
-    }, 5000);
   }
 
   setupStatusBars() {
@@ -62,6 +53,32 @@ export default class Character extends DynamicBody {
       this._health,
       "blue"
     );
+  }
+
+  get isAttacking() {
+    return this._isAttacking;
+  }
+
+  set isAttacking(value) {
+    this._isAttacking = value;
+    setTimeout(() => {
+      if (this._isAttacking) {
+        this.isAttacking = false;
+      }
+    }, 200);
+  }
+
+  get inBattle() {
+    return this._inBattle;
+  }
+
+  set inBattle(value) {
+    this._inBattle = value;
+    setTimeout(() => {
+      if (this._inBattle) {
+        this._inBattle = false;
+      }
+    }, 5000);
   }
 
   get health() {
@@ -85,7 +102,7 @@ export default class Character extends DynamicBody {
   }
 
   attack() {
-    // Not Implemented
+    this.isAttacking = true;
   }
 
   draw(display) {

@@ -7,6 +7,8 @@ const animationStates = await getAnimationStates.json();
 const walkingAnimationStates = animationStates["black-knight"];
 const battleReadyAnimationStates =
   animationStates["black-knight-battler-ready"];
+const lightSwordAttackAnimationStates =
+  animationStates["black-knight-battler-light-sword-attack"];
 
 const walkingSpriteImg = new Image();
 walkingSpriteImg.src = walkingAnimationStates["img"];
@@ -123,6 +125,30 @@ animationManager.addAnimation(
   battleReadyAnimationStates["swordIdleFramesRow"],
   battleReadyAnimationStates["initialFrameCol"],
   battleReadyAnimationStates["lastPositionFramesCol"],
+  null,
+  true
+);
+
+animationManager.addAnimation(
+  "light-attack-sword-left",
+  battleSpriteImg,
+  lightSwordAttackAnimationStates["width"],
+  lightSwordAttackAnimationStates["height"],
+  lightSwordAttackAnimationStates["initialFrameCol"],
+  lightSwordAttackAnimationStates["swordIdleFramesRow"],
+  lightSwordAttackAnimationStates["initialFrameCol"],
+  lightSwordAttackAnimationStates["lastPositionFramesCol"]
+);
+
+animationManager.addAnimation(
+  "light-attack-sword-right",
+  battleSpriteImg,
+  lightSwordAttackAnimationStates["width"],
+  lightSwordAttackAnimationStates["height"],
+  lightSwordAttackAnimationStates["initialFrameCol"],
+  lightSwordAttackAnimationStates["swordIdleFramesRow"],
+  lightSwordAttackAnimationStates["initialFrameCol"],
+  lightSwordAttackAnimationStates["lastPositionFramesCol"],
   null,
   true
 );
