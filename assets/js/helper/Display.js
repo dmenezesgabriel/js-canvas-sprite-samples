@@ -4,6 +4,16 @@ export default class Display {
     this.context = canvas.getContext("2d");
     this.context.imageSmoothingEnabled = false;
     this.debug = debug;
+    this.canvas.addEventListener("mousedown", (event) => {
+      this.getCursorPosition(this.canvas, event);
+    });
+  }
+
+  getCursorPosition(canvas, event) {
+    const rect = canvas.getBoundingClientRect();
+    const x = event.clientX - rect.left;
+    const y = event.clientY - rect.top;
+    console.log("x: " + x + " y: " + y);
   }
 
   save() {
