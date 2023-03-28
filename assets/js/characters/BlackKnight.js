@@ -25,8 +25,6 @@ export default class BlackKnight extends Character {
       scaleSize,
       isColliding
     );
-    this.isAttacking = false;
-    this._inBattle = false;
     this.animationManager = animationManager;
     this.idle();
   }
@@ -49,15 +47,6 @@ export default class BlackKnight extends Character {
   draw(display) {
     super.draw(display);
     this._draw(display);
-  }
-
-  set inBattle(value) {
-    this._inBattle = value;
-    setTimeout(() => {
-      if (this._inBattle) {
-        this._inBattle = false;
-      }
-    }, 5000);
   }
 
   moveLeft() {

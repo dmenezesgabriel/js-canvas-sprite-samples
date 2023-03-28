@@ -28,10 +28,21 @@ export default class Character extends DynamicBody {
       scaleSize,
       isColliding
     );
+    this.isAttacking = false;
+    this._inBattle = false;
     this._health = 100;
     this._mana = 100;
     this.items = items;
     this.setupStatusBars();
+  }
+
+  set inBattle(value) {
+    this._inBattle = value;
+    setTimeout(() => {
+      if (this._inBattle) {
+        this._inBattle = false;
+      }
+    }, 5000);
   }
 
   setupStatusBars() {
