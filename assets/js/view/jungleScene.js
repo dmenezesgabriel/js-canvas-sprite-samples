@@ -101,13 +101,13 @@ export default class JungleScene extends BaseScene {
       this.map.getLayer("trees"),
       () => console.log("Player collided with trees")
     );
-  }
 
-  update() {
     this.display.on("mousedown", (x, y) => {
       console.log("Clicked", "x: ", x, " y: ", y);
     });
+  }
 
+  update() {
     if (this.playerController.moving === true) {
       this.playerCharacter.moving = true;
     } else {
