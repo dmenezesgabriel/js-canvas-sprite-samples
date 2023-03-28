@@ -19,16 +19,19 @@ class Game {
     this.display = new Display(this.canvas, true);
     this.playerController = new PlayerController();
     this.frame = this.update.bind(this);
+    this.activeScenes = {};
   }
 
   create() {
     this.playerController.init();
-    this.currentScene = new JungleScene(
+    const jungleScene = new JungleScene(
       this.display,
       this.camera,
       this.cameraController,
       this.playerController
     );
+
+    this.activeScenes["jungle"] = jungleScene;
 
     this.display.on("mousedown", (x, y) => {
       console.log("Clicked", "x: ", x, " y: ", y);
@@ -41,14 +44,18 @@ class Game {
     this.elapsed = this.now - this.then;
     if (this.elapsed > this.fpsInterval) {
       this.then = this.now - (this.elapsed % this.fpsInterval);
-      this.currentScene.update();
+      for (const activeSceneName of Object.keys(this.activeScenes)) {
+        this.activeScenes[activeSceneName].update();
+      }
     }
   }
 
   async start(fps) {
     this.create();
 
-    await this.currentScene.create();
+    for (const activeSceneName of Object.keys(this.activeScenes)) {
+      await this.activeScenes[activeSceneName].create();
+    }
 
     this.fpsInterval = 1000 / fps; // calculate milliseconds
     this.then = Date.now();
