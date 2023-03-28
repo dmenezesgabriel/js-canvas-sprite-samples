@@ -1,19 +1,27 @@
-export default class Display {
+import EventEmitter from "./EventEmitter.js";
+
+export default class Display extends EventEmitter {
   constructor(canvas, debug) {
+    super();
     this.canvas = canvas;
     this.context = canvas.getContext("2d");
     this.context.imageSmoothingEnabled = false;
     this.debug = debug;
     this.canvas.addEventListener("mousedown", (event) => {
-      this.getCursorPosition(this.canvas, event);
+      this.getCursorPosition(event);
     });
   }
 
-  getCursorPosition(canvas, event) {
-    const rect = canvas.getBoundingClientRect();
-    const x = event.clientX - rect.left;
-    const y = event.clientY - rect.top;
-    console.log("x: " + x + " y: " + y);
+  getCursorPosition(event) {
+    event.preventDefault();
+    event.stopPropagation();
+
+    const rect = this.canvas.getBoundingClientRect();
+    const canvasX = event.clientX - rect.left;
+    const canvasY = event.clientY - rect.top;
+    const coordinateX = this.camera ? this.camera.x + canvasX : canvasX;
+    const coordinateY = this.camera ? this.camera.y + canvasY : canvasY;
+    this.emit("mousedown", coordinateX, coordinateY);
   }
 
   save() {
@@ -179,6 +187,7 @@ export default class Display {
   }
 
   beforeDraw(camera) {
+    this.camera = camera;
     this.context.save();
     this.context.clearRect(
       0,

@@ -104,6 +104,10 @@ export default class JungleScene extends BaseScene {
   }
 
   update() {
+    this.display.on("mousedown", (x, y) => {
+      console.log("Clicked", "x: ", x, " y: ", y);
+    });
+
     if (this.playerController.moving === true) {
       this.playerCharacter.moving = true;
     } else {
