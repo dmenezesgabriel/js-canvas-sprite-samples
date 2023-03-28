@@ -29,6 +29,10 @@ class Game {
       this.cameraController,
       this.playerController
     );
+
+    this.display.on("mousedown", (x, y) => {
+      console.log("Clicked", "x: ", x, " y: ", y);
+    });
   }
 
   update() {
