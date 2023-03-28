@@ -3,6 +3,7 @@ import PlayerController from "./controller/PlayerController.js";
 import Display from "./helper/Display.js";
 import Camera from "./model/camera.js";
 import CameraController from "./controller/CameraController.js";
+import GameUI from "./view/GameUI.js";
 
 class Game {
   constructor(fpsInterval, startTime, now, then, elapsed) {
@@ -31,10 +32,20 @@ class Game {
       this.playerController
     );
 
+    const gameUI = new GameUI(this.display);
+
     this.scenes.push({
       name: "jungle",
       isActive: true,
       sceneObject: jungleScene,
+      order: 0,
+    });
+
+    this.scenes.push({
+      name: "gameUI",
+      isActive: true,
+      sceneObject: gameUI,
+      order: 1,
     });
 
     this.display.on("mousedown", (x, y) => {
@@ -51,6 +62,8 @@ class Game {
       const activeScenes = this.scenes.filter(
         (scene) => scene.isActive === true
       );
+      activeScenes.sort((a, b) => a.order - b.order);
+
       for (const scene of activeScenes) {
         scene.sceneObject.update();
       }
@@ -61,6 +74,8 @@ class Game {
     this.create();
 
     const activeScenes = this.scenes.filter((scene) => scene.isActive === true);
+
+    activeScenes.sort((a, b) => a.order - b.order);
 
     for (const scene of activeScenes) {
       await scene.sceneObject.create();
