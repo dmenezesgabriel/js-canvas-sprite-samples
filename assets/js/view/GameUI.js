@@ -1,17 +1,43 @@
+import StatusBar from "../model/StatusBar.js";
 import BaseScene from "./BaseScene.js";
 
 export default class GameUI extends BaseScene {
-  constructor(display) {
-    super(display);
+  constructor(game, display) {
+    super(game, display);
   }
 
-  async create() {}
+  async create() {
+    if (this.game.player.character) {
+      this.healthBar = new StatusBar(
+        5,
+        4,
+        150,
+        8,
+        this.game.player.character.health,
+        "green"
+      );
+      this.manaBar = new StatusBar(
+        5,
+        12,
+        150,
+        8,
+        this.game.player.character.mana,
+        "blue"
+      );
+    }
+  }
 
   update() {
     this.display.context.beginPath();
-    this.display.context.lineWidth = 2;
-    this.display.context.strokeStyle = "red";
-    this.display.context.rect(0, 0, 150, 20);
-    this.display.context.stroke();
+    this.display.context.strokeStyle = "#333";
+    this.display.context.lineWidth = 1;
+    this.display.context.fillStyle = "gray";
+    this.display.context.fillRect(0, 0, 160, 25);
+    this.display.context.strokeRect(0, 0, 160, 25);
+
+    this.healthBar.value = this.game.player.character.health;
+    this.healthBar.draw(this.display);
+    this.manaBar.value = this.game.player.character.mana;
+    this.manaBar.draw(this.display);
   }
 }

@@ -4,6 +4,7 @@ import Display from "./helper/Display.js";
 import Camera from "./model/camera.js";
 import CameraController from "./controller/CameraController.js";
 import GameUI from "./view/GameUI.js";
+import Player from "./model/Player.js";
 
 class Game {
   constructor(fpsInterval, startTime, now, then, elapsed) {
@@ -21,18 +22,21 @@ class Game {
     this.playerController = new PlayerController();
     this.frame = this.update.bind(this);
     this.scenes = [];
+    this.player = null;
   }
 
   create() {
+    this.player = new Player();
     this.playerController.init();
     const jungleScene = new JungleScene(
+      this,
       this.display,
       this.camera,
       this.cameraController,
       this.playerController
     );
 
-    const gameUI = new GameUI(this.display);
+    const gameUI = new GameUI(this, this.display);
 
     this.scenes.push({
       name: "jungle",

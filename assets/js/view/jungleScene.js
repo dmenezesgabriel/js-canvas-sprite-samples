@@ -3,8 +3,8 @@ import TileMap from "../model/TileMap.js";
 import BaseScene from "./BaseScene.js";
 
 export default class JungleScene extends BaseScene {
-  constructor(display, camera, cameraController, playerController) {
-    super(display);
+  constructor(game, display, camera, cameraController, playerController) {
+    super(game, display);
     this.camera = camera;
     this.cameraController = cameraController;
     this.playerController = playerController;
@@ -44,7 +44,7 @@ export default class JungleScene extends BaseScene {
       );
     }
 
-    this.playerCharacter = new BlackKnight(
+    this.game.player.character = new BlackKnight(
       "Black Knight",
       0,
       0,
@@ -58,12 +58,12 @@ export default class JungleScene extends BaseScene {
 
     this.camera.x = 780;
     this.camera.y = 0;
-    this.playerCharacter.x = 990;
-    this.playerCharacter.y = 30;
+    this.game.player.character.x = 990;
+    this.game.player.character.y = 30;
 
     this.world.addCollider(
       "playerBackgroundCollision",
-      this.playerCharacter,
+      this.game.player.character,
       this.map.getLayer("background"),
       (objectA, objectB) => {
         console.log("Player collided with background");
@@ -77,27 +77,27 @@ export default class JungleScene extends BaseScene {
 
     this.world.addCollider(
       "playerPathCollision",
-      this.playerCharacter,
+      this.game.player.character,
       this.map.getLayer("path"),
       () => console.log("Player collided with path")
     );
 
     this.world.addCollider(
       "playerLagoonCollision",
-      this.playerCharacter,
+      this.game.player.character,
       this.map.getLayer("lagoon"),
       () => console.log("Player collided with lagoon")
     );
     this.world.addCollider(
       "playerBushesCollision",
-      this.playerCharacter,
+      this.game.player.character,
       this.map.getLayer("bushes"),
       () => console.log("Player collided with bushes")
     );
 
     this.world.addCollider(
       "playerTreesCollision",
-      this.playerCharacter,
+      this.game.player.character,
       this.map.getLayer("trees"),
       () => console.log("Player collided with trees")
     );
@@ -105,9 +105,9 @@ export default class JungleScene extends BaseScene {
 
   update() {
     if (this.playerController.moving === true) {
-      this.playerCharacter.moving = true;
+      this.game.player.character.moving = true;
     } else {
-      this.playerCharacter.moving = false;
+      this.game.player.character.moving = false;
     }
 
     // Draw
@@ -118,7 +118,7 @@ export default class JungleScene extends BaseScene {
       if (layerObject.name != "foreground") layerObject.draw(this.display);
     }
 
-    this.playerCharacter.draw(this.display);
+    this.game.player.character.draw(this.display);
 
     for (const key of Object.keys(this.map.layers)) {
       const layerObject = this.map.layers[key];
@@ -128,17 +128,17 @@ export default class JungleScene extends BaseScene {
     this.display.afterDraw();
 
     this.playerController.moveCharacter(
-      this.playerCharacter,
+      this.game.player.character,
       this.map.width,
       this.map.height
     );
 
     this.cameraController.moveCamera(
       this.camera,
-      this.playerCharacter.x,
-      this.playerCharacter.y,
-      this.playerCharacter.width,
-      this.playerCharacter.height,
+      this.game.player.character.x,
+      this.game.player.character.y,
+      this.game.player.character.width,
+      this.game.player.character.height,
       this.map.width,
       this.map.height
     );
