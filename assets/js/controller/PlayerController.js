@@ -1,3 +1,5 @@
+import PathFinding from "../helper/PathFinding.js";
+
 export default class PlayerController {
   constructor() {
     this.moveKeys = [
@@ -13,6 +15,7 @@ export default class PlayerController {
     this.attackKeys = ["k"];
     this.keys = [];
     this.moving = false;
+    this.pathFinding = new PathFinding();
   }
 
   init() {
@@ -100,6 +103,21 @@ export default class PlayerController {
 
     if (character.isColliding) {
       character.speed = characterSpeed;
+    }
+  }
+
+  moveCharacterToCoordinates(character, tileMapLayers, targetX, targetY) {
+    const path = this.pathFinding.search(
+      character,
+      tileMapLayers,
+      targetX,
+      targetY
+    );
+
+    if (path) {
+      for (const point in path) {
+        console.log(point);
+      }
     }
   }
 }

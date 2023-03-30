@@ -51,10 +51,6 @@ class Game {
       sceneObject: gameUI,
       order: 1,
     });
-
-    this.display.on("mousedown", (x, y) => {
-      console.log("Clicked", "x: ", x, " y: ", y);
-    });
   }
 
   update() {
