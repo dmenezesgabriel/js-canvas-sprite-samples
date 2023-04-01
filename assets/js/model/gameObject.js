@@ -1,10 +1,9 @@
 import EventEmitter from "../helper/EventEmitter.js";
 
 export default class GameObject extends EventEmitter {
-  constructor(x, y, width, height, scaleSize = 1) {
+  constructor(position, width, height, scaleSize = 1) {
     super();
-    this.x = x;
-    this.y = y;
+    this.position = position;
     this._width = width;
     this._height = height;
     this.scaleSize = scaleSize;
@@ -26,18 +25,18 @@ export default class GameObject extends EventEmitter {
   }
 
   get left() {
-    return this.x;
+    return this.position.x;
   }
 
   get top() {
-    return this.y;
+    return this.position.y;
   }
 
   get right() {
-    return this.x + this.width * this.scaleSize;
+    return this.position.x + this.width * this.scaleSize;
   }
 
   get bottom() {
-    this.y + this.height * this.scaleSize;
+    this.position.y + this.height * this.scaleSize;
   }
 }

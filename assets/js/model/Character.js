@@ -5,8 +5,7 @@ import drawName from "../utils/drawName.js";
 export default class Character extends DynamicBody {
   constructor(
     name,
-    x,
-    y,
+    position,
     width,
     height,
     speed,
@@ -18,8 +17,7 @@ export default class Character extends DynamicBody {
   ) {
     super(
       name,
-      x,
-      y,
+      position,
       width,
       height,
       speed,
@@ -38,16 +36,16 @@ export default class Character extends DynamicBody {
 
   setupStatusBars() {
     this.healthBar = new StatusBar(
-      this.x + 2,
-      this.y + this.height + 3,
+      this.position.x + 2,
+      this.position.y + this.height + 3,
       this.width - 4,
       8,
       this._health,
       "green"
     );
     this.manaBar = new StatusBar(
-      this.x + 2,
-      this.y + this.height + 3 + 8,
+      this.position.x + 2,
+      this.position.y + this.height + 3 + 8,
       this.width - 4,
       8,
       this._health,
@@ -106,13 +104,21 @@ export default class Character extends DynamicBody {
   }
 
   draw(display) {
-    drawName(display, this.x + this.width / 2, this.y - 5, this.name, "#fff");
-    this.healthBar.x = this.x + this.width / 2 - this.healthBar.maxWidth / 2;
-    this.healthBar.y = this.y + this.height + 3;
+    drawName(
+      display,
+      this.position.x + this.width / 2,
+      this.position.y - 5,
+      this.name,
+      "#fff"
+    );
+    this.healthBar.x =
+      this.position.x + this.width / 2 - this.healthBar.maxWidth / 2;
+    this.healthBar.y = this.position.y + this.height + 3;
     this.healthBar.draw(display);
 
-    this.manaBar.x = this.x + this.width / 2 - this.manaBar.maxWidth / 2;
-    this.manaBar.y = this.y + this.height + 3 + 8;
+    this.manaBar.x =
+      this.position.x + this.width / 2 - this.manaBar.maxWidth / 2;
+    this.manaBar.y = this.position.y + this.height + 3 + 8;
     this.manaBar.draw(display);
   }
 }

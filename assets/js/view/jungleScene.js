@@ -1,4 +1,5 @@
 import BlackKnight from "../characters/BlackKnight.js";
+import Position from "../model/Position.js";
 import TileMap from "../model/TileMap.js";
 import BaseScene from "./BaseScene.js";
 
@@ -41,10 +42,10 @@ export default class JungleScene extends BaseScene {
       );
     }
 
+    const characterPosition = new Position(0, 0);
     this.game.player.character = new BlackKnight(
       "Black Knight",
-      0,
-      0,
+      characterPosition,
       26,
       36,
       10,
@@ -55,8 +56,8 @@ export default class JungleScene extends BaseScene {
 
     this.game.camera.position.x = 780;
     this.game.camera.position.y = 0;
-    this.game.player.character.x = 990;
-    this.game.player.character.y = 30;
+    this.game.player.character.position.x = 990;
+    this.game.player.character.position.y = 30;
 
     this.world.addCollider(
       "playerBackgroundCollision",
@@ -143,8 +144,8 @@ export default class JungleScene extends BaseScene {
 
     this.game.cameraController.moveCamera(
       this.game.camera,
-      this.game.player.character.x,
-      this.game.player.character.y,
+      this.game.player.character.position.x,
+      this.game.player.character.position.y,
       this.game.player.character.width,
       this.game.player.character.height,
       this.map.width,

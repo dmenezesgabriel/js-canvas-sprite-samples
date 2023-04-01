@@ -1,7 +1,6 @@
 class Point {
-  constructor(x, y) {
-    this.x = x;
-    this.y = y;
+  constructor(position) {
+    this.position = position;
     this.totalCost = 0;
     this.costFromStartingPointToThis = 0;
     this.estimatedCostFromThisToGoal = 0;
@@ -10,10 +9,10 @@ class Point {
   }
 
   updateNeighbors(speed) {
-    this.neighbors.push(this.x + speed);
-    this.neighbors.push(this.x - speed);
-    this.neighbors.push(this.y + speed);
-    this.neighbors.push(this.y - speed);
+    this.neighbors.push(this.position.x + speed);
+    this.neighbors.push(this.position.x - speed);
+    this.neighbors.push(this.position.y + speed);
+    this.neighbors.push(this.position.y - speed);
   }
 }
 
@@ -27,8 +26,8 @@ export default class PathFinding {
   search(DynamicBody, tileMapLayers, targetX, targetY) {
     const start = {};
     const end = {};
-    start.x = DynamicBody.x;
-    start.y = DynamicBody.y;
+    start.x = DynamicBody.position.x;
+    start.y = DynamicBody.position.y;
     end.x = targetX;
     end.y = targetY;
 

@@ -4,8 +4,7 @@ import animationManager from "../animations/Sword.js";
 export default class Sword extends Weapon {
   constructor(
     name,
-    x,
-    y,
+    position,
     width,
     height,
     speed,
@@ -16,8 +15,7 @@ export default class Sword extends Weapon {
   ) {
     super(
       name,
-      x,
-      y,
+      position,
       width,
       height,
       speed,
@@ -33,14 +31,14 @@ export default class Sword extends Weapon {
   attack(direction) {
     if (this.moving) return;
     this.moving = true;
-    const cachedX = this.x;
-    const cachedY = this.y;
+    const cachedX = this.position.x;
+    const cachedY = this.position.y;
     this.direction = direction;
 
     switch (this.direction) {
       case "Left":
-        this.y += 5;
-        this.x -= 40;
+        this.position.y += 5;
+        this.position.x -= 40;
 
         this.animationManager.play("left");
         break;
@@ -48,8 +46,8 @@ export default class Sword extends Weapon {
         this.animationManager.play("up");
         break;
       case "Right":
-        this.y += 5;
-        this.x += 40;
+        this.position.y += 5;
+        this.position.x += 40;
 
         this.animationManager.play("right");
         break;
@@ -61,8 +59,8 @@ export default class Sword extends Weapon {
 
     setTimeout(() => {
       animationManager.play("down");
-      this.x = cachedX;
-      this.y = cachedY;
+      this.position.x = cachedX;
+      this.position.y = cachedY;
       this.moving = false;
     }, 200);
   }
@@ -72,8 +70,8 @@ export default class Sword extends Weapon {
       this.animationManager.currentAnimation.img,
       this.animationManager.currentAnimation.frameX,
       this.animationManager.currentAnimation.frameY,
-      this.x,
-      this.y,
+      this.position.x,
+      this.position.y,
       this._width,
       this._height,
       this.scaleSize,

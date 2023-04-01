@@ -58,17 +58,17 @@ export default class PlayerController {
   }
 
   handleMapLimits(character, mapWidth, mapHeight) {
-    if (character.x < 0) {
-      character.x = 0;
+    if (character.position.x < 0) {
+      character.position.x = 0;
     }
-    if (character.x + character.width > mapWidth) {
-      character.x = mapWidth - character.width;
+    if (character.position.x + character.width > mapWidth) {
+      character.position.x = mapWidth - character.width;
     }
-    if (character.y < 0) {
-      character.y = 0;
+    if (character.position.y < 0) {
+      character.position.y = 0;
     }
-    if (character.y + character.height > mapHeight) {
-      character.y = mapHeight - character.height;
+    if (character.position.y + character.height > mapHeight) {
+      character.position.y = mapHeight - character.height;
     }
   }
 

@@ -3,8 +3,7 @@ import Item from "../model/Item.js";
 export default class Weapon extends Item {
   constructor(
     name,
-    x,
-    y,
+    position,
     width,
     height,
     speed,
@@ -15,8 +14,7 @@ export default class Weapon extends Item {
   ) {
     super(
       name,
-      x,
-      y,
+      position,
       width,
       height,
       speed,

@@ -3,8 +3,7 @@ import DynamicBody from "./DynamicBody.js";
 export default class Item extends DynamicBody {
   constructor(
     name,
-    x,
-    y,
+    position,
     width,
     height,
     speed,
@@ -15,8 +14,7 @@ export default class Item extends DynamicBody {
   ) {
     super(
       name,
-      x,
-      y,
+      position,
       width,
       height,
       speed,

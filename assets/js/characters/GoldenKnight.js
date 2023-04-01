@@ -35,8 +35,8 @@ export default class GoldenKnight extends Character {
       this.animationManager.currentAnimation.img,
       this.animationManager.currentAnimation.frameX,
       this.animationManager.currentAnimation.frameY,
-      this.x,
-      this.y,
+      this.position.x,
+      this.position.y,
       this._width,
       this._height,
       this.scaleSize

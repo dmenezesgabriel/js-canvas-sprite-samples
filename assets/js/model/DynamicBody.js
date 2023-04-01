@@ -4,8 +4,7 @@ import Direction from "../enum/Direction.js";
 export default class DynamicBody extends GameObject {
   constructor(
     name,
-    x,
-    y,
+    position,
     width,
     height,
     speed,
@@ -14,10 +13,10 @@ export default class DynamicBody extends GameObject {
     scaleSize,
     isColliding = false
   ) {
-    super(x, y, width, height, scaleSize);
+    super(position, width, height, scaleSize);
     this.name = name;
-    this._nextX = this.x;
-    this._nextY = this.y;
+    this._nextX = this.position.x;
+    this._nextY = this.position.y;
     this.moving = moving;
     this._speed = speed;
     this.friction = friction;
@@ -29,7 +28,7 @@ export default class DynamicBody extends GameObject {
   }
 
   get nextX() {
-    return this._nextX || this.x;
+    return this._nextX || this.position.x;
   }
 
   set nextX(value) {
@@ -40,7 +39,7 @@ export default class DynamicBody extends GameObject {
   }
 
   get nextY() {
-    return this._nextY || this.y;
+    return this._nextY || this.position.y;
   }
 
   set nextY(value) {
@@ -59,11 +58,11 @@ export default class DynamicBody extends GameObject {
   }
 
   get collisionX() {
-    return this.x + this.width * 0.3;
+    return this.position.x + this.width * 0.3;
   }
 
   get collisionY() {
-    return this.y + this.height * 0.7;
+    return this.position.y + this.height * 0.7;
   }
 
   get collisionWidth() {
@@ -87,25 +86,25 @@ export default class DynamicBody extends GameObject {
 
   moveLeft() {
     this.orientation = this.direction = Direction.Left;
-    this.x -= this._speed;
+    this.position.x -= this._speed;
     this.moving = true;
   }
 
   moveUp() {
     this.direction = Direction.Up;
-    this.y -= this._speed;
+    this.position.y -= this._speed;
     this.moving = true;
   }
 
   moveRight() {
     this.orientation = this.direction = Direction.Right;
-    this.x += this._speed;
+    this.position.x += this._speed;
     this.moving = true;
   }
 
   moveDown() {
     this.direction = Direction.Down;
-    this.y += this._speed;
+    this.position.y += this._speed;
     this.moving = true;
   }
 
