@@ -2,8 +2,8 @@ import StatusBar from "../model/StatusBar.js";
 import BaseScene from "./BaseScene.js";
 
 export default class GameUI extends BaseScene {
-  constructor(game, display) {
-    super(game, display);
+  constructor(game) {
+    super(game);
   }
 
   async create() {
@@ -28,16 +28,16 @@ export default class GameUI extends BaseScene {
   }
 
   update() {
-    this.display.context.beginPath();
-    this.display.context.strokeStyle = "#333";
-    this.display.context.lineWidth = 1;
-    this.display.context.fillStyle = "gray";
-    this.display.context.fillRect(0, 0, 160, 25);
-    this.display.context.strokeRect(0, 0, 160, 25);
+    this.game.display.context.beginPath();
+    this.game.display.context.strokeStyle = "#333";
+    this.game.display.context.lineWidth = 1;
+    this.game.display.context.fillStyle = "gray";
+    this.game.display.context.fillRect(0, 0, 160, 25);
+    this.game.display.context.strokeRect(0, 0, 160, 25);
 
     this.healthBar.value = this.game.player.character.health;
-    this.healthBar.draw(this.display);
+    this.healthBar.draw(this.game.display);
     this.manaBar.value = this.game.player.character.mana;
-    this.manaBar.draw(this.display);
+    this.manaBar.draw(this.game.display);
   }
 }

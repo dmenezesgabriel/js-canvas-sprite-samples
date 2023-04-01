@@ -28,15 +28,9 @@ class Game {
   create() {
     this.player = new Player();
     this.playerController.init();
-    const jungleScene = new JungleScene(
-      this,
-      this.display,
-      this.camera,
-      this.cameraController,
-      this.playerController
-    );
 
-    const gameUI = new GameUI(this, this.display);
+    const jungleScene = new JungleScene(this);
+    const gameUI = new GameUI(this);
 
     this.scenes.push({
       name: "jungle",

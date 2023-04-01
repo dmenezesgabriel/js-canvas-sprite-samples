@@ -3,11 +3,8 @@ import TileMap from "../model/TileMap.js";
 import BaseScene from "./BaseScene.js";
 
 export default class JungleScene extends BaseScene {
-  constructor(game, display, camera, cameraController, playerController) {
-    super(game, display);
-    this.camera = camera;
-    this.cameraController = cameraController;
-    this.playerController = playerController;
+  constructor(game) {
+    super(game);
     this.maps = {};
   }
 
@@ -56,8 +53,8 @@ export default class JungleScene extends BaseScene {
       2
     );
 
-    this.camera.x = 780;
-    this.camera.y = 0;
+    this.game.camera.x = 780;
+    this.game.camera.y = 0;
     this.game.player.character.x = 990;
     this.game.player.character.y = 30;
 
@@ -102,9 +99,9 @@ export default class JungleScene extends BaseScene {
       () => console.log("Player collided with trees")
     );
 
-    this.display.on("mousedown", (x, y) => {
+    this.game.display.on("mousedown", (x, y) => {
       console.log("Clicked", "x: ", x, " y: ", y);
-      this.playerController.moveCharacterToCoordinates(
+      this.game.playerController.moveCharacterToCoordinates(
         this.game.player.character,
         null,
         x,
@@ -114,37 +111,38 @@ export default class JungleScene extends BaseScene {
   }
 
   update() {
-    if (this.playerController.moving === true) {
+    if (this.game.playerController.moving === true) {
       this.game.player.character.moving = true;
     } else {
       this.game.player.character.moving = false;
     }
 
     // Draw
-    this.display.beforeDraw(this.camera);
+    this.game.display.beforeDraw(this.game.camera);
 
     for (const key of Object.keys(this.map.layers)) {
       const layerObject = this.map.layers[key];
-      if (layerObject.name != "foreground") layerObject.draw(this.display);
+      if (layerObject.name != "foreground") layerObject.draw(this.game.display);
     }
 
-    this.game.player.character.draw(this.display);
+    this.game.player.character.draw(this.game.display);
 
     for (const key of Object.keys(this.map.layers)) {
       const layerObject = this.map.layers[key];
-      if (layerObject.name === "foreground") layerObject.draw(this.display);
+      if (layerObject.name === "foreground")
+        layerObject.draw(this.game.display);
     }
 
-    this.display.afterDraw();
+    this.game.display.afterDraw();
 
-    this.playerController.moveCharacter(
+    this.game.playerController.moveCharacter(
       this.game.player.character,
       this.map.width,
       this.map.height
     );
 
-    this.cameraController.moveCamera(
-      this.camera,
+    this.game.cameraController.moveCamera(
+      this.game.camera,
       this.game.player.character.x,
       this.game.player.character.y,
       this.game.player.character.width,
