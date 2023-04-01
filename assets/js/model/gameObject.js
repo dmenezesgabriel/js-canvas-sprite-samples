@@ -1,39 +1,13 @@
 import EventEmitter from "../helper/EventEmitter.js";
 
 export default class GameObject extends EventEmitter {
-  constructor(x, y, width, height, scaleSize = 1, isColliding = false) {
+  constructor(x, y, width, height, scaleSize = 1) {
     super();
     this.x = x;
     this.y = y;
-    this._nextX = this.x;
-    this._nextY = this.y;
     this._width = width;
     this._height = height;
     this.scaleSize = scaleSize;
-    this._isColliding = isColliding;
-    this.colliders = [];
-  }
-
-  get nextX() {
-    return this._nextX || this.x;
-  }
-
-  set nextX(value) {
-    if (this._nextX != value) {
-      this._nextX = value;
-      this.emit("nextXChanged");
-    }
-  }
-
-  get nextY() {
-    return this._nextY || this.y;
-  }
-
-  set nextY(value) {
-    if (this._nextY != value) {
-      this._nextY = value;
-      this.emit("nextYChanged");
-    }
   }
 
   get height() {
@@ -49,17 +23,6 @@ export default class GameObject extends EventEmitter {
 
   set width(value) {
     this._width = value;
-  }
-
-  get isColliding() {
-    return this._isColliding;
-  }
-
-  set isColliding(value) {
-    if (this._isColliding != value) {
-      this._isColliding = value;
-      this.emit("isCollidingChanged");
-    }
   }
 
   get left() {
