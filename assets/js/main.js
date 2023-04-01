@@ -5,6 +5,7 @@ import Camera from "./model/camera.js";
 import CameraController from "./controller/CameraController.js";
 import GameUI from "./view/GameUI.js";
 import Player from "./model/Player.js";
+import Position from "./model/Position.js";
 
 class Game {
   constructor(fpsInterval, startTime, now, then, elapsed) {
@@ -16,7 +17,7 @@ class Game {
     this.canvas = document.getElementById("canvas1");
     this.canvas.width = 500;
     this.canvas.height = 500;
-    this.camera = new Camera(0, 0, this.canvas.width, this.canvas.height);
+    this.camera = null;
     this.cameraController = new CameraController();
     this.display = new Display(this.canvas, true);
     this.playerController = new PlayerController();
@@ -26,6 +27,14 @@ class Game {
   }
 
   create() {
+    const cameraPosition = new Position(0, 0);
+
+    this.camera = new Camera(
+      cameraPosition,
+      this.canvas.width,
+      this.canvas.height
+    );
+
     this.player = new Player();
     this.playerController.init();
 

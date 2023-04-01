@@ -53,8 +53,8 @@ export default class JungleScene extends BaseScene {
       2
     );
 
-    this.game.camera.x = 780;
-    this.game.camera.y = 0;
+    this.game.camera.position.x = 780;
+    this.game.camera.position.y = 0;
     this.game.player.character.x = 990;
     this.game.player.character.y = 30;
 

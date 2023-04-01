@@ -1,32 +1,32 @@
 export default class CameraController {
   followTarget(camera, targetX, targetY, targetWidth, targetHeight) {
     if (targetX < camera.leftEdge()) {
-      camera.x = targetX - camera.width * 0.25;
+      camera.position.x = targetX - camera.width * 0.25;
     }
     if (targetX + targetWidth > camera.rightEdge()) {
-      camera.x = targetX + targetWidth - camera.width * 0.75;
+      camera.position.x = targetX + targetWidth - camera.width * 0.75;
     }
     if (targetY < camera.topEdge()) {
-      camera.y = targetY - camera.height * 0.25;
+      camera.position.y = targetY - camera.height * 0.25;
     }
     if (targetY + targetHeight > camera.bottomEdge()) {
-      camera.y = targetY + targetHeight - camera.height * 0.75;
+      camera.position.y = targetY + targetHeight - camera.height * 0.75;
     }
   }
 
   handleMapLimits(camera, mapWidth, mapHeight) {
     // Limits
-    if (camera.x < 0) {
-      camera.x = 0;
+    if (camera.position.x < 0) {
+      camera.position.x = 0;
     }
-    if (camera.x + camera.width > mapWidth) {
-      camera.x = mapWidth - camera.width;
+    if (camera.position.x + camera.width > mapWidth) {
+      camera.position.x = mapWidth - camera.width;
     }
-    if (camera.y < 0) {
-      camera.y = 0;
+    if (camera.position.y < 0) {
+      camera.position.y = 0;
     }
-    if (camera.y + camera.height > mapHeight) {
-      camera.y = mapHeight - camera.height;
+    if (camera.position.y + camera.height > mapHeight) {
+      camera.position.y = mapHeight - camera.height;
     }
   }
 

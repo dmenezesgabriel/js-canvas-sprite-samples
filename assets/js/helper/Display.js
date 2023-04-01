@@ -19,8 +19,12 @@ export default class Display extends EventEmitter {
     const rect = this.canvas.getBoundingClientRect();
     const canvasX = event.clientX - rect.left;
     const canvasY = event.clientY - rect.top;
-    const coordinateX = this.camera ? this.camera.x + canvasX : canvasX;
-    const coordinateY = this.camera ? this.camera.y + canvasY : canvasY;
+    const coordinateX = this.camera
+      ? this.camera.position.x + canvasX
+      : canvasX;
+    const coordinateY = this.camera
+      ? this.camera.position.y + canvasY
+      : canvasY;
     this.emit("mousedown", coordinateX, coordinateY);
   }
 
@@ -195,7 +199,7 @@ export default class Display extends EventEmitter {
       this.context.canvas.width,
       this.context.canvas.height
     );
-    this.context.translate(-camera.x, -camera.y);
+    this.context.translate(-camera.position.x, -camera.position.y);
   }
 
   afterDraw() {
