@@ -1,7 +1,6 @@
 export default class StatusBar {
-  constructor(x, y, width, height, maxValue, color) {
-    this.x = x;
-    this.y = y;
+  constructor(position, width, height, maxValue, color) {
+    this.position = position;
     this.width = width;
     this.height = height;
     this.maxValue = maxValue;
@@ -25,11 +24,21 @@ export default class StatusBar {
     context.lineWidth = 2;
     // Background
     context.fillStyle = "gray";
-    context.fillRect(this.x, this.y, this.maxWidth, this.height);
+    context.fillRect(
+      this.position.x,
+      this.position.y,
+      this.maxWidth,
+      this.height
+    );
     // Color
     context.fillStyle = this.color;
-    context.fillRect(this.x, this.y, this.width, this.height);
+    context.fillRect(this.position.x, this.position.y, this.width, this.height);
 
-    context.strokeRect(this.x, this.y, this.maxWidth, this.height);
+    context.strokeRect(
+      this.position.x,
+      this.position.y,
+      this.maxWidth,
+      this.height
+    );
   }
 }

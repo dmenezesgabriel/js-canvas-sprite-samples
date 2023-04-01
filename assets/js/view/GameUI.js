@@ -1,3 +1,4 @@
+import Position from "../model/Position.js";
 import StatusBar from "../model/StatusBar.js";
 import BaseScene from "./BaseScene.js";
 
@@ -7,18 +8,19 @@ export default class GameUI extends BaseScene {
   }
 
   async create() {
+    const healthBarPosition = new Position(5, 4);
     if (this.game.player.character) {
       this.healthBar = new StatusBar(
-        5,
-        4,
+        healthBarPosition,
         150,
         8,
         this.game.player.character.health,
         "green"
       );
+
+      const manaBarPosition = new Position(5, 12);
       this.manaBar = new StatusBar(
-        5,
-        12,
+        manaBarPosition,
         150,
         8,
         this.game.player.character.mana,

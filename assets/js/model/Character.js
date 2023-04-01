@@ -1,6 +1,7 @@
 import DynamicBody from "./DynamicBody.js";
 import StatusBar from "./StatusBar.js";
 import drawName from "../utils/drawName.js";
+import Position from "./Position.js";
 
 export default class Character extends DynamicBody {
   constructor(
@@ -35,17 +36,23 @@ export default class Character extends DynamicBody {
   }
 
   setupStatusBars() {
-    this.healthBar = new StatusBar(
+    const healthBarPosition = new Position(
       this.position.x + 2,
-      this.position.y + this.height + 3,
+      this.position.y + this.height + 3
+    );
+    this.healthBar = new StatusBar(
+      healthBarPosition,
       this.width - 4,
       8,
       this._health,
       "green"
     );
-    this.manaBar = new StatusBar(
+    const manaBarPosition = new Position(
       this.position.x + 2,
-      this.position.y + this.height + 3 + 8,
+      this.position.y + this.height + 3 + 8
+    );
+    this.manaBar = new StatusBar(
+      manaBarPosition,
       this.width - 4,
       8,
       this._health,
@@ -111,14 +118,14 @@ export default class Character extends DynamicBody {
       this.name,
       "#fff"
     );
-    this.healthBar.x =
+    this.healthBar.position.x =
       this.position.x + this.width / 2 - this.healthBar.maxWidth / 2;
-    this.healthBar.y = this.position.y + this.height + 3;
+    this.healthBar.position.y = this.position.y + this.height + 3;
     this.healthBar.draw(display);
 
-    this.manaBar.x =
+    this.manaBar.position.x =
       this.position.x + this.width / 2 - this.manaBar.maxWidth / 2;
-    this.manaBar.y = this.position.y + this.height + 3 + 8;
+    this.manaBar.position.y = this.position.y + this.height + 3 + 8;
     this.manaBar.draw(display);
   }
 }
