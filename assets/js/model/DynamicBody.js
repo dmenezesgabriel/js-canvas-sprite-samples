@@ -15,8 +15,6 @@ export default class DynamicBody extends GameObject {
   ) {
     super(position, width, height, scaleSize);
     this.name = name;
-    this._nextX = this.position.x;
-    this._nextY = this.position.y;
     this.moving = moving;
     this._speed = speed;
     this.friction = friction;
@@ -25,28 +23,6 @@ export default class DynamicBody extends GameObject {
     this.orientation = null;
     this._isColliding = isColliding;
     this.colliders = [];
-  }
-
-  get nextX() {
-    return this._nextX || this.position.x;
-  }
-
-  set nextX(value) {
-    if (this._nextX != value) {
-      this._nextX = value;
-      this.emit("nextXChanged");
-    }
-  }
-
-  get nextY() {
-    return this._nextY || this.position.y;
-  }
-
-  set nextY(value) {
-    if (this._nextY != value) {
-      this._nextY = value;
-      this.emit("nextYChanged");
-    }
   }
 
   get speed() {

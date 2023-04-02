@@ -16,8 +16,8 @@ export default class World extends EventEmitter {
 
   handleGameObjectTileMapLayerCollision(gameObject, tileMapLayer, collider) {
     const collisionOccurs = TileMapLayerCollision.collidesGameObject(
-      gameObject.nextX,
-      gameObject.nextY,
+      gameObject.position.nextX,
+      gameObject.position.nextY,
       gameObject.collisionWidth,
       gameObject.collisionHeight,
       tileMapLayer.layerCols,
@@ -48,10 +48,10 @@ export default class World extends EventEmitter {
       if (objectB.isBody) {
         // Not implemented
       } else if (objectB.isTileMapLayer) {
-        objectA.on("nextXChanged", () =>
+        objectA.position.on("nextXChanged", () =>
           this.handleGameObjectTileMapLayerCollision(objectA, objectB, collider)
         );
-        objectA.on("nextYChanged", () =>
+        objectA.position.on("nextYChanged", () =>
           this.handleGameObjectTileMapLayerCollision(objectA, objectB, collider)
         );
         if (callback) {
@@ -64,10 +64,10 @@ export default class World extends EventEmitter {
 
     if (objectA.isTileMapLayer) {
       if (objectB.isBody) {
-        objectA.on("nextXChanged", () =>
+        objectA.position.on("nextXChanged", () =>
           this.handleGameObjectTileMapLayerCollision(objectB, objectA)
         );
-        objectA.on("nextYChanged", () =>
+        objectA.position.on("nextYChanged", () =>
           this.handleGameObjectTileMapLayerCollision(objectB, objectA)
         );
         if (callback) {

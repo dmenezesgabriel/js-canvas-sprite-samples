@@ -53,8 +53,8 @@ export default class PlayerController {
     if (this.keys["d"] || this.keys["ArrowRight"]) {
       newX = currentX + currentSpeed;
     }
-    character.nextX = newX;
-    character.nextY = newY;
+    character.position.nextX = newX;
+    character.position.nextY = newY;
   }
 
   handleMapLimits(character, mapWidth, mapHeight) {
