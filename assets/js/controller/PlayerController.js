@@ -106,7 +106,7 @@ export default class PlayerController {
     }
   }
 
-  moveCharacterToCoordinates(character, tileMapLayers, targetX, targetY) {
+  moveCharacterToCoordinates(character, targetX, targetY) {
     const path = this.pathFinding.search(character, targetX, targetY);
 
     if (path) {

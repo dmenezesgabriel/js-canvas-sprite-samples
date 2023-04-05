@@ -2,9 +2,9 @@ class Point {
   constructor(x, y) {
     this.x = x;
     this.y = y;
-    this.totalCost = 0;
-    this.costFromStartingPointToThis = 0;
-    this.estimatedCostFromThisToGoal = 0;
+    this.totalCost = 0; // f
+    this.costFromStartingPointToThis = 0; // g
+    this.estimatedCostFromThisToGoal = 0; // h
     this.neighbors = [];
     this.parent = null;
   }
@@ -27,8 +27,6 @@ class Point {
 
 export default class PathFinding {
   constructor() {
-    this.start = null;
-    this.end = null;
     this.grid = null;
     this.unevaluatedPoints = [];
     this.evaluatedPoints = [];
@@ -41,37 +39,125 @@ export default class PathFinding {
     const gridCols = 40;
 
     this.grid = new Array(gridCols);
-    for (let col = 1; col < gridCols; col++) {
+    for (let col = 0; col < gridCols; col++) {
       this.grid[col] = new Array(gridRows);
     }
 
-    for (let col = 1; col < gridCols; col++) {
-      for (let row = 1; row < gridRows; row++) {
+    for (let col = 0; col < gridCols; col++) {
+      for (let row = 0; row < gridRows; row++) {
         this.grid[col][row] = new Point(col, row);
       }
     }
 
-    for (let col = 1; col < gridCols; col++) {
-      for (let row = 1; row < gridRows; row++) {
+    for (let col = 0; col < gridCols; col++) {
+      for (let row = 0; row < gridRows; row++) {
         this.grid[col][row].updateNeighbors(this.grid);
       }
     }
+  }
 
-    console.log(this.grid);
+  heuristic(pointA, pointB) {
+    let xDistance = Math.abs(pointB.x - pointA.x);
+    let yDistance = Math.abs(pointB.y - pointA.y);
+
+    return xDistance + yDistance;
   }
 
   search(dynamicBody, targetX, targetY) {
-    this.init();
+    const tileSize = 16;
+    const tileScaleSize = 2;
     const start = {};
     const end = {};
-    start.x = Math.ceil(dynamicBody.position.x / (16 * 2));
-    start.y = Math.ceil(dynamicBody.position.y / (16 * 2));
-    end.x = Math.ceil(targetX / (16 * 2));
-    end.y = Math.ceil(targetY / (16 * 2));
 
-    console.log(start);
-    console.log(end);
+    let counter = 0;
 
-    return this.path;
+    this.init();
+
+    start.x = Math.ceil(dynamicBody.position.x / (tileSize * tileScaleSize));
+    start.y = Math.ceil(dynamicBody.position.y / (tileSize * tileScaleSize));
+    end.x = Math.ceil(targetX / (tileSize * tileScaleSize));
+    end.y = Math.ceil(targetY / (tileSize * tileScaleSize));
+
+    console.log("start", start);
+    console.log("end", end);
+
+    this.unevaluatedPoints.push(this.grid[start.x][start.y]);
+    while (this.unevaluatedPoints.length > 0) {
+      //
+      counter++;
+      if (counter > 5000) {
+        break;
+      }
+      console.log("running");
+      //
+
+      let lowestIndex = 0;
+      for (
+        let unevaluatedIndex = 0;
+        unevaluatedIndex < this.unevaluatedPoints.length;
+        unevaluatedIndex++
+      ) {
+        if (
+          this.unevaluatedPoints[unevaluatedIndex].totalCost <
+          this.unevaluatedPoints[lowestIndex].totalCost
+        ) {
+          lowestIndex = unevaluatedIndex;
+        }
+      }
+      let currentPoint = this.unevaluatedPoints[lowestIndex];
+
+      if (currentPoint.x === end.x && currentPoint.y === end.y) {
+        let temp = currentPoint;
+        this.path.push(temp);
+        while (temp.parent) {
+          this.path.push(temp.parent);
+          temp = temp.parent;
+        }
+        console.log("DONE!");
+        return this.path.reverse();
+      }
+
+      this.unevaluatedPoints.splice(lowestIndex, 1);
+      this.evaluatedPoints.push(currentPoint);
+
+      let neighbors = currentPoint.neighbors;
+
+      for (
+        let neighborsIndex = 0;
+        neighborsIndex < neighbors.length;
+        neighborsIndex++
+      ) {
+        let currentNeighbor = neighbors[neighborsIndex];
+
+        if (!this.evaluatedPoints.includes(currentNeighbor)) {
+          let possibleCostFromStartingPointToThis =
+            currentPoint.costFromStartingPointToThis + 1;
+
+          if (!this.evaluatedPoints.includes(currentNeighbor)) {
+            this.unevaluatedPoints.push(currentNeighbor);
+          } else if (
+            possibleCostFromStartingPointToThis >=
+            currentNeighbor.costFromStartingPointToThis
+          ) {
+            continue;
+          }
+          currentNeighbor.costFromStartingPointToThis =
+            possibleCostFromStartingPointToThis;
+
+          currentNeighbor.estimatedCostFromThisToGoal = this.heuristic(
+            currentNeighbor,
+            end
+          );
+
+          currentNeighbor.totalCost =
+            currentNeighbor.costFromStartingPointToThis +
+            currentNeighbor.estimatedCostFromThisToGoal;
+
+          currentNeighbor.parent = currentPoint;
+        }
+      }
+    }
+
+    return [];
   }
 }
