@@ -104,7 +104,6 @@ export default class JungleScene extends BaseScene {
       console.log("Clicked", "x: ", x, " y: ", y);
       this.game.playerController.moveCharacterToCoordinates(
         this.game.player.character,
-        null,
         x,
         y
       );

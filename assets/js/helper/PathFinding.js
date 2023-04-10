@@ -85,7 +85,7 @@ export default class PathFinding {
     while (this.unevaluatedPoints.length > 0) {
       //
       counter++;
-      if (counter > 5000) {
+      if (counter > 10000) {
         break;
       }
       console.log("running");
