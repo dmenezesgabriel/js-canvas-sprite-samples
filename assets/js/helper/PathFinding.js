@@ -1,36 +1,8 @@
-class Point {
-  constructor(x, y) {
-    this.x = x;
-    this.y = y;
-    this.totalCost = 0; // f
-    this.costFromStartingPointToThis = 0; // g
-    this.estimatedCostFromThisToGoal = 0; // h
-    this.neighbors = [];
-    this.parent = null;
-  }
-
-  updateNeighbors(grid) {
-    if (grid[this.x + 1] && grid[this.x + 1][this.y]) {
-      this.neighbors.push(grid[this.x + 1][this.y]);
-    }
-    if (grid[this.x - 1] && grid[this.x - 1][this.y]) {
-      this.neighbors.push(grid[this.x - 1][this.y]);
-    }
-    if (grid[this.x] && grid[this.x][this.y + 1]) {
-      this.neighbors.push(grid[this.x][this.y + 1]);
-    }
-    if (grid[this.x] && grid[this.x][this.y - 1]) {
-      this.neighbors.push(grid[this.x][this.y - 1]);
-    }
-  }
-}
+import GridPoint from "../model/GridPoint.js";
 
 export default class PathFinding {
   constructor() {
     this.grid = null;
-    this.unevaluatedPoints = [];
-    this.evaluatedPoints = [];
-    this.path = [];
   }
 
   init() {
@@ -45,7 +17,7 @@ export default class PathFinding {
 
     for (let col = 0; col < gridCols; col++) {
       for (let row = 0; row < gridRows; row++) {
-        this.grid[col][row] = new Point(col, row);
+        this.grid[col][row] = new GridPoint(col, row);
       }
     }
 
@@ -64,6 +36,10 @@ export default class PathFinding {
   }
 
   search(dynamicBody, targetX, targetY) {
+    const unevaluatedPoints = [];
+    const evaluatedPoints = [];
+    const path = [];
+
     const tileSize = 16;
     const tileScaleSize = 2;
     const start = {};
@@ -81,44 +57,44 @@ export default class PathFinding {
     console.log("start", start);
     console.log("end", end);
 
-    this.unevaluatedPoints.push(this.grid[start.x][start.y]);
-    while (this.unevaluatedPoints.length > 0) {
+    unevaluatedPoints.push(this.grid[start.x][start.y]);
+    while (unevaluatedPoints.length > 0) {
       //
       counter++;
       if (counter > 10000) {
+        console.log("More than 10k iteration");
         break;
       }
-      console.log("running");
       //
 
       let lowestIndex = 0;
       for (
         let unevaluatedIndex = 0;
-        unevaluatedIndex < this.unevaluatedPoints.length;
+        unevaluatedIndex < unevaluatedPoints.length;
         unevaluatedIndex++
       ) {
         if (
-          this.unevaluatedPoints[unevaluatedIndex].totalCost <
-          this.unevaluatedPoints[lowestIndex].totalCost
+          unevaluatedPoints[unevaluatedIndex].totalCost <
+          unevaluatedPoints[lowestIndex].totalCost
         ) {
           lowestIndex = unevaluatedIndex;
         }
       }
-      let currentPoint = this.unevaluatedPoints[lowestIndex];
+      let currentPoint = unevaluatedPoints[lowestIndex];
 
       if (currentPoint.x === end.x && currentPoint.y === end.y) {
         let temp = currentPoint;
-        this.path.push(temp);
+        path.push(temp);
         while (temp.parent) {
-          this.path.push(temp.parent);
+          path.push(temp.parent);
           temp = temp.parent;
         }
         console.log("DONE!");
-        return this.path.reverse();
+        return path.reverse();
       }
 
-      this.unevaluatedPoints.splice(lowestIndex, 1);
-      this.evaluatedPoints.push(currentPoint);
+      unevaluatedPoints.splice(lowestIndex, 1);
+      evaluatedPoints.push(currentPoint);
 
       let neighbors = currentPoint.neighbors;
 
@@ -129,12 +105,12 @@ export default class PathFinding {
       ) {
         let currentNeighbor = neighbors[neighborsIndex];
 
-        if (!this.evaluatedPoints.includes(currentNeighbor)) {
+        if (!evaluatedPoints.includes(currentNeighbor)) {
           let possibleCostFromStartingPointToThis =
             currentPoint.costFromStartingPointToThis + 1;
 
-          if (!this.evaluatedPoints.includes(currentNeighbor)) {
-            this.unevaluatedPoints.push(currentNeighbor);
+          if (!evaluatedPoints.includes(currentNeighbor)) {
+            unevaluatedPoints.push(currentNeighbor);
           } else if (
             possibleCostFromStartingPointToThis >=
             currentNeighbor.costFromStartingPointToThis

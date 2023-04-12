@@ -102,11 +102,7 @@ export default class JungleScene extends BaseScene {
 
     this.game.display.on("mousedown", (x, y) => {
       console.log("Clicked", "x: ", x, " y: ", y);
-      this.game.playerController.moveCharacterToCoordinates(
-        this.game.player.character,
-        x,
-        y
-      );
+      this.game.playerController.findPath(this.game.player.character, x, y);
     });
   }
 
@@ -131,6 +127,22 @@ export default class JungleScene extends BaseScene {
       const layerObject = this.map.layers[key];
       if (layerObject.name === "foreground")
         layerObject.draw(this.game.display);
+    }
+
+    if (this.game.player.character.path) {
+      const path = this.game.player.character.path;
+      this.game.display.context.strokeStyle = "orange";
+      for (let index = 0; index < path.length; index++) {
+        if (index > 0 && index < path.length - 1) {
+          const start = path[index];
+          const end = path[index + 1];
+          this.game.display.context.beginPath();
+          this.game.display.context.moveTo(start.x * 16 * 2, start.y * 16 * 2);
+          this.game.display.context.lineTo(end.x * 16 * 2, end.y * 16 * 2);
+          this.game.display.context.stroke();
+        }
+      }
+      this.game.player.character.path = [];
     }
 
     this.game.display.afterDraw();

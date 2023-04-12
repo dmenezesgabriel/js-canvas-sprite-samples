@@ -79,6 +79,13 @@ export default class PlayerController {
       character.speed = 0;
     }
 
+    if (
+      !Object.keys(this.keys).some((key) => this.moveKeys.includes(key)) &&
+      character.path
+    ) {
+      // move point click
+    }
+
     if (this.keys["w"] || this.keys["ArrowUp"]) {
       character.moveUp();
     }
@@ -106,13 +113,7 @@ export default class PlayerController {
     }
   }
 
-  moveCharacterToCoordinates(character, targetX, targetY) {
-    const path = this.pathFinding.search(character, targetX, targetY);
-
-    if (path) {
-      for (const point in path) {
-        console.log(point);
-      }
-    }
+  findPath(character, targetX, targetY) {
+    character.path = this.pathFinding.search(character, targetX, targetY);
   }
 }
